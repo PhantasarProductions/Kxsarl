@@ -37,7 +37,7 @@ namespace Kxsarl {
 
 	static bool AlwaysAllowed(MainMenuItem*) { return true; }
 
-	MainMenuItem::MainMenuItem(std::string _Caption, void (*_Action)(MainMenuItem*) = nullptr, bool (*_Allow)(MainMenuItem*) = nullptr) {
+	MainMenuItem::MainMenuItem(std::string _Caption, void (*_Action)(MainMenuItem*) , bool (*_Allow)(MainMenuItem*) ) {
 		Caption = _Caption;
 		Action = _Action;
 		if (_Allow)
