@@ -46,6 +46,7 @@ MKL_*
 
 # Executables Directory
 Exe_*
+Kxsarl/x64/Release
 
 # Visual Studio Crap
 .vs
