@@ -24,7 +24,21 @@
 // Version: 23.07.17
 // EndLic
 
+#include <SlyvQCol.hpp>
+
+#include "../Headers/Version.hpp"
+
+using namespace Slyvina;
+using namespace Units;
+using namespace Kxsarl;
+
 int main(int ac, char** a) {
+	QCol->LCyan("The Legend of the Kxsarl\n");
+	QCol->Doing("Version", Version());
+	QCol->Doing("Coded by", "Jeroen P. Broks");
+	QCol->LMagenta("(c) " + CYear() + " Jeroen P. Broks; ");
+	QCol->LGreen("Licensed under the terms of the GPL3\n");
 	// Actual code comes later!
+	QCol->Reset();
 	return 0;
 }
