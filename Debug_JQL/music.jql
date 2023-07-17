@@ -1,5 +1,10 @@
 JQL
 
+
+# This file links to all raw music files that would be in the Kxsarl.music.jcr file in the final release.
+# The reason why you cannot find these files in this repository is first of all to avoid copyright issues
+# and second because these files are way too big for a github repository.
+
 Author:Nihilore
 Notes:Creative Commons Attribution license -- http://www.nihilore.com/license/ -- Music downloaded from http://www.nihilore.com
 Raw:\Projects\3rd party assets\Music\Nihilore\Tempest.mp3>Music/MainMenu/Tempest.mp3
