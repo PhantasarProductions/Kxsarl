@@ -44,5 +44,8 @@ MKL_*
 .DS_Store
 ._*
 
+# Visual Studio Crap
+.vs
+
 
 
