@@ -30,3 +30,19 @@
 *.exe
 *.out
 *.app
+
+# Private files (kept out of repository for several reasons)
+Private.*
+MKL_*
+*.MKL.*
+
+# Prebuild JCR files
+*.jcr
+*.JCR
+
+# MacOS Crap 
+.DS_Store
+._*
+
+
+
