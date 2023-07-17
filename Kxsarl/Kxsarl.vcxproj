@@ -134,9 +134,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Debug.hpp" />
     <ClInclude Include="Headers\MainMenu.hpp" />
+    <ClInclude Include="Headers\Version.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Libs\Units\Source\DieParse.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvArgParse.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvBank.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvDir.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvDirry.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvMD5.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvQCol.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvRequestFile.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvSTOI.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvStream.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvString.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvTime.cpp" />
+    <ClCompile Include="..\..\..\Libs\Units\Source\SlyvVolumes.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainMenu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
