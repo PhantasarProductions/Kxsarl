@@ -28,23 +28,44 @@
 
 #include <TQSG.hpp>
 
+#include "../Headers/UseJCR6.hpp"
 #include "../Headers/Version.hpp"
 #include "../Headers/Config.hpp"
+#include "../Headers/Flow.hpp"
 
 using namespace Slyvina;
 using namespace Units;
 using namespace TQSG;
 using namespace Kxsarl;
 
+void EnterGFXMode() {
+	QCol->Doing("Entering", "Graphics Mode");
+	if (CFG_Windowed()) {
+		Graphics(CFG_Width(), CFG_Height(), "The Legend of the Kxsarl");
+	} else {
+		Graphics("The Legend of the Kxsarl");
+	}
+	SetAltScreen(1900, 1000);
+}
+
 int main(int ac, char** a) {
+	Executable = ChReplace(a[0], '\\', '/');
 	QCol->LCyan("The Legend of the Kxsarl\n");
 	QCol->Doing("Version", Version());
 	QCol->Doing("Coded by", "Jeroen P. Broks");
 	QCol->LMagenta("(c) " + CYear() + " Jeroen P. Broks; ");
 	QCol->LGreen("Licensed under the terms of the GPL3\n\n");
+	QCol->Doing("Launched file", Executable);
+	QCol->Doing("Game dir", ExeDir()); 
 	QCol->Doing("Desktop Size",TrSPrintF("%d x %d",DesktopWidth(),DesktopHeight()));
 	QCol->Doing("Game screen", CFG_ScreenModeString());
+
+	QCol->LMagenta(MRes()->GetString("Text/Welcome.txt")+" \n");
+	FlowInt();
+	EnterGFXMode();
+	Run();
+	
 	// Actual code comes later!
-	QCol->Reset();
+	QCol->Reset(); std::cout << "\n\n\n";
 	return 0;
 }
