@@ -48,6 +48,15 @@
     <ClInclude Include="Headers\Config.hpp">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\UseJCR6.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Error.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Flow.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">
@@ -122,53 +131,15 @@
     <ClCompile Include="Source\Config.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libjpeg-9.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libmodplug-1.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libmpg123-0.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libogg-0.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libopus-0.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libopusfile-0.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libpng16-16.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libtiff-5.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libvorbis-0.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libvorbisfile-3.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\libwebp-7.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\SDL2.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\SDL2_image.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\SDL2_mixer.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
-    <None Include="..\..\..\Libs\TQSL\SDL2\zlib1.dll">
-      <Filter>Source Files\Slyvina\TQSL\DLL</Filter>
-    </None>
+    <ClCompile Include="Source\UseJCR6.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Error.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Flow.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libFLAC-8.dll">
@@ -177,5 +148,20 @@
     <CopyFileToFolders Include="..\..\..\Libs\JCR6\3rdParty\zlib\zlib.dll">
       <Filter>Source Files\Slyvina\JCR6</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libjpeg-9.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libmodplug-1.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libmpg123-0.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libogg-0.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libopus-0.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libopusfile-0.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libpng16-16.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libtiff-5.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libvorbis-0.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libvorbisfile-3.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\libwebp-7.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\SDL2.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\SDL2_image.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\SDL2_mixer.dll" />
+    <CopyFileToFolders Include="..\..\..\Libs\TQSL\SDL2\zlib1.dll" />
   </ItemGroup>
 </Project>
