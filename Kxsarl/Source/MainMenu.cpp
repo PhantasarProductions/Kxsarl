@@ -25,6 +25,7 @@
 // EndLic
 
 #include <TQSG.hpp>
+#include <TQSE.hpp>
 
 #include <SlyvLinkedList.hpp>
 
@@ -35,6 +36,7 @@ using namespace std;
 using namespace Slyvina;
 using namespace Units;
 using namespace TQSG;
+using namespace TQSE;
 
 namespace Kxsarl {
 	static unique_ptr<TList<MainMenuItem>> MenuItems{TList<MainMenuItem>::CreateUnique() };
@@ -87,6 +89,10 @@ namespace Kxsarl {
 		int miy{ 120 };
 		for (auto mi = MenuItems->First(0); mi; mi = MenuItems->Next(0)) {
 			// CSay(mi->Caption); // Debug
+			if (MouseY() > miy && MouseY() < miy + 95)
+				SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1);
+			else
+				SetColor(255, 255, 255);
 			Fantasy->Text(mi->Caption, ScreenWidth() / 2, miy, Align::Center, Align::Top);
 			miy += 95;
 		}
