@@ -41,6 +41,8 @@ using namespace TQSG;
 
 namespace Kxsarl {
 
+	std::string Executable{};
+
 	static GINIE _Config{nullptr};
 
 	static GINIE Config() {

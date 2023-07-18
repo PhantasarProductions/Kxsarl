@@ -26,8 +26,12 @@
 
 #pragma once
 #include <string>
+#include <SlyvString.hpp>
 
 namespace Kxsarl {
+	extern std::string Executable;
+	inline std::string ExeDir() { return Slyvina::Units::ExtractDir(Executable); }
+
 	std::string ConfigDir();
 	std::string ConfigFile();
 
