@@ -44,6 +44,8 @@ namespace Kxsarl {
 	static TUImage Title{nullptr};
 	static TUImage GPL{nullptr};
 
+	static TUImageFont Fantasy{nullptr};
+
 
 	MainMenuItem::MainMenuItem(std::string _Caption, void (*_Action)(MainMenuItem*) , bool (*_Allow)(MainMenuItem*) ) {
 		Caption = _Caption;
@@ -52,15 +54,17 @@ namespace Kxsarl {
 			Allow = _Allow;
 		else
 			Allow = AlwaysAllowed;
-		(*MenuItems) += this;
+		MenuItems->AddLast(this);
+		CSay("Item " + _Caption + " added to main menu");
 	}
 
 	void MainMenuItem::InitMenuItems() {
+		bool _done{ false }; if (_done) return; _done = true;
 		new MainMenuItem("Character Creation");
 		new MainMenuItem("Start Game");
 		new MainMenuItem("Jukebox");
-		new MainMenuItem("Report bugs");
-		new MainMenuItem("System configuration");
+		new MainMenuItem("Report Bugs");
+		new MainMenuItem("System Configuration");
 		new MainMenuItem("Transfer");
 		new MainMenuItem("Exit");
 	}
@@ -70,7 +74,8 @@ namespace Kxsarl {
 		if (!Title) { Title = LoadUImage(MRes(), "GFX/Banner/Title.png"); Title->Hot(Title->Width() / 2, 0); }
 		if (!Background) Background = LoadUImage(MRes(), "GFX/MainMenu/Background.png");
 		if (!GPL) { GPL = LoadUImage(MRes(), "GFX/MainMenu/GPL.png"); GPL->Hot(0, GPL->Height()); }
-		
+		if (!Fantasy) { Fantasy = LoadUImageFont(MRes(), "Fonts/Fantasy.jfbf"); }
+		MainMenuItem::InitMenuItems();
 	}
 
 	bool Flow_MainMenu() {
@@ -79,6 +84,12 @@ namespace Kxsarl {
 		SetColor(255, 255, 255);
 		Title->Draw(ScreenWidth() / 2, 25);
 		GPL->Draw(20, ScreenHeight() - 20);
+		int miy{ 120 };
+		for (auto mi = MenuItems->First(0); mi; mi = MenuItems->Next(0)) {
+			// CSay(mi->Caption); // Debug
+			Fantasy->Text(mi->Caption, ScreenWidth() / 2, miy, Align::Center, Align::Top);
+			miy += 95;
+		}
 		return true;
 	}
 }
