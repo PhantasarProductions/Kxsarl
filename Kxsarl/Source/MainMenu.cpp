@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.18
+// Version: 23.07.19
 // EndLic
 
 #include <TQSG.hpp>
@@ -89,7 +89,7 @@ namespace Kxsarl {
 		int miy{ 120 };
 		for (auto mi = MenuItems->First(0); mi; mi = MenuItems->Next(0)) {
 			// CSay(mi->Caption); // Debug
-			if (MouseY() > miy && MouseY() < miy + 95)
+			if (MouseY() > ASY(miy) && MouseY() < ASY(miy + 95))
 				SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1);
 			else
 				SetColor(255, 255, 255);
