@@ -26,10 +26,14 @@
 
 #include <SlyvQCol.hpp>
 
+#include <TQSG.hpp>
+
 #include "../Headers/Version.hpp"
+#include "../Headers/Config.hpp"
 
 using namespace Slyvina;
 using namespace Units;
+using namespace TQSG;
 using namespace Kxsarl;
 
 int main(int ac, char** a) {
@@ -37,7 +41,9 @@ int main(int ac, char** a) {
 	QCol->Doing("Version", Version());
 	QCol->Doing("Coded by", "Jeroen P. Broks");
 	QCol->LMagenta("(c) " + CYear() + " Jeroen P. Broks; ");
-	QCol->LGreen("Licensed under the terms of the GPL3\n");
+	QCol->LGreen("Licensed under the terms of the GPL3\n\n");
+	QCol->Doing("Desktop Size",TrSPrintF("%d x %d",DesktopWidth(),DesktopHeight()));
+	QCol->Doing("Game screen", CFG_ScreenModeString());
 	// Actual code comes later!
 	QCol->Reset();
 	return 0;
