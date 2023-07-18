@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.17
+// Version: 23.07.18
 // EndLic
 
 namespace Kxsarl {
@@ -39,4 +39,6 @@ namespace Kxsarl {
 		static void InitMenuItems();
 	};
 
+	void Arrive_MainMenu();
+	bool Flow_MainMenu();
 }
