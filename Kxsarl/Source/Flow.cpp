@@ -33,6 +33,7 @@
 #include "../Headers/Debug.hpp"
 #include "../Headers/Error.hpp"
 #include "../Headers/Flow.hpp"
+#include "../Headers/Config.hpp"
 
 #include "../Headers/MainMenu.hpp"
 
@@ -74,6 +75,7 @@ namespace Kxsarl {
 	void FlowInt() {
 		QCol->Doing("Init", "Flow functions");
 		RegFlow("MainMenu", Flow_MainMenu,Arrive_MainMenu);
+		RegFlow("Config", Flow_Config, Arrive_Config);
 	}
 
 	void Run() {
