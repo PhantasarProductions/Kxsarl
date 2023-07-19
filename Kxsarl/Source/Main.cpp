@@ -21,13 +21,16 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.18
+// Version: 23.07.19
 // EndLic
+
+#undef KXSARL_NOCATCH
 
 #include <SlyvQCol.hpp>
 
 #include <TQSG.hpp>
 
+#include "../Headers/Error.hpp"
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/Version.hpp"
 #include "../Headers/Config.hpp"
@@ -49,23 +52,32 @@ void EnterGFXMode() {
 }
 
 int main(int ac, char** a) {
-	Executable = ChReplace(a[0], '\\', '/');
-	QCol->LCyan("The Legend of the Kxsarl\n");
-	QCol->Doing("Version", Version());
-	QCol->Doing("Coded by", "Jeroen P. Broks");
-	QCol->LMagenta("(c) " + CYear() + " Jeroen P. Broks; ");
-	QCol->LGreen("Licensed under the terms of the GPL3\n\n");
-	QCol->Doing("Launched file", Executable);
-	QCol->Doing("Game dir", ExeDir()); 
-	QCol->Doing("Desktop Size",TrSPrintF("%d x %d",DesktopWidth(),DesktopHeight()));
-	QCol->Doing("Game screen", CFG_ScreenModeString());
+#ifndef KXSARL_NOCATCH
+	try {
+#endif
+		Executable = ChReplace(a[0], '\\', '/');
+		QCol->LCyan("The Legend of the Kxsarl\n");
+		QCol->Doing("Version", Version());
+		QCol->Doing("Coded by", "Jeroen P. Broks");
+		QCol->LMagenta("(c) " + CYear() + " Jeroen P. Broks; ");
+		QCol->LGreen("Licensed under the terms of the GPL3\n\n");
+		QCol->Doing("Launched file", Executable);
+		QCol->Doing("Game dir", ExeDir());
+		QCol->Doing("Desktop Size", TrSPrintF("%d x %d", DesktopWidth(), DesktopHeight()));
+		QCol->Doing("Game screen", CFG_ScreenModeString());
 
-	QCol->LMagenta(MRes()->GetString("Text/Welcome.txt")+" \n");
-	FlowInt();
-	EnterGFXMode();
-	Run();
-	
-	// Actual code comes later!
-	QCol->Reset(); std::cout << "\n\n\n";
-	return 0;
+		QCol->LMagenta(MRes()->GetString("Text/Welcome.txt") + " \n");
+		FlowInt();
+		EnterGFXMode();
+		Run();
+
+		// Actual code comes later!
+		QCol->Reset(); std::cout << "\n\n\n";
+		return 0;
+#ifndef KXSARL_NOCATCH
+	} catch (std::exception e) {
+		Crash(TrSPrintF("Exception thrown: %s", e.what()));
+		return 255; // Backup. Should not be required as "Crash" should already end all operations.
+	}
+#endif
 }
