@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.18
+// Version: 23.07.19
 // EndLic
 
 #include <SlyvStream.hpp>
@@ -33,6 +33,7 @@
 #include <TQSG.hpp>
 #include <TQSE.hpp>
 
+#include "../Headers/Flow.hpp"
 #include "../Headers/GlobGFX.hpp"
 #include "../Headers/Config.hpp"
 #include "../Headers/UseJCR6.hpp"
@@ -90,6 +91,7 @@ namespace Kxsarl {
 		auto c{ Upper(Config()->Value("Screen", "Windowed")) };
 		return c == "YES" || c == "TRUE";
 	}
+
 	std::string CFG_ScreenModeString() {
 		if (CFG_Windowed())
 			return TrSPrintF("%d x %d (Windowed)", CFG_Width(), CFG_Height());
@@ -111,6 +113,7 @@ namespace Kxsarl {
 		SetColor(255, 255, 255);
 		Banner->StretchDraw(0, 0, ScreenWidth(), 104);
 		SetColor(0, 180, 255);
+		// Screen
 		Ryanna()->Text("Screen settings:", 20, 120); //printf("H: %9d\n", Ryanna()->Height("ABCabc")); 
 		SetColor(255, 0, 0); MiniFont()->Text("NOTE!", 20, 150); SetColor(255, 255, 255);
 		MiniFont()->Text("The base screen setting is 1900x1000. Any other setting is allowed, but could \"misform\" the graphics a bit", 20, 165);
@@ -122,6 +125,15 @@ namespace Kxsarl {
 			Config()->Value("Screen", "Windowed", boolstring(!CFG_Windowed()));
 			CSay("Windowed = " + boolstring(CFG_Windowed()));
 		}
+		// Character Folder
+		
+		// Back
+		SetColor(255, 255, 255);
+		if (MouseX() < ASX(182) && MouseY() > ASY(ScreenHeight() - 100)) {
+			SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1);
+			if (MouseHit(1)) GoFlow("MainMenu");
+		}
+		Arrow(EArrow::Left)->StretchDraw(0, ScreenHeight() - 100, 182, 100);
 		return true;
 	}
 }
