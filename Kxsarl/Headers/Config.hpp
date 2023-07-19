@@ -42,5 +42,5 @@ namespace Kxsarl {
 	std::string CFG_ScreenModeString();
 
 	void Arrive_Config();
-	void Flow_Config();
+	bool Flow_Config();
 }
