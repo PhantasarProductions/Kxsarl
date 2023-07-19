@@ -24,6 +24,8 @@
 // Version: 23.07.19
 // EndLic
 
+#include <algorithm>
+
 #include <SlyvQCol.hpp>
 
 #include "../Headers/UseJCR6.hpp"
@@ -33,17 +35,36 @@ using namespace Slyvina;
 using namespace TQSG;
 using namespace Units;
 
+#define KXSARL_GetFont(VARIABLE,FONTFILE)\
+	if (!VARIABLE) {\
+		QCol->Doing("Linking font", FONTFILE);\
+		VARIABLE = LoadUImageFont(MRes(), FONTFILE);\
+	}\
+	return VARIABLE.get();
+
 namespace Kxsarl {
 
 	const char* _FileChiqueFont{ "Fonts/MorrisRoman.jfbf" };
+	const char* _FileRyannaFont{ "Fonts/Ryanna.jfbf" };
 
 	TUImageFont _ChiqueFont{ nullptr };
+	TUImageFont _RyannaFont{ nullptr };
+	TUImageFont _MiniFont{ nullptr };
 
-	_____TIMAGEFONT* ChiqueFont() {
-		if (!_ChiqueFont) {
-			QCol->Doing("Linking font", _FileChiqueFont);
-			_ChiqueFont = LoadUImageFont(MRes(),_FileChiqueFont);
+	_____TIMAGEFONT* ChiqueFont() { KXSARL_GetFont(_ChiqueFont, _FileChiqueFont); }
+	_____TIMAGEFONT* Ryanna() { KXSARL_GetFont(_RyannaFont, _FileRyannaFont); }
+	_____TIMAGEFONT* MiniFont() { KXSARL_GetFont(_MiniFont, "Fonts/Mini.jfbf"); }
+
+	
+
+	_____TIMAGE* CheckBox(byte Checked) {
+		static TUImage _Checkbox[2];
+		Checked = std::min((byte)1, Checked);
+		if (!_Checkbox[Checked]) {
+			QCol->Doing("Loading", TrSPrintF("Checkbox #%d", Checked));
+			_Checkbox[Checked] = LoadUImage(MRes(), TrSPrintF("GFX/BasicUI/Check%d.png", Checked));
 		}
-		return _ChiqueFont.get();
+		return _Checkbox[Checked].get();
 	}
+
 }
