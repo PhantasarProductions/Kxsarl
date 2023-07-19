@@ -33,6 +33,7 @@
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/MainMenu.hpp"
 #include "../Headers/GlobGFX.hpp"
+#include "../Headers/Flow.hpp"
 
 using namespace std;
 using namespace Slyvina;
@@ -57,6 +58,10 @@ namespace Kxsarl {
 	static void ActExit(MainMenuItem*) { Running = false; }
 #pragma endregion
 
+#pragma region "Action Functions"
+	static void ActConfig(MainMenuItem*) { GoFlow("Config"); }
+#pragma endregion
+
 	MainMenuItem::MainMenuItem(std::string _Caption, void (*_Action)(MainMenuItem*) , bool (*_Allow)(MainMenuItem*) ) {
 		Caption = _Caption;
 		Action = _Action;
@@ -74,7 +79,7 @@ namespace Kxsarl {
 		new MainMenuItem("Start Game");
 		new MainMenuItem("Jukebox");
 		new MainMenuItem("Report Bugs");
-		new MainMenuItem("System Configuration");
+		new MainMenuItem("System Configuration",ActConfig);
 		new MainMenuItem("Transfer");
 		new MainMenuItem("Exit", ActExit);
 	}
