@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.18
+// Version: 23.07.19
 // EndLic
 #include <SlyvQCol.hpp>
 #include <SlyvString.hpp>
@@ -33,6 +33,7 @@
 #include "../Headers/Config.hpp"
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/Error.hpp"
+
 
 using namespace std;
 
