@@ -140,6 +140,7 @@
     <ClInclude Include="Headers\Debug.hpp" />
     <ClInclude Include="Headers\Error.hpp" />
     <ClInclude Include="Headers\Flow.hpp" />
+    <ClInclude Include="Headers\GlobGFX.hpp" />
     <ClInclude Include="Headers\MainMenu.hpp" />
     <ClInclude Include="Headers\UseJCR6.hpp" />
     <ClInclude Include="Headers\Version.hpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Source\Config.cpp" />
     <ClCompile Include="Source\Error.cpp" />
     <ClCompile Include="Source\Flow.cpp" />
+    <ClCompile Include="Source\GlobGFX.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainMenu.cpp" />
     <ClCompile Include="Source\UseJCR6.cpp" />

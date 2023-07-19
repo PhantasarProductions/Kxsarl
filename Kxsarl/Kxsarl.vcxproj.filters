@@ -57,6 +57,9 @@
     <ClInclude Include="Headers\Flow.hpp">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\GlobGFX.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">
@@ -138,6 +141,9 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\Flow.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GlobGFX.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
