@@ -34,4 +34,10 @@ namespace Kxsarl {
 	Slyvina::TQSG::_____TIMAGEFONT* MiniFont();
 
 	Slyvina::TQSG::_____TIMAGE* CheckBox(Slyvina::byte Checked = 0);
+
+#pragma region Arrows
+	enum class EArrow { Left, Right, Up, Down, UpLeft, UpRight, DownLeft, DownRight };
+	Slyvina::TQSG::_____TIMAGE* Arrow(EArrow A);
+#pragma endregion
+
 }

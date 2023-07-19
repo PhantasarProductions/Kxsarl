@@ -28,6 +28,7 @@
 
 #include <SlyvQCol.hpp>
 
+#include "../Headers/Error.hpp"
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/GlobGFX.hpp"
 
@@ -65,6 +66,27 @@ namespace Kxsarl {
 			_Checkbox[Checked] = LoadUImage(MRes(), TrSPrintF("GFX/BasicUI/Check%d.png", Checked));
 		}
 		return _Checkbox[Checked].get();
+	}
+
+	Slyvina::TQSG::_____TIMAGE* Arrow(EArrow A) {
+		static std::map<EArrow, TUImage>_Arrow{};
+		std::string n{""};
+		if (!_Arrow[A]) {
+			switch (A) {
+			case EArrow::Left: n = "Left"; break;
+			case EArrow::Right: n = "Right"; break;
+			case EArrow::Up: n = "Up"; break;
+			case EArrow::Down: n = "Down"; break;
+			case EArrow::UpLeft: n = "UpLeft"; break;
+			case EArrow::UpRight: n = "UpRight"; break;
+			case EArrow::DownLeft: n = "DownLeft"; break;
+			case EArrow::DownRight: n = "DownRight"; break;
+			default: Crash("Unknown Arrow Code"); break;
+			}
+			QCol->Doing("Loading", n + " arrow");
+			_Arrow[A] = LoadUImage(MRes(), "GFX/Arrows/" + n + ".png");
+		}
+		return _Arrow[A].get();
 	}
 
 }
