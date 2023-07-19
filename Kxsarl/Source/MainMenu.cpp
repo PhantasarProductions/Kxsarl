@@ -24,6 +24,8 @@
 // Version: 23.07.19
 // EndLic
 
+#include <SlyvOpenURL.hpp>
+
 #include <TQSG.hpp>
 #include <TQSE.hpp>
 
@@ -60,6 +62,7 @@ namespace Kxsarl {
 
 #pragma region "Action Functions"
 	static void ActConfig(MainMenuItem*) { GoFlow("Config"); }
+	static void ActBugs(MainMenuItem*) { OpenURL("https://github.com/PhantasarProductions/Kxsarl/issues"); QCol->Doing("Opening", "Issue tracker on GitHub"); }
 #pragma endregion
 
 	MainMenuItem::MainMenuItem(std::string _Caption, void (*_Action)(MainMenuItem*) , bool (*_Allow)(MainMenuItem*) ) {
@@ -79,7 +82,7 @@ namespace Kxsarl {
 		new MainMenuItem("Character Creation");
 		new MainMenuItem("Start Game");
 		new MainMenuItem("Jukebox");
-		new MainMenuItem("Report Bugs");
+		new MainMenuItem("Report Bugs", ActBugs);
 		new MainMenuItem("System Configuration",ActConfig);
 		new MainMenuItem("Transfer");
 		new MainMenuItem("Exit", ActExit);
