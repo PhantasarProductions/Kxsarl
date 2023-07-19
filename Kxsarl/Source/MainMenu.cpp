@@ -77,7 +77,6 @@ namespace Kxsarl {
 	}
 
 	void MainMenuItem::InitMenuItems() {
-		bool _done{ false }; if (_done) return; _done = true;
 		static bool _done{ false }; if (_done) return; _done = true;
 		new MainMenuItem("Character Creation");
 		new MainMenuItem("Start Game");
