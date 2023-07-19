@@ -29,8 +29,10 @@
 
 #include <SlyvLinkedList.hpp>
 
+#include "../Headers/Error.hpp"
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/MainMenu.hpp"
+#include "../Headers/GlobGFX.hpp"
 
 using namespace std;
 using namespace Slyvina;
@@ -41,13 +43,19 @@ using namespace TQSE;
 namespace Kxsarl {
 	static unique_ptr<TList<MainMenuItem>> MenuItems{TList<MainMenuItem>::CreateUnique() };
 	static bool AlwaysAllowed(MainMenuItem*) { return true; }
-	
+
+#pragma region "Main menu specific graphics"	
 	static TUImage Background{nullptr};
 	static TUImage Title{nullptr};
 	static TUImage GPL{nullptr};
 
 	static TUImageFont Fantasy{nullptr};
+#pragma endregion
 
+#pragma region "Exit the game through the main menu"
+	static bool Running{ true };
+	static void ActExit(MainMenuItem*) { Running = false; }
+#pragma endregion
 
 	MainMenuItem::MainMenuItem(std::string _Caption, void (*_Action)(MainMenuItem*) , bool (*_Allow)(MainMenuItem*) ) {
 		Caption = _Caption;
@@ -68,7 +76,7 @@ namespace Kxsarl {
 		new MainMenuItem("Report Bugs");
 		new MainMenuItem("System Configuration");
 		new MainMenuItem("Transfer");
-		new MainMenuItem("Exit");
+		new MainMenuItem("Exit", ActExit);
 	}
 	
 
@@ -89,13 +97,25 @@ namespace Kxsarl {
 		int miy{ 120 };
 		for (auto mi = MenuItems->First(0); mi; mi = MenuItems->Next(0)) {
 			// CSay(mi->Caption); // Debug
-			if (MouseY() > ASY(miy) && MouseY() < ASY(miy + 95))
+			if (MouseY() > ASY(miy) && MouseY() < ASY(miy + 95) && mi->Allow(mi)) {
 				SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1);
-			else
+				if (MouseHit(1)) {
+					if (mi->Action)
+						mi->Action(mi);
+					else
+						Crash("There is no action set for menu item \"" + mi->Caption + "\"");
+				}
+			} else if (mi->Allow(mi))
 				SetColor(255, 255, 255);
+			else
+				SetColor(120, 120, 120);
 			Fantasy->Text(mi->Caption, ScreenWidth() / 2, miy, Align::Center, Align::Top);
 			miy += 95;
 		}
-		return true;
+		SetColor(255, 255, 255);
+		//printf("Debug: TextHeight=%d\n", ChiqueFont()->Height("Copyright  Jeroen P. Broks, 2023, licened under the GPL3")); // debug
+		ChiqueFont()->Text("Copyright |cr Jeroen P. Broks, 2023, licened under the GPL3", ScreenWidth() / 2, ScreenHeight() - 10, Align::Center, Align::Bottom);
+		//printf("Debug: Drawn\n");
+		return Running;
 	}
 }
