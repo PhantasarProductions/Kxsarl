@@ -42,7 +42,12 @@ namespace Kxsarl {
 		TextBox* Current();
 		TextBox* NewBox(Slyvina::uint32 x, Slyvina::uint32 y, std::string defaultvalue = "", bool numbersonly = false);
 		TextBox* NewBox(Slyvina::uint32 x, Slyvina::uint32 y, int defaultvalue);
+		void Next();
 		void Draw(bool noaction = false, bool forceenabled = false);
+		void SetEnabled(bool value);
+		inline void Enable() { SetEnabled(true); }
+		inline void Disable() { SetEnabled(false); }
+
 	};
 
 	class TextBox {
@@ -72,7 +77,14 @@ namespace Kxsarl {
 
 		bool Current();
 		void Draw(bool noaction = false, bool forceenabled = false);
+		void Color(Slyvina::byte r, Slyvina::byte g, Slyvina::byte b);
+		void IntValue(int _value);
+		inline void IntValue(std::string value) { IntValue(ToInt(value)); }
+		int IntValue() { return ToInt(value); }
+
 	};
+		
+	inline TextBoxGroup CreateTextBoxGroup() { return std::unique_ptr<_TextBoxGroup>(new _TextBoxGroup()); }
 
 
 }
