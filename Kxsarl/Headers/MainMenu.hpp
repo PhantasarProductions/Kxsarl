@@ -24,6 +24,11 @@
 // Version: 23.07.18
 // EndLic
 
+
+#ifdef KXSARL_DEBUG
+#include <iostream>
+#endif
+
 namespace Kxsarl {
 
 	class MainMenuItem;
@@ -37,6 +42,9 @@ namespace Kxsarl {
 		bool (*Allow)(MainMenuItem*) { nullptr };
 
 		static void InitMenuItems();
+#ifdef KXSARL_DEBUG
+		inline ~MainMenuItem() { std::cout << "Destroyed main menu item: " << Caption << "\n"; }
+#endif
 	};
 
 	void Arrive_MainMenu();
