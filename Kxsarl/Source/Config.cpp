@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.19
+// Version: 23.07.20
 // EndLic
 
 #include <SlyvStream.hpp>
@@ -37,6 +37,7 @@
 #include "../Headers/GlobGFX.hpp"
 #include "../Headers/Config.hpp"
 #include "../Headers/UseJCR6.hpp"
+#include "../Headers/Textboxes.hpp"
 
 
 using namespace Slyvina;
@@ -47,6 +48,7 @@ using namespace TQSE;
 namespace Kxsarl {
 
 	std::string Executable{};
+
 
 	static GINIE _Config{nullptr};
 
@@ -61,6 +63,34 @@ namespace Kxsarl {
 		}
 		return _Config;
 	}
+
+#pragma region "TextBox Action"
+	struct sTBAct {
+		std::string
+			Error = "",
+			Field = "";
+		int
+			mini = 0,
+			maxi = 0;
+	};
+	std::map<TextBox*, sTBAct> TBAct{};
+
+	void fTBAct(TextBox* o) {
+		auto v{ o->IntValue() };
+		auto a{ &TBAct[o] };
+		a->Error = "";
+		if (v < 0)
+			a->Error = "Value may noy be negative";
+		else if (v < a->mini)
+			a->Error = TrSPrintF("Minimal value is %d", a->mini);
+		else if (v > a->maxi)
+			a->Error = TrSPrintF("Maximal value is %d", a->maxi);
+		if (!a->Error.size()) {
+			CSay(TrSPrintF("Screen %s is now %d", a->Field.c_str(), v)); 
+			Config()->Value("Screen", a->Field, v);
+		}
+	}
+#pragma enregion
 
 	inline void DefaultScreen() {
 		Config()->NewValue("Screen", "Windowed", "Yes");
@@ -77,6 +107,10 @@ namespace Kxsarl {
 			MakeDir(_D);
 		}
 		return _D + "/Config.ini";
+	}
+	std::string SaveCharDir() {
+		Config()->NewValue("Directory", "SavedChars", ConfigDir() + "Characters");
+		return Config()->Value("Directory", "SavedChars");
 	}
 	int CFG_Width() {
 		DefaultScreen();
@@ -125,8 +159,28 @@ namespace Kxsarl {
 			Config()->Value("Screen", "Windowed", boolstring(!CFG_Windowed()));
 			CSay("Windowed = " + boolstring(CFG_Windowed()));
 		}
+		Ryanna()->Text("Width:",20,240);
+		Ryanna()->Text("Height:", 20, 280);
+		static auto TBL{ CreateTextBoxGroup() };
+		static auto TBW{ TBL->NewBox(220,250,CFG_Width()) }; TBW->w = 200; TBW->Color(255, 180, 0); TBW->Action = fTBAct;
+		static auto TBH{ TBL->NewBox(220,280,CFG_Height()) }; TBH->w = 200; TBH->Color(255, 180, 0); TBH->Action = fTBAct;
+		if (!TBAct.count(TBW)) TBAct[TBW] = sTBAct{ "", "Width", 800,ScreenWidth() - 10 };
+		if (!TBAct.count(TBH)) TBAct[TBH] = sTBAct{ "", "Height", 600,ScreenHeight() - 100 };
+		SetColor(255, 0, 0); 
+		Ryanna()->Text(TBAct[TBW].Error, 450, 250);
+		Ryanna()->Text(TBAct[TBH].Error, 450, 290);
+		TBL->SetEnabled(CFG_Windowed());
+		TBL->Draw();
+
 		// Character Folder
-		
+		SetColor(0, 180, 255);
+		Ryanna()->Text("Saved character data path", 20, 350);
+		static auto TBCP{ TBL->NewBox(20, 380,SaveCharDir()) };
+		TBCP->enabled = true;
+		TBCP->Color(180, 0, 255);
+		TBCP->Font = MiniFont();
+
+
 		// Back
 		SetColor(255, 255, 255);
 		if (MouseX() < ASX(182) && MouseY() > ASY(ScreenHeight() - 100)) {
