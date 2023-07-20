@@ -35,6 +35,8 @@ namespace Kxsarl {
 	std::string ConfigDir();
 	std::string ConfigFile();
 
+	std::string SaveCharDir();
+
 	int CFG_Width();
 	int CFG_Height();
 	bool CFG_Windowed();
