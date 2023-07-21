@@ -45,6 +45,7 @@ namespace Kxsarl {
 			QCol->Doing(ei.first, ei.second);
 		}
 		Slyvina::TQSE::Notify("**** YOU HAVE BEEN STRUCK BY THE FORCES OF EVIL ****\n\n" + error);
+		QCol->Reset();
 		exit(e.size());
 	}
 }
