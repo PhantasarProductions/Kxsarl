@@ -36,6 +36,7 @@
 #include "../Headers/MainMenu.hpp"
 #include "../Headers/GlobGFX.hpp"
 #include "../Headers/Flow.hpp"
+#include "../Headers/Music.hpp"
 
 using namespace std;
 using namespace Slyvina;
@@ -44,6 +45,9 @@ using namespace TQSG;
 using namespace TQSE;
 
 namespace Kxsarl {
+
+	const char* MainMenuMusic = "music/mainmenu/tempest.mp3";
+
 	static unique_ptr<TList<MainMenuItem>> MenuItems{TList<MainMenuItem>::CreateUnique() };
 	static bool AlwaysAllowed(MainMenuItem*) { return true; }
 
@@ -94,6 +98,8 @@ namespace Kxsarl {
 		if (!GPL) { GPL = LoadUImage(MRes(), "GFX/MainMenu/GPL.png"); GPL->Hot(0, GPL->Height()); }
 		if (!Fantasy) { Fantasy = LoadUImageFont(MRes(), "Fonts/Fantasy.jfbf"); }
 		MainMenuItem::InitMenuItems();
+		Music(MainMenuMusic);
+		
 	}
 
 	bool Flow_MainMenu() {
