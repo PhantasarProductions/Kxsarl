@@ -29,11 +29,14 @@
 
 namespace Kxsarl {
 
+	inline void ColLoop(){ Slyvina::TQSG::SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1); }
+
 	Slyvina::TQSG::_____TIMAGEFONT* ChiqueFont();
 	Slyvina::TQSG::_____TIMAGEFONT* Ryanna();
 	Slyvina::TQSG::_____TIMAGEFONT* MiniFont();
 
 	Slyvina::TQSG::_____TIMAGE* CheckBox(Slyvina::byte Checked = 0);
+	Slyvina::TQSG::_____TIMAGE* ImgPickButton();
 
 #pragma region Arrows
 	enum class EArrow { Left, Right, Up, Down, UpLeft, UpRight, DownLeft, DownRight };

@@ -43,6 +43,8 @@ using namespace Units;
 	}\
 	return VARIABLE.get();
 
+#define KXSARL_GetPic(FILE) static auto ret{LoadUImage(MRes(),FILE)}; return ret.get()
+
 namespace Kxsarl {
 
 	const char* _FileChiqueFont{ "Fonts/MorrisRoman.jfbf" };
@@ -67,6 +69,8 @@ namespace Kxsarl {
 		}
 		return _Checkbox[Checked].get();
 	}
+
+	Slyvina::TQSG::_____TIMAGE* ImgPickButton() { KXSARL_GetPic("GFX/BasicUI/Pick.png"); }
 
 	Slyvina::TQSG::_____TIMAGE* Arrow(EArrow A) {
 		static std::map<EArrow, TUImage>_Arrow{};
