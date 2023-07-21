@@ -28,6 +28,7 @@
 #include <SlyvGINIE.hpp>
 #include <SlyvDirry.hpp>
 #include <SlyvQCol.hpp>
+#include <SlyvRequestFile.hpp>
 #include <SlyvTime.hpp>
 
 #include <TQSG.hpp>
@@ -179,7 +180,13 @@ namespace Kxsarl {
 		TBCP->enabled = true;
 		TBCP->Color(180, 0, 255);
 		TBCP->Font = MiniFont();
-
+		/*
+		if (MouseX() > ASX(20) && MouseX() < ASX(220) && MouseY() > ASY(400) && MouseY() < ASY(500)) {
+			ColLoop();
+		} else
+			SetColor(255, 255, 255);
+		ImgPickButton()->StretchDraw(20, 400, 200, 100);
+		//*/
 
 		// Back
 		SetColor(255, 255, 255);
