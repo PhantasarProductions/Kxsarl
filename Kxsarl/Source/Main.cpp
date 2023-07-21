@@ -29,16 +29,19 @@
 #include <SlyvQCol.hpp>
 
 #include <TQSG.hpp>
+#include <TQSA.hpp>
 
 #include "../Headers/Error.hpp"
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/Version.hpp"
 #include "../Headers/Config.hpp"
 #include "../Headers/Flow.hpp"
+#include "../Headers/Music.hpp"
 
 using namespace Slyvina;
 using namespace Units;
 using namespace TQSG;
+using namespace TQSA;
 using namespace Kxsarl;
 
 void EnterGFXMode() {
@@ -65,6 +68,12 @@ int main(int ac, char** a) {
 		QCol->Doing("Game dir", ExeDir());
 		QCol->Doing("Desktop Size", TrSPrintF("%d x %d", DesktopWidth(), DesktopHeight()));
 		QCol->Doing("Game screen", CFG_ScreenModeString());
+		QCol->Doing("Init TQSA", "", "");
+		if (Init_TQSA()) QCol->LGreen("Success\n"); else {
+			QCol->Red("Failed\n\n");
+			Crash("Audio initiation failed");
+		}
+		QCol->Doing("Music", MusicPresent());
 
 		QCol->LMagenta(MRes()->GetString("Text/Welcome.txt") + " \n");
 		FlowInt();
