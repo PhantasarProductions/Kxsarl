@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.19
+// Version: 23.07.22
 // EndLic
 #pragma once
 
@@ -36,6 +36,7 @@
 #include "../Headers/Config.hpp"
 
 #include "../Headers/MainMenu.hpp"
+#include "../Headers/CharacterCreation.hpp"
 
 using namespace std;
 using namespace Slyvina;
@@ -76,6 +77,7 @@ namespace Kxsarl {
 		QCol->Doing("Init", "Flow functions");
 		RegFlow("MainMenu", Flow_MainMenu,Arrive_MainMenu);
 		RegFlow("Config", Flow_Config, Arrive_Config);
+		RegFlow("CharGen", Flow_CharacterCreation,Arrive_CharCreation); 
 	}
 
 	void Run() {
