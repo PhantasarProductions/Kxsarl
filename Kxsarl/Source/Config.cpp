@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.21
+// Version: 23.07.22
 // EndLic
 
 #include <SlyvStream.hpp>
@@ -132,7 +132,12 @@ namespace Kxsarl {
 			return TrSPrintF("%d x %d (Windowed)", CFG_Width(), CFG_Height());
 		else
 		return TrSPrintF("%d x %d (FullScreen)", DesktopWidth(),DesktopHeight());
-	}	
+	}
+	std::string CFG_Lang() {
+		Config()->NewValue("Scenario", "Language", "English");
+		return Config()->Value("Scenario", "Language");
+	}
+
 
 	void Arrive_Config() {
 #ifdef KXSARL_DEBUG
