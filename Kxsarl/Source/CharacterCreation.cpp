@@ -27,6 +27,7 @@
 #include <TQSE.hpp>
 
 #include <SlyvMath.hpp>
+#include <SlyvLinkedList.hpp>
 
 #include <map>
 
@@ -146,7 +147,30 @@ namespace Kxsarl {
 		string name{ "???" };
 	};
 	inline string CSex() { return Basic->Value("Gen", "Sex"); }
+	inline string CClass() { return Basic->Value("GEN", "Class"); }
+
+	class TClass {
+	public:
+		static unique_ptr<TList<TClass>> Lijst;
+		TUImage Banner{ nullptr };
+		std::string Name{""};
+		VecString Uitleg{ nullptr };
+		uint32 y;
+		inline TClass(std::string N,string U) {
+			Name = N;
+			Uitleg = Split(U, '\n');
+			Banner = LoadUImage(MRes(), TrSPrintF("GFX/Class/%s.png", N));
+			QCol->Doing("Init Class", N);
+			y = 120 + (Lijst->Size() * 120);
+			(*Lijst) += this;
+		}
+		inline ~TClass() { QCol->Doing("Destroyed Class", Name); }
+	};
+	unique_ptr<TList<TClass>> TClass::Lijst{TList<TClass>::CreateUnique()};
+
 	static void S_ClassSex() {
+
+		// Sex
 		static TSex Sex[2]{ {LoadUImage(MRes(),"GFX/Sex/Male.png"),"Male"},{LoadUImage(MRes(),"GFX/Sex/Female.png"),"Female"} };
 		SetColor(0, 180, 255);
 		Ryanna()->Text("Gender:", 20, 100);
@@ -167,6 +191,42 @@ namespace Kxsarl {
 			}
 			g->Symbol->StretchDraw(20, y,100,100);
 			SetAlpha(255);
+
+			// Class
+			static bool initclassdone{ false };
+			SetColor(0, 180, 255);
+			Ryanna()->Text("Class:", 180, 100);
+			if (!initclassdone) {
+				initclassdone = true;
+				new TClass("Paladin","A knight sworn to good\nHas a decent melee attack and defenses.\nCan also do a tiny bit of healing.");
+				new TClass("Warrior","Brute force make the warrior realy useful\nCan also try to distract the enemy from weaker allies");
+				new TClass("Mage","Physically weak in both offense and defense\bBut the powerful spells a mage can cast should make it up for it.\nIf you can find the enemy's weaknesses,\nthe mage can be the most powerful killer");
+				new TClass("Cleric","Sworn to God, the cleric takes their power from prayer.\nMight not be the strongest with offense, but healing spells can cover that up\nThe cleric also come in handy when dealing with the undead.");
+				new TClass("Rogue","Are you more the tactical player?\nThe rogue is faster than the others\nand can poison and paralyze the enemy.\nMay also dodge your enemy's most powerful blows");
+				new TClass("Archer","The archer can attack the enemy from a distance\nMay not be handy when the enemy is up close, but if you\nmanage to keep your distance, the archer can work");
+			}
+			for (auto c = TClass::Lijst->First(); c; c = TClass::Lijst->Next()) {
+				if (CClass() == c->Name) {
+					if (CSex() == g->name) {
+						ColLoop(98);
+						ARect(178, (c->y - 2), c->Banner->Width() + 4, c->Banner->Height() + 4);
+					}
+				}
+				if (MouseX() > ASX(180) && MouseX() < 180 + ASX(c->Banner->Width()) && MouseY() > ASY(c->y) && MouseY() < ASY(c->y + c->Banner->Height())) {
+					int ty{ 180 };
+					for (auto l : *(c->Uitleg)) {
+						SetColor(255, 255, 255, 255);
+						MiniFont()->Text(l, 500, ty); ty += 30;
+					}
+					SetAlphaD(abs(DegSin((double)SDL_GetTicks() / 25)));
+					if (MouseHit(1)) {
+						Basic->Value("Gen", "Class", c->Name);
+					}
+				}
+				SetColor(255, 255, 255);
+				c->Banner->Draw(180, c->y);
+				SetAlpha(255);
+			}
 		}
 	}
 #pragma endregion
