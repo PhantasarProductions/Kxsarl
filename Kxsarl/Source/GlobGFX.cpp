@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.21
+// Version: 23.07.22
 // EndLic
 
 #include <algorithm>
@@ -71,6 +71,9 @@ namespace Kxsarl {
 	}
 
 	Slyvina::TQSG::_____TIMAGE* ImgPickButton() { KXSARL_GetPic("GFX/BasicUI/Pick.png"); }
+	Slyvina::TQSG::_____TIMAGE* ImgBack() { KXSARL_GetPic("GFX/Alg/Background.jpg"); }
+
+	void DrawBackground() { ImgBack()->Tile(0, 0, ScreenWidth(), ScreenHeight()); }
 
 	Slyvina::TQSG::_____TIMAGE* Arrow(EArrow A) {
 		static std::map<EArrow, TUImage>_Arrow{};
