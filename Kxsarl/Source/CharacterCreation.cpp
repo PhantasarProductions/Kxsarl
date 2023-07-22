@@ -30,6 +30,8 @@ using namespace std;
 
 namespace Kxsarl {
 
+#define NTY(A) void A() {Crash("Feature not yet implemented");}
+
 #pragma region "Stage Initiation"
 	enum class Stage { Skill, ClassSex, StatRolls, Name };
 	void S_Skill();
@@ -57,4 +59,23 @@ namespace Kxsarl {
 		CurrentStage = Stage::Skill;
 	}
 #pragma endregion
+
+#pragma region "Skill Selection"
+	NTY(S_Skill);
+#pragma endregion
+
+#pragma region "Class & Sex"
+	NTY(S_ClassSex);
+#pragma endregion
+
+#pragma region "Stat Rolls"
+	NTY(S_StatRoll);
+#pragma endregion
+
+#pragma region "Name"
+	NTY(S_Name);
+#pragma endregion
+
+
+
 }
