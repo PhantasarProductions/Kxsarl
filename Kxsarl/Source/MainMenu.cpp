@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.21
+// Version: 23.07.22
 // EndLic
 
 #include <SlyvOpenURL.hpp>
@@ -65,6 +65,7 @@ namespace Kxsarl {
 #pragma endregion
 
 #pragma region "Action Functions"
+	static void ActCharGen(MainMenuItem*) { GoFlow("CharGen"); }
 	static void ActConfig(MainMenuItem*) { GoFlow("Config"); }
 	static void ActBugs(MainMenuItem*) { OpenURL("https://github.com/PhantasarProductions/Kxsarl/issues"); QCol->Doing("Opening", "Issue tracker on GitHub"); }
 #pragma endregion
@@ -82,7 +83,7 @@ namespace Kxsarl {
 
 	void MainMenuItem::InitMenuItems() {
 		static bool _done{ false }; if (_done) return; _done = true;
-		new MainMenuItem("Character Creation");
+		new MainMenuItem("Character Creation",ActCharGen);
 		new MainMenuItem("Start Game");
 		new MainMenuItem("Jukebox");
 		new MainMenuItem("Report Bugs", ActBugs);
