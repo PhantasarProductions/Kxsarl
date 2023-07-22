@@ -66,6 +66,9 @@
     <ClInclude Include="Headers\Music.hpp">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\CharacterCreation.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">
@@ -159,6 +162,9 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\Music.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CharacterCreation.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>

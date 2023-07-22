@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\CharacterCreation.hpp" />
     <ClInclude Include="Headers\Config.hpp" />
     <ClInclude Include="Headers\Debug.hpp" />
     <ClInclude Include="Headers\Error.hpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvString.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvTime.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvVolumes.cpp" />
+    <ClCompile Include="Source\CharacterCreation.cpp" />
     <ClCompile Include="Source\Config.cpp" />
     <ClCompile Include="Source\Error.cpp" />
     <ClCompile Include="Source\Flow.cpp" />
