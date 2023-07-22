@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.22
+// Version: 23.07.23
 // EndLic
 #pragma once
 
@@ -29,7 +29,7 @@
 
 namespace Kxsarl {
 
-	inline void ColLoop(){ Slyvina::TQSG::SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1); }
+	inline void ColLoop(int divider=100){ Slyvina::TQSG::SetColorHSV((SDL_GetTicks() / divider) % 360, 1, 1); }
 
 	Slyvina::TQSG::_____TIMAGEFONT* ChiqueFont();
 	Slyvina::TQSG::_____TIMAGEFONT* Ryanna();
