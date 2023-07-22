@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.22
+// Version: 23.07.23
 // EndLic
 #include <TQSA.hpp>
 #include "../Headers/Error.hpp"
@@ -43,11 +43,11 @@ namespace Kxsarl {
         static int __Channel{ 0 };
         QCol->Doing("Music", File);
         if (!HasMusic()) {
-            QCol->Red("Ignored! "); QCol->Pink("No music present in this installation\m"); return;
+            QCol->Red("Ignored! "); QCol->Pink("No music present in this installation\n"); return;
         }
         Trans2Upper(File);
         if (File == LastFile) {
-            QCol->Red("Ignored! "); QCol->Pink("Same as before. No need to reload!\m"); return;
+            QCol->Red("Ignored! "); QCol->Pink("Same as before. No need to reload!\n"); return;
             return;
         }
         if (!MRes()->EntryExists(File)) Crash("Music not found", { {"Music File",File} });
