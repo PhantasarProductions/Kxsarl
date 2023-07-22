@@ -80,7 +80,7 @@ namespace Kxsarl {
 		Banner->XDraw(ScreenWidth() / 2, 60);
 		SetScale(1);
 		if (MouseX() < ASX(182) && MouseY() > ASY(ScreenHeight() - 100)) {
-			SetColorHSV((SDL_GetTicks() / 101) % 360, 1, 1);
+			SetColorHSV((SDL_GetTicks() / 105) % 360, 1, 1);
 			if (MouseHit(1)) {
 				if (CurrentStage == Stage::Skill)
 					GoFlow("MainMenu");
