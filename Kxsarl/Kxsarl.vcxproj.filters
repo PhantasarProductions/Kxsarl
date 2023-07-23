@@ -81,6 +81,9 @@
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician.hpp">
       <Filter>Header Files\Slyvina\Statitician</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\RollStat.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">

@@ -145,6 +145,7 @@
     <ClInclude Include="Headers\GlobGFX.hpp" />
     <ClInclude Include="Headers\MainMenu.hpp" />
     <ClInclude Include="Headers\Music.hpp" />
+    <ClInclude Include="Headers\RollStat.hpp" />
     <ClInclude Include="Headers\Textboxes.hpp" />
     <ClInclude Include="Headers\UseJCR6.hpp" />
     <ClInclude Include="Headers\Version.hpp" />
