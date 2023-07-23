@@ -225,6 +225,17 @@ namespace Kxsarl {
 				c->Banner->Draw(180, c->y);
 				SetAlpha(255);
 			}
+
+			// Next
+			if (CSex().size() && CClass().size()) {
+				static auto nx{ ScreenWidth() - 182 };
+				if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
+					SetColorHSV((SDL_GetTicks() / 97) % 360, 1, 1);
+					if (MouseHit(1))
+						CurrentStage = Stage::StatRolls;
+				}
+				Arrow(EArrow::Right)->StretchDraw(nx, ScreenHeight() - 100, 182, 100);
+			}
 		}
 	}
 #pragma endregion
