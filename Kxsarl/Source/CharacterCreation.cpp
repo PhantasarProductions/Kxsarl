@@ -207,10 +207,8 @@ namespace Kxsarl {
 			}
 			for (auto c = TClass::Lijst->First(); c; c = TClass::Lijst->Next()) {
 				if (CClass() == c->Name) {
-					if (CSex() == g->name) {
-						ColLoop(98);
-						ARect(178, (c->y - 2), c->Banner->Width() + 4, c->Banner->Height() + 4);
-					}
+					ColLoop(98);
+					ARect(178, (c->y - 2), c->Banner->Width() + 4, c->Banner->Height() + 4);
 				}
 				if (MouseX() > ASX(180) && MouseX() < 180 + ASX(c->Banner->Width()) && MouseY() > ASY(c->y) && MouseY() < ASY(c->y + c->Banner->Height())) {
 					int ty{ 180 };
