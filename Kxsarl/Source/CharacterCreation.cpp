@@ -21,13 +21,15 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.23
+// Version: 23.07.24
 // EndLic
 
 #include <TQSE.hpp>
 
 #include <SlyvMath.hpp>
 #include <SlyvLinkedList.hpp>
+
+#include <Statistician.hpp>
 
 #include <map>
 
@@ -39,6 +41,7 @@ using namespace std;
 using namespace Slyvina;
 using namespace TQSG;
 using namespace TQSE;
+using namespace Statistician;
 
 namespace Kxsarl {
 
@@ -50,8 +53,9 @@ namespace Kxsarl {
 	enum class Stage { Skill, ClassSex, StatRolls, Name };
 	static void S_Skill();
 	static void S_ClassSex();
-	void S_StatRolls();
-	void S_Name();
+	static void StartChar();
+	static void S_StatRolls();
+	static void S_Name();
 	map<Stage, void (*)()> StageMap{
 		{Stage::Skill, S_Skill},
 		{ Stage::ClassSex,S_ClassSex },
@@ -103,6 +107,8 @@ namespace Kxsarl {
 #pragma endregion
 
 #pragma region "Skill Selection"
+	inline int CSkill() { return Basic->IntValue("Skill", "Skill"); }
+	static std::string CSkillName() { switch (CSkill()) { case 1:return "Easy"; case 2:return "Normal"; case 3:return "Hard"; default: return "???"; } }
 	static void S_Skill() {
 		static TUImage SkI[3]{ nullptr,nullptr,nullptr };
 		static int CX{ ScreenWidth() / 2 };
@@ -231,8 +237,11 @@ namespace Kxsarl {
 				static auto nx{ ScreenWidth() - 182 };
 				if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
 					SetColorHSV((SDL_GetTicks() / 97) % 360, 1, 1);
-					if (MouseHit(1))
+					if (MouseHit(1)) {
 						CurrentStage = Stage::StatRolls;
+						StartChar();
+					}
+					
 				}
 				Arrow(EArrow::Right)->StretchDraw(nx, ScreenHeight() - 100, 182, 100);
 			}
@@ -241,7 +250,46 @@ namespace Kxsarl {
 #pragma endregion
 
 #pragma region "Stat Rolls"
-	NTY(S_StatRolls);
+	static UParty CParty{nullptr};
+	static Character CChar{nullptr};
+	static void RollBaseStats() {
+		static map<string, map<string, int>> mini {
+			{ "Warrior", { { "Power",14 },{"Toughness",10} }},
+			{ "Paladin", { { "Will",17},{"Power",12},{"Thoughness",9}} },
+			{ "Mage", {{"Intelligence",16},{"Will",16} } },
+			{ "Rogue", { {"Power",8},{"Agility",14}, {"Will",9} } },
+			{ "Archer",{{"Agility",10},{"Power",9},{"Stamina",9} } }
+		};
+		for (auto S : StatNames) {
+			CChar->Statistic(S)->Base=RollStat(Basic->IntValue("SKILL", "SKILL"),mini[CClass()][S]);
+			CSay(TrSPrintF("Rolled %d for stat %s", CChar->Statistic(S)->Base, S.c_str()));
+		}
+	}
+
+	static void StartChar() {
+		CParty = CreateUniqueParty();
+		CChar = CParty->NewChar("CREATION");
+		RollBaseStats();
+	}
+	static void S_StatRolls() {
+		static auto Reroll{ LoadUImage(MRes(),"GFX/Buttons/Stats/Reroll.png") };
+		SetColor(255, 255, 255);
+		Ryanna(CSkillName()+" mode / "+CClass()+" "+CSex(),ScreenWidth()/2,ScreenHeight(),Align::Center,Align::Bottom);
+		SetColor(0, 180, 255);
+		Ryanna("Character statistics:", 20, 100);
+		int y{ 150 };
+		for (auto S : StatNames) {
+			SetColor(255, 255, 255);
+			Ryanna(S, 20, y);
+			SetColor(255, 180, 0);
+			Ryanna(CChar->Statistic(S)->Base, 300, y);
+			y += 50;
+		}
+		SetColor(255, 255, 255);
+		Reroll->StretchDraw(20, y, 120, 55);
+		if (MouseHit(1) && MouseX() < ASX(140) && MouseY() > ASY(y) && MouseY() < ASY(y + 55)) RollBaseStats();
+	}
+	
 #pragma endregion
 
 #pragma region "Name"
