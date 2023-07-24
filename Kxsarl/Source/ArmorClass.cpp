@@ -148,9 +148,9 @@ namespace Kxsarl {
 		auto Ch{ S->GetCharacter() };
 		double Base{ 20 };
 		double PW1{ (double) Ch->Statistic("Intelligence")->Total() * 5 };
-		double PW1{ (double) Ch->Statistic("Will")->Total() * 5 };
-		double PW2{ (double) Ch->Statistic("Level")->Total() };
-		double AVG{ (PW1 + PW2) / 12 };
+		double PW2{ (double) Ch->Statistic("Will")->Total() * 5 };
+		double PW3{ (double) Ch->Statistic("Level")->Total() };
+		double AVG{ (PW1 + PW2 + PW3) / 12 };
 		Ch->Statistic("THAC0")->Base = (int)(Base - (AVG / 3));
 	}
 
