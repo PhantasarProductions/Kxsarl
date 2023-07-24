@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.22
+// Version: 23.07.24
 // EndLic
 
 #include <algorithm>
@@ -57,6 +57,8 @@ namespace Kxsarl {
 	_____TIMAGEFONT* ChiqueFont() { KXSARL_GetFont(_ChiqueFont, _FileChiqueFont); }
 	_____TIMAGEFONT* Ryanna() { KXSARL_GetFont(_RyannaFont, _FileRyannaFont); }
 	_____TIMAGEFONT* MiniFont() { KXSARL_GetFont(_MiniFont, "Fonts/Mini.jfbf"); }
+
+	
 
 	
 
