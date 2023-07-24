@@ -59,7 +59,7 @@ namespace Kxsarl {
 			int ret{ 0 };
 			for (byte i = 0; i < 3; i++) {
 				int roll{ 0 };
-				do roll = Rand.Get(1, 6); while (roll < 6 || Rand.Get(1, 6) == 6);
+				do roll = Rand.Get(1, 6); while (roll >= 6 && Rand.Get(1, 6) != 6);
 				ret += roll;
 			}
 			return ret;
