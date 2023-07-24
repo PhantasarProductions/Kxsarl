@@ -137,11 +137,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician.hpp" />
+    <ClInclude Include="Headers\ArmorClass.hpp" />
     <ClInclude Include="Headers\CharacterCreation.hpp" />
     <ClInclude Include="Headers\Config.hpp" />
     <ClInclude Include="Headers\Debug.hpp" />
     <ClInclude Include="Headers\Error.hpp" />
     <ClInclude Include="Headers\Flow.hpp" />
+    <ClInclude Include="Headers\Game_Config.hpp" />
     <ClInclude Include="Headers\GlobGFX.hpp" />
     <ClInclude Include="Headers\MainMenu.hpp" />
     <ClInclude Include="Headers\Music.hpp" />
@@ -175,10 +177,12 @@
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvString.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvTime.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvVolumes.cpp" />
+    <ClCompile Include="Source\ArmorClass.cpp" />
     <ClCompile Include="Source\CharacterCreation.cpp" />
     <ClCompile Include="Source\Config.cpp" />
     <ClCompile Include="Source\Error.cpp" />
     <ClCompile Include="Source\Flow.cpp" />
+    <ClCompile Include="Source\Game_Config.cpp" />
     <ClCompile Include="Source\GlobGFX.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MainMenu.cpp" />

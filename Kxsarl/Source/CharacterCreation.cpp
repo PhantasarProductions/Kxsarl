@@ -253,6 +253,7 @@ namespace Kxsarl {
 	static UParty CParty{nullptr};
 	static Character CChar{nullptr};
 	static void RollBaseStats() {
+		Game::GameSkill = CSkill();
 		static map<string, map<string, int>> mini {
 			{ "Warrior", { { "Power",14 },{"Toughness",10} }},
 			{ "Paladin", { { "Will",17},{"Power",12},{"Thoughness",9}} },
@@ -264,11 +265,13 @@ namespace Kxsarl {
 			CChar->Statistic(S)->Base=RollStat(Basic->IntValue("SKILL", "SKILL"),mini[CClass()][S]);
 			CSay(TrSPrintF("Rolled %d for stat %s", CChar->Statistic(S)->Base, S.c_str()));
 		}
+		SetArmorClass(CChar, CClass());
 	}
 
 	static void StartChar() {
 		CParty = CreateUniqueParty();
 		CChar = CParty->NewChar("CREATION");
+		CChar->Statistic("Level")->Base = 1;
 		RollBaseStats();
 	}
 	static void S_StatRolls() {
@@ -285,6 +288,9 @@ namespace Kxsarl {
 			Ryanna(CChar->Statistic(S)->Base, 300, y);
 			y += 50;
 		}
+		SetColor(255, 255, 255); Ryanna("Armor Class", 20, y);
+		SetColor(255, 180, 0); Ryanna(CChar->Statistic("AC")->Total(), 300, y);
+		y += 50;
 		SetColor(255, 255, 255);
 		Reroll->StretchDraw(20, y, 120, 55);
 		if (MouseHit(1) && MouseX() < ASX(140) && MouseY() > ASY(y) && MouseY() < ASY(y + 55)) RollBaseStats();

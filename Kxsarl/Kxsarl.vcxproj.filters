@@ -87,6 +87,12 @@
     <ClInclude Include="Headers\Stats.hpp">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\ArmorClass.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Game_Config.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">
@@ -187,6 +193,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Libs\Statistician\Statistician.cpp">
       <Filter>Source Files\Slyvina\Statitician</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ArmorClass.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game_Config.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
