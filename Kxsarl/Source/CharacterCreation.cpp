@@ -291,7 +291,7 @@ namespace Kxsarl {
 		SetColor(255, 255, 255); Ryanna("Armor Class", 20, y);
 		SetColor(255, 180, 0); Ryanna(CChar->Statistic("AC")->Total(), 300, y);
 		y += 50;
-		SetColor(255, 255, 255); Ryanna("Accuracy Class", 20, y);
+		SetColor(255, 255, 255); Ryanna("Strike Class", 20, y);
 		SetColor(255, 180, 0); Ryanna(CChar->Statistic("THAC0")->Total(), 300, y);
 		y += 50;
 
