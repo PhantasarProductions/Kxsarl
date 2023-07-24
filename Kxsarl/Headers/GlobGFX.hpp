@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.23
+// Version: 23.07.24
 // EndLic
 #pragma once
 
@@ -39,6 +39,10 @@ namespace Kxsarl {
 	Slyvina::TQSG::_____TIMAGE* ImgPickButton();
 
 	Slyvina::TQSG::_____TIMAGE* ImgBack();
+
+	inline void Ryanna(std::string t, int x, int y, Slyvina::TQSG::Align ax = Slyvina::TQSG::Align::Left, Slyvina::TQSG::Align ay = Slyvina::TQSG::Align::Top) { Ryanna()->Text(t, x, y, ax, ay); }
+	inline void MiniFont(std::string t, int x, int y, Slyvina::TQSG::Align ax = Slyvina::TQSG::Align::Left, Slyvina::TQSG::Align ay = Slyvina::TQSG::Align::Top) { MiniFont()->Text(t, x, y, ax, ay); }
+	inline void Ryanna(int t, int x, int y, Slyvina::TQSG::Align ax = Slyvina::TQSG::Align::Left, Slyvina::TQSG::Align ay = Slyvina::TQSG::Align::Top) { Ryanna()->Text(std::to_string(t), x, y, ax, ay); }
 
 	void DrawBackground();
 
