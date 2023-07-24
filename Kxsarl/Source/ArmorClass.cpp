@@ -124,13 +124,91 @@ namespace Kxsarl {
 
 #pragma endregion
 
+#pragma region "Calculate THAC0 per class"
+	static void THAC0_Paladin(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Base{ 20 };
+		double PW1{ (double) Ch->Statistic("Power")->Total()*3 };
+		double PW2{ (double) Ch->Statistic("Intelligence")->Total()*2};
+		double PW3{ (double) Ch->Statistic("Level")->Total() };
+		double AVG{ (PW1 + PW2 + PW3) / 6 };
+		Ch->Statistic("THAC0")->Base = (int)(Base - (AVG / 3));
+	}
+
+	static void THAC0_Warrior(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Base{ 20 };
+		double PW1{ (double) Ch->Statistic("Power")->Total() * 5 };
+		double PW2{ (double) Ch->Statistic("Level")->Total() };
+		double AVG{ (PW1 + PW2) / (3 + GameSkill) };
+		Ch->Statistic("THAC0")->Base = (int)(Base - (AVG / 3));
+	}
+
+	static void THAC0_Mage(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Base{ 20 };
+		double PW1{ (double) Ch->Statistic("Intelligence")->Total() * 5 };
+		double PW1{ (double) Ch->Statistic("Will")->Total() * 5 };
+		double PW2{ (double) Ch->Statistic("Level")->Total() };
+		double AVG{ (PW1 + PW2) / 12 };
+		Ch->Statistic("THAC0")->Base = (int)(Base - (AVG / 3));
+	}
+
+	static void THAC0_Cleric(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Base{ 20 };
+		double PW1{ (double) Ch->Statistic("Power")->Total() * 5 };
+		double PW2{ (double) Ch->Statistic("Intelligence")->Total() * 2.5 };
+		double PW3{ (double) Ch->Statistic("Will")->Total() * 1.5 };
+		double PW4{ (double) Ch->Statistic("Level")->Total() };
+		double AVG{ (PW1 + PW2 + PW3 + PW4) / 9 };
+		Ch->Statistic("THAC0")->Base = (int)(Base - (AVG / 3));
+	}
+
+	static void THAC0_Rogue(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Base{ 20 };
+		double PW1{ (double)Ch->Statistic("Agility")->Total() * 5 };
+		double PW2{ (double)Ch->Statistic("Power")->Total() * 2.5 };
+		double PW3{ (double)Ch->Statistic("Stamina")->Total() * 1.5 };
+		double PW4{ (double)Ch->Statistic("Level")->Total() };
+		double AVG{ (PW1 + PW2 + PW3 + PW4) / 9 };
+		Ch->Statistic("THAC0")->Base = (int)(Base - (AVG / 3));
+	}
+
+	static void THAC0_Archer(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Base{ 20 };
+		double PW1{ (double)Ch->Statistic("Stamina")->Total() * 6 };
+		double PW2{ (double)Ch->Statistic("Power")->Total() * 1.5 };
+		double PW3{ (double)Ch->Statistic("Agility")->Total() * 1.5 };
+		double PW4{ (double)Ch->Statistic("Level")->Total() };
+		double AVG{ (PW1 + PW2 + PW3 + PW4) / 9 };
+		Ch->Statistic("THAC0")->Base = (int)(Base - (AVG / 3));
+	}
+
+	static std::map<std::string, StatScript> THAC0_PerClass{
+		{ "PALADIN", THAC0_Paladin},
+		{ "WARRIOR",THAC0_Warrior },
+		{ "MAGE",THAC0_Mage },
+		{ "CLERIC",THAC0_Cleric },
+		{ "ROGUE",THAC0_Rogue },
+		{ "ARCHER",THAC0_Archer }
+	};
+#pragma endregion
 
 	void SetArmorClass(Character Ch, std::string CClass) {
 		auto AC{ Ch->Statistic("AC") };
+		auto THAC0{ Ch->Statistic("THAC0") };
 		Trans2Upper(CClass);
 		AC->Maxi(10);
 		AC->Mini(-10);
 		if (!AC_PerClass.count(CClass)) throw std::runtime_error("AC cannot be set up for class: " + CClass);
+		if (!THAC0_PerClass.count(CClass)) throw std::runtime_error("THAC0 cannot be set up for class: " + CClass);
 		AC->StatScriptFunction = AC_PerClass[CClass];
+		THAC0->Mini(1 + GameSkill);
+		THAC0->Maxi(16 + GameSkill);
+		THAC0->StatScriptFunction = THAC0_PerClass[CClass];
+
 	}
 }
