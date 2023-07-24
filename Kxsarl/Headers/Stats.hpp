@@ -23,6 +23,7 @@
 // 
 // Version: 23.07.24
 // EndLic
+
 #pragma once
 #include <string>
 
