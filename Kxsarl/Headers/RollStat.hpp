@@ -32,7 +32,7 @@
 
 
 namespace Kxsarl {
-	inline int RollStat(Slyvina::byte skill) {
+	inline int RollStat(Slyvina::byte skill,int mini=0) {
 		using namespace Slyvina;
 		using namespace Units;		
 		byte dice[4]{ 0,0,0,0 };
@@ -48,12 +48,12 @@ namespace Kxsarl {
 			}
 			int ret{ 0 };
 			for (byte i = 0; i < 4; i++) if (i != lowd) ret += dice[i];
-			return ret;
+			return std::max(mini,ret);
 		} 
 		case 2: {
 			int ret{ 0 };
 			for (byte i = 0; i < 3; i++) ret += Rand.Get(2, 6);
-			return ret;
+			return std::max(mini,ret);
 		}
 		case 3: {
 			int ret{ 0 };
