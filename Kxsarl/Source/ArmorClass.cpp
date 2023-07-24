@@ -30,7 +30,7 @@ using namespace Slyvina;
 using namespace Statistician;
 using namespace Kxsarl::Game;
 
-#define ACDEBUG
+#undef ACDEBUG
 
 #ifdef ACDEBUG
 #include <iostream>
@@ -43,23 +43,85 @@ namespace Kxsarl {
 #pragma region "Calculate AC per class"
 	static void AC_Paladin(_Stat* S, std::string script) {
 		auto Ch{ S->GetCharacter() };
-		double Base = 5 * GameSkill; Chat("Base: " << Base<< "\t(Skill: "<<GameSkill<<")");
+		double Base = 8 * GameSkill; Chat("Base: " << Base<< "\t(Skill: "<<GameSkill<<")");
 		double Level{ (double)Ch->Statistic("Level")->Total() }; Chat("Level: " << Level);
 		double Tough{ (double)Ch->Statistic("Toughness")->Total() }; Chat("Toughness: " << Tough);
 		double Will{ (double)Ch->Statistic("Will")->Total() }; Chat("Will: " << Will);
 		double Stat{ 0 };
-		Stat += ((Tough + Level) / 20); 
-		Stat += ((Will + Level) / 18);
+		Stat += (Tough + (Level/20)); 
+		Stat += (Will + (Level/20) );
 		Chat("Raw Stat: " << Stat);
-		Stat /= 2;
+		Stat /= 4;
+		Stat -= GameSkill;
 		Chat("Half Stat: " << Stat);
 		Ch->Statistic("AC")->Base = (int)ceil(Base - Stat);
 		Chat("AC: " << Ch->Statistic("AC")->Base);
 	}
 
+	static void AC_Warrior(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Base = 7 * GameSkill; Chat("Base: " << Base << "\t(Skill: " << GameSkill << ")");
+		double Level{ (double)Ch->Statistic("Level")->Total() }; Chat("Level: " << Level);
+		double Tough{ (double)Ch->Statistic("Toughness")->Total() }; Chat("Toughness: " << Tough);
+		double Power{ (double)Ch->Statistic("Power")->Total() }; Chat("Power: " << Tough);
+		double Stat{ 0 };
+		Stat += ((Tough / 18) * 6) + (Level / 18);
+		Stat += ((Power / 18) * 2) + (Level / 25);
+		Ch->Statistic("AC")->Base = (int)ceil(Base - Stat);
+
+	}
+
+	static void AC_Mage(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		Ch->Statistic("MageCloth")->Mini(3 - GameSkill);
+		double Level{ (double)Ch->Statistic("Level")->Total() }; Chat("Level: " << Level);
+		Ch->Statistic("AC")->Base = 15 - Ch->Statistic("MageCloth")->Total() - (Ch->Statistic("Level")->Total() / (10 * GameSkill))-(Ch->Statistic("Will")->Total()*(Level/(10*GameSkill)));
+	}
+
+
+	static void AC_Cleric(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Level{ (double)Ch->Statistic("Level")->Total() }; Chat("Level: " << Level);
+		double Tough{ (double)Ch->Statistic("Toughness")->Total() }; Chat("Toughness: " << Tough);
+		double Power{ (double)Ch->Statistic("Power")->Total() }; Chat("Power: " << Tough);
+		double Intelligence{ (double)Ch->Statistic("Power")->Total() }; Chat("Power: " << Tough);
+		double Total{ (Tough * 3) + (Intelligence * 2) + Power };
+		double Avg{ Total / 6 };
+		double Mod{ Avg * (Level / 20) };
+		Ch->Statistic("AC")->Base = (7 * GameSkill) - Mod;
+	}
+
+	static void AC_Rogue(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Level{ (double)Ch->Statistic("Level")->Total() }; Chat("Level: " << Level);
+		double Agility{ (double)Ch->Statistic("Agility")->Total() }; Chat("Agility: " << Tough);
+		double Tough{ (double)Ch->Statistic("Toughness")->Total() }; Chat("Toughness: " << Tough);
+		double Mod{ ((Agility / 18) * 4) - (Tough / 72) + (Level / 25) };
+		Ch->Statistic("AC")->Base = 9+GameSkill-Mod;
+	}
+
+	static void AC_Archer(_Stat* S, std::string script) {
+		auto Ch{ S->GetCharacter() };
+		double Level{ (double)Ch->Statistic("Level")->Total() }; Chat("Level: " << Level);
+		double Agility{ (double)Ch->Statistic("Agility")->Total() };
+		double Tough{ (double)Ch->Statistic("Toughness")->Total() }; 
+		double Stamina{ (double)Ch->Statistic("Stamina")->Total() };
+		double Will{ (double)Ch->Statistic("Will")->Total() };
+		double Total{ (Agility * 4) + (Tough * 3) + (Will * 2) + Stamina };
+		double Avg{ Total / 10 };
+		double Mod{ Avg * (Level / 20) };
+		Ch->Statistic("AC")->Base = (8 * GameSkill) - Mod;
+	}
+
 	static std::map<std::string, StatScript> AC_PerClass{
-		{"PALADIN", AC_Paladin}
+		{"PALADIN", AC_Paladin},
+		{"WARRIOR",AC_Warrior},
+		{"MAGE",AC_Mage},
+		{"CLERIC",AC_Cleric},
+		{"ROGUE",AC_Rogue},
+		{"ARCHER",AC_Archer}
 	};
+
 #pragma endregion
 
 
@@ -68,7 +130,7 @@ namespace Kxsarl {
 		Trans2Upper(CClass);
 		AC->Maxi(10);
 		AC->Mini(-10);
-		if (!AC_PerClass.count(CClass)) throw std::runtime_error("AC cannot be set up for class" + CClass);
+		if (!AC_PerClass.count(CClass)) throw std::runtime_error("AC cannot be set up for class: " + CClass);
 		AC->StatScriptFunction = AC_PerClass[CClass];
 	}
 }
