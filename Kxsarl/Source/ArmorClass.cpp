@@ -209,6 +209,5 @@ namespace Kxsarl {
 		THAC0->Mini(1 + GameSkill);
 		THAC0->Maxi(16 + GameSkill);
 		THAC0->StatScriptFunction = THAC0_PerClass[CClass];
-
 	}
 }
