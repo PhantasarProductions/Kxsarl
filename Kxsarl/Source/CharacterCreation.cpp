@@ -55,6 +55,7 @@ namespace Kxsarl {
 	static void S_ClassSex();
 	static void StartChar();
 	static void S_StatRolls();
+	static void StartNameAndPicture();
 	static void S_Name();
 	map<Stage, void (*)()> StageMap{
 		{Stage::Skill, S_Skill},
@@ -301,7 +302,20 @@ namespace Kxsarl {
 
 		SetColor(255, 255, 255);
 		Reroll->StretchDraw(20, y, 120, 55);
-		if (MouseHit(1) && MouseX() < ASX(140) && MouseY() > ASY(y) && MouseY() < ASY(y + 55)) RollBaseStats();
+		if (MouseHit(1) && MouseX() < ASX(140) && MouseY() > ASY(y) && MouseY() < ASY(y + 55))
+			RollBaseStats();
+		{
+			static auto nx{ ScreenWidth() - 182 };
+			if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
+				SetColorHSV((SDL_GetTicks() / 97) % 360, 1, 1);
+				if (MouseHit(1)) {
+					CurrentStage = Stage::Name;
+					StartNameAndPicture();
+				}
+
+			}
+			Arrow(EArrow::Right)->StretchDraw(nx, ScreenHeight() - 100, 182, 100);
+		}
 	}
 	
 #pragma endregion
