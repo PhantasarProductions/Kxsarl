@@ -323,6 +323,9 @@ namespace Kxsarl {
 #pragma region "Name"
 	static TextBoxGroup TBG{nullptr};
 	static TextBox* TBName{nullptr};
+	static VecString Faces{nullptr};
+	static uint32 CFace{0};
+	static TUImage IFace{nullptr};
 
 	static void StartNameAndPicture(){
 		if (!TBG) {
@@ -332,12 +335,28 @@ namespace Kxsarl {
 			TBName->Color(255, 180, 0);
 		}
 		TBName->value = "";
+		Faces = MRes()->Directory("GFX/Faces/" + CSex()); CSay(CSex() + " faces found: " + to_string(Faces->size()));
+		CFace = Rand.Get(0, Faces->size() - 1);
+		IFace = nullptr;;
 	}
 
 	static void S_Name() {
+		auto
+			PX{ (ScreenWidth() / 2) - 250 },
+			PY{ (ScreenHeight() / 2) - 250 };
 		SetColor(0, 180, 255);
 		Ryanna("Name your " + Lower(CSex()) + " " + Lower(CClass())+":", 20, 120);
 		TBG->Draw(); TBName->value = Trim(TBName->value);
+		if (!IFace) {
+			CSay(TrSPrintF("Loading: %s (%d/%d)", ((*Faces)[CFace]).c_str(), CFace, Faces->size()));
+			IFace = LoadUImage(MRes(), (*Faces)[CFace]);
+		}
+		SetColor(255, 255, 255);
+		IFace->StretchDraw(PX, PY, 500, 500);
+		if (MouseHit(1) && MouseX() > ASX(PX) && MouseX() < ASX(PX + 500) && MouseY() > ASY(PY) && MouseY() < ASY(500 + PY)) {
+			IFace = nullptr;
+			CFace = (CFace + 1) % Faces->size();
+		}
 		if (TBName->value.size()) {
 			static auto nx{ ScreenWidth() - 182 };
 			if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
