@@ -278,7 +278,7 @@ namespace Kxsarl {
 	static void S_StatRolls() {
 		static auto Reroll{ LoadUImage(MRes(),"GFX/Buttons/Stats/Reroll.png") };
 		SetColor(255, 255, 255);
-		Ryanna(CSkillName()+" mode / "+CClass()+" "+CSex(),ScreenWidth()/2,ScreenHeight(),Align::Center,Align::Bottom);
+		Ryanna(CSkillName() + " mode / " + CClass() + " " + CSex(), ScreenWidth() / 2, ScreenHeight(), Align::Center, Align::Bottom);
 		SetColor(0, 180, 255);
 		Ryanna("Character statistics:", 20, 100);
 		int y{ 150 };
@@ -307,7 +307,35 @@ namespace Kxsarl {
 #pragma endregion
 
 #pragma region "Name"
-	NTY(S_Name);
+	static TextBoxGroup TBG{nullptr};
+	static TextBox* TBName{nullptr};
+
+	static void StartNameAndPicture(){
+		if (!TBG) {
+			TBG = CreateTextBoxGroup();
+			TBName = TBG->NewBox(20, 150, "");
+			TBName->h = Ryanna()->Height("The quick brown fox jumps over the lazy dog");
+			TBName->Color(255, 180, 0);
+		}
+		TBName->value = "";
+	}
+
+	static void S_Name() {
+		SetColor(0, 180, 255);
+		Ryanna("Name your " + Lower(CSex()) + " " + Lower(CClass())+":", 20, 120);
+		TBG->Draw(); TBName->value = Trim(TBName->value);
+		if (TBName->value.size()) {
+			static auto nx{ ScreenWidth() - 182 };
+			if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
+				SetColorHSV((SDL_GetTicks() / 97) % 360, 1, 1);
+				if (MouseHit(1)) {
+					Crash("No next stage set yet");
+				}
+
+			}
+			Arrow(EArrow::Right)->StretchDraw(nx, ScreenHeight() - 100, 182, 100);
+		}
+	}
 #pragma endregion
 
 
