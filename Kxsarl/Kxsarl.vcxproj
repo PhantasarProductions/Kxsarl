@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician.hpp" />
+    <ClInclude Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.hpp" />
     <ClInclude Include="Headers\ArmorClass.hpp" />
     <ClInclude Include="Headers\CharacterCreation.hpp" />
     <ClInclude Include="Headers\Config.hpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Headers\Music.hpp" />
     <ClInclude Include="Headers\RollStat.hpp" />
     <ClInclude Include="Headers\Stats.hpp" />
+    <ClInclude Include="Headers\SysStatus.hpp" />
     <ClInclude Include="Headers\Textboxes.hpp" />
     <ClInclude Include="Headers\UseJCR6.hpp" />
     <ClInclude Include="Headers\Version.hpp" />
@@ -161,6 +163,7 @@
     <ClCompile Include="..\..\..\Libs\JCR6\Source\JCR6_Write.cpp" />
     <ClCompile Include="..\..\..\Libs\JCR6\Source\JCR6_zlib.cpp" />
     <ClCompile Include="..\..\..\Libs\Statistician\Statistician.cpp" />
+    <ClCompile Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.cpp" />
     <ClCompile Include="..\..\..\Libs\TQSL\Source\TQSA.cpp" />
     <ClCompile Include="..\..\..\Libs\TQSL\Source\TQSE.cpp" />
     <ClCompile Include="..\..\..\Libs\TQSL\Source\TQSG.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvString.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvTime.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvVolumes.cpp" />
+    <ClCompile Include="Source.cpp\SysStatus.cpp" />
     <ClCompile Include="Source\ArmorClass.cpp" />
     <ClCompile Include="Source\CharacterCreation.cpp" />
     <ClCompile Include="Source\Config.cpp" />

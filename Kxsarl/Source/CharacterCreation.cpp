@@ -272,10 +272,11 @@ namespace Kxsarl {
 
 	static void StartChar() {
 		CParty = CreateUniqueParty();
-		CChar = CParty->NewChar("CREATION");
+		CChar = CParty->NewChar("MAIN");
 		CChar->Statistic("Level")->Base = 1;
 		RollBaseStats();
 	}
+
 	static void S_StatRolls() {
 		static auto Reroll{ LoadUImage(MRes(),"GFX/Buttons/Stats/Reroll.png") };
 		SetColor(255, 255, 255);
@@ -357,11 +358,12 @@ namespace Kxsarl {
 			IFace = nullptr;
 			CFace = (CFace + 1) % Faces->size();
 		}
-		if (TBName->value.size()) {
+		if (Trim(TBName->value).size()) {
 			static auto nx{ ScreenWidth() - 182 };
 			if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
 				SetColorHSV((SDL_GetTicks() / 97) % 360, 1, 1);
 				if (MouseHit(1)) {
+					CChar->Name = Trim(TBName->value);
 					Crash("No next stage set yet");
 				}
 

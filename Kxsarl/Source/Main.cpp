@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.21
+// Version: 23.07.25
 // EndLic
 
 #undef KXSARL_NOCATCH
@@ -30,13 +30,15 @@
 
 #include <TQSG.hpp>
 #include <TQSA.hpp>
-
+/*
 #include "../Headers/Error.hpp"
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/Version.hpp"
 #include "../Headers/Config.hpp"
 #include "../Headers/Flow.hpp"
 #include "../Headers/Music.hpp"
+*/
+#include "AllHeaders.hpp"
 
 using namespace Slyvina;
 using namespace Units;
@@ -51,6 +53,7 @@ void EnterGFXMode() {
 	} else {
 		Graphics("The Legend of the Kxsarl");
 	}
+	SysStatus("Loading");
 	SetAltScreen(1900, 1000);
 }
 
