@@ -30,6 +30,7 @@
 #include <SlyvQCol.hpp>
 #include <SlyvRequestFile.hpp>
 #include <SlyvTime.hpp>
+#include <SlyvVolumes.hpp>
 
 #include <TQSG.hpp>
 #include <TQSE.hpp>
@@ -111,7 +112,7 @@ namespace Kxsarl {
 	}
 	std::string SaveCharDir() {
 		Config()->NewValue("Directory", "SavedChars", ConfigDir() + "Characters");
-		return Config()->Value("Directory", "SavedChars");
+		return AVolPath( Dirry(Config()->Value("Directory", "SavedChars")));
 	}
 	int CFG_Width() {
 		DefaultScreen();

@@ -30,6 +30,9 @@
 #include <SlyvLinkedList.hpp>
 
 #include <Statistician.hpp>
+#include <Statistician_SaveJCR6.hpp>
+
+#include <JCR6_Write.hpp>
 
 #include <map>
 
@@ -362,9 +365,30 @@ namespace Kxsarl {
 			static auto nx{ ScreenWidth() - 182 };
 			if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
 				SetColorHSV((SDL_GetTicks() / 97) % 360, 1, 1);
-				if (MouseHit(1)) {
+				if (MouseHit(1)) {					
 					CChar->Name = Trim(TBName->value);
-					Crash("No next stage set yet");
+					CChar->Data["Class"] = CClass();
+					CChar->Data["Sex"] = CSex();
+					CChar->BStat["Skill"] = CSkill();
+					CChar->BStat["Experience"] = 0;
+					CChar->BStat["Level"] = 1;
+					SysStatus("Saving");
+					if (!DirectoryExists(SaveCharDir())) {
+						QCol->Doing("Creating dir", SaveCharDir());
+						MakeDir(SaveCharDir());
+					}
+					int CID{ 0 };
+					std::string OutDir;
+					do { OutDir = TrSPrintF("%s/CHAR_%08x", SaveCharDir().c_str(), CID++); } while (DirectoryExists(OutDir));
+					QCol->Doing("Creating dir", OutDir);
+					MakeDir(OutDir);
+					auto JO{ JCR6::CreateJCR6(OutDir + "/General.jcr","zlib") };
+					CSay("Base"); JO->AddString(Basic->UnParse(), "Base.ini", "zlib");
+					CSay("Face");  JO->AddBank(MRes()->B((*Faces)[CFace]), "Face.png");
+					CSay("Party");  Statistician::StatSaveJCR6(CParty.get(), JO, "Char", "Store");
+					CSay("Finalize"); JO->Close();
+					//Crash("No next stage set yet");
+					GoFlow("MainMenu");
 				}
 
 			}
