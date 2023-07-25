@@ -152,6 +152,7 @@
     <ClInclude Include="Headers\Textboxes.hpp" />
     <ClInclude Include="Headers\UseJCR6.hpp" />
     <ClInclude Include="Headers\Version.hpp" />
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Libs\JCR6\Source\JCR6_Core.cpp" />
@@ -244,6 +245,12 @@
     <CopyFileToFolders Include="..\..\..\Libs\JCR6\3rdParty\zlib\zlib.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Kxsarl1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Ksarl.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
