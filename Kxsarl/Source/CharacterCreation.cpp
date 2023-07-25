@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.24
+// Version: 23.07.25
 // EndLic
 
 #include <TQSE.hpp>
@@ -266,6 +266,7 @@ namespace Kxsarl {
 			CSay(TrSPrintF("Rolled %d for stat %s", CChar->Statistic(S)->Base, S.c_str()));
 		}
 		SetArmorClass(CChar, CClass());
+		SetBaseHP(CChar, CClass());
 	}
 
 	static void StartChar() {
@@ -293,6 +294,9 @@ namespace Kxsarl {
 		y += 50;
 		SetColor(255, 255, 255); Ryanna("Strike Class", 20, y);
 		SetColor(255, 180, 0); Ryanna(CChar->Statistic("THAC0")->Total(), 300, y);
+		y += 50;
+		SetColor(255, 255, 255); Ryanna("Hit Points", 20, y);
+		SetColor(255, 180, 0); Ryanna(CChar->Statistic("HP")->Total(), 300, y);
 		y += 50;
 
 		SetColor(255, 255, 255);

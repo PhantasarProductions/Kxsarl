@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.24
+// Version: 23.07.25
 // EndLic
 #include "AllHeaders.hpp"
 
@@ -210,4 +210,33 @@ namespace Kxsarl {
 		THAC0->Maxi(16 + GameSkill);
 		THAC0->StatScriptFunction = THAC0_PerClass[CClass];
 	}
+
+
+#pragma region "Base HP"
+	void SetBaseHP(Slyvina::Statistician::Character Ch, std::string CClass, byte Level) {		
+		byte die = 6;
+		int16 HP = 0;
+		Trans2Upper(CClass);
+		if (CClass == "MAGE") {
+			HP = Ch->TStat("Stamina");
+			die = 4;
+		} else if (CClass == "CLERIC") {
+			HP = Ch->TStat("Stamina") + Rand.Get(1, 10 - (GameSkill * 2));
+			if (GameSkill == 1) die = 6;
+			die = 4;
+		} else if (CClass == "ROGUE" || CClass=="ARCHER") {
+			HP = Ch->TStat("Stamina") + Rand.Get(1, 6);
+			die = 6;
+		} else if (CClass == "PALADIN" || CClass == "WARRIOR") {
+			HP = Ch->TStat("Stamina") + (Rand.Get(1, 6) * (4 - GameSkill));
+			if (GameSkill == 1) die = 8;
+			die = 6;
+		}
+		for (byte i = 2; i <= Level && i <= Ch->TStat("Stamina"); ++i) HP += Rand.Get(1, die);
+		Ch->BStat["HP"] = HP;
+		auto P{ Ch->GetPoints("HP") };
+		P->MaxCopy = "HP";
+		P->Have(HP);
+	}
+#pragma endregion
 }
