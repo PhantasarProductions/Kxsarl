@@ -86,7 +86,7 @@ namespace Kxsarl {
 
 #pragma region "Action Functions"
 	static void ActCharGen(MainMenuItem*) { GoFlow("CharGen"); }
-	static void ActStartGame(MainMenuItem*) { GoFlow("ChooseCharAndGame"); }
+	static void ActStartGame(MainMenuItem*) { GoFlow("ChooseChar"); }
 	static void ActConfig(MainMenuItem*) { GoFlow("Config"); }
 	static void ActBugs(MainMenuItem*) { OpenURL("https://github.com/PhantasarProductions/Kxsarl/issues"); QCol->Doing("Opening", "Issue tracker on GitHub"); }
 #pragma endregion
