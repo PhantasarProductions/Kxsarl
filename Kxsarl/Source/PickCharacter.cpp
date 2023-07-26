@@ -31,14 +31,19 @@
 
 #include <JCR6_Core.hpp>
 
+#include <TQSE.hpp>
+
 #include "AllHeaders.hpp"
 
 using namespace std;
 using namespace Slyvina;
 using namespace Units;
+using namespace TQSG;
+using namespace TQSE;
 
 namespace Kxsarl {
 	static UGINIE CharIndex{nullptr};
+	static int ScrollY{ 0 };
 
 	const char* Header{
 		"# This is the index file for characers\n"
@@ -54,7 +59,7 @@ namespace Kxsarl {
 		return SaveCharDir()+"/CharacterIndex.ini";
 	}
 	void Char_Indexer(bool force) {
-		auto Okay{ force };	
+		auto Okay{ force };			
 		
 		if (FileExists(IndexFile())) {
 			CharIndex = LoadUGINIE(IndexFile());
@@ -79,6 +84,7 @@ namespace Kxsarl {
 			}
 		}
 		QCol->Doing("Indexing", "Characters", "\t");
+		ScrollY = 0;
 		if (!Okay) {
 			QCol->Red("Skipped! Appears to be no need for it!\n");
 			CharIndex->Value("Force", "Times", Times+1);
@@ -94,14 +100,15 @@ namespace Kxsarl {
 		for (auto D : *CDirs) {
 			if (Prefixed(Upper(D), "CHAR_")) {
 				string DTag{ "CHAR::" + D };
-				auto GeneralFile{ SaveCharDir() + "/" + D + "General.jcr" };
+				auto GeneralFile{ SaveCharDir() + "/" + D + "/General.jcr" };
 				if (FileExists(GeneralFile)) {
 					QCol->Doing("Indexing:", D);
 					auto GF = JCR6::JCR6_Dir(GeneralFile);
-					auto GG = LoadUGINIE(GF->GetString("Base.ini"));
+					auto GG = ParseUGINIE(GF->GetString("Base.ini"));
+					GG->NewValue("Gen", "Name", "<Name could not received>");
 					CharIndex->Value(DTag, "Name", GG->Value("Gen", "Name"));
 					CharIndex->Value(DTag, "Class", GG->Value("Gen", "Class"));
-					CharIndex->Value(DTag, "Gender", GG->Value("Gen", "Gender"));
+					CharIndex->Value(DTag, "Sex", GG->Value("Gen", "Sex"));
 					switch (GG->IntValue("SKill", "Skill")) {
 					case 1: CharIndex->Value(DTag, "Skill", "Easy"); break;
 					case 2: CharIndex->Value(DTag, "Skill", "Normal"); break;
@@ -114,7 +121,42 @@ namespace Kxsarl {
 				}
 			}
 		}
-		SaveString(TrSPrintF("%s\n%s", Header, CharIndex->UnParse().c_str()), IndexFile());
+		string outp{ Header }; outp += CharIndex->UnParse();
+		QCol->Doing("Saving", IndexFile());
+		SaveString( IndexFile(),outp);
 	}
+
+#pragma region "Flow initiation and execution"
+
+	void Arrive_CharSelect() {
+		Char_Indexer();
+	}
+
+	bool Flow_CharSelect() {
+		static auto Banner{ LoadUImage(MRes(),"GFX/Banner/Select A Character.png") }; Banner->HotCenter();
+		SetColor(255, 255, 255, 255);
+		DrawBackground();
+		Banner->Draw(ScreenWidth() / 2, 50);
+		int Y{ -ScrollY };
+		auto L{ CharIndex->List("CharList","CharList") };
+		for (auto Ch : *L) {
+			if (Y >= 0 && Y < 18) {
+				auto IY{ (Y * 50) + 100 };
+				auto Cat{ "CHAR::" + Ch };
+				SetColor(255, 255, 255);
+				if (MouseY() > ASY(IY) && MouseY() < ASY(IY + 50)) {
+					ColLoop(250); SetAlpha(100);
+					ARect(10, IY, ScreenWidth() - 20, 50);
+					SetAlpha(255);
+				} 
+				Ryanna(CharIndex->Value(Cat, "Name"), 15, IY + 3); 
+				MiniFont(CharIndex->Value(Cat, "Sex") + " " + CharIndex->Value(Cat, "Class") + "    " + CharIndex->Value(Cat, "Skill") + " difficulty", 15, IY + 35);
+			}
+			Y++;
+		}
+		return true;
+	}
+
+#pragma endregion
 
 }
