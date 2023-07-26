@@ -32,4 +32,7 @@ namespace Kxsarl {
 	std::string IndexFile();
 	void Char_Indexer(bool force=false);
 
+	void Arrive_CharSelect();
+	bool Flow_CharSelect();
+
 }
