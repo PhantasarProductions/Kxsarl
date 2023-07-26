@@ -33,6 +33,7 @@
 
 # Private files (kept out of repository for several reasons)
 Private.*
+Priv.*
 MKL_*
 *.MKL.*
 
