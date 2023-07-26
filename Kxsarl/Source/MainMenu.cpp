@@ -21,22 +21,27 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.22
+// Version: 23.07.26
 // EndLic
 
 #include <SlyvOpenURL.hpp>
+#include <SlyvLinkedList.hpp>
+#include <SlyvDir.hpp>
 
 #include <TQSG.hpp>
 #include <TQSE.hpp>
 
-#include <SlyvLinkedList.hpp>
 
+
+/*
 #include "../Headers/Error.hpp"
 #include "../Headers/UseJCR6.hpp"
 #include "../Headers/MainMenu.hpp"
 #include "../Headers/GlobGFX.hpp"
 #include "../Headers/Flow.hpp"
 #include "../Headers/Music.hpp"
+*/
+#include "AllHeaders.hpp"
 
 using namespace std;
 using namespace Slyvina;
@@ -64,8 +69,24 @@ namespace Kxsarl {
 	static void ActExit(MainMenuItem*) { Running = false; }
 #pragma endregion
 
+#pragma region "Allow to start the game (requires the existence of at least ONE character)"
+	static bool HasChar{ false };
+	static void CheckHasChar() {
+		uint64 cnt{ 0 };
+		auto l = FileList(SaveCharDir(), DirWant::Directories);
+		for (auto d : *l) {
+			if (Prefixed(d, "CHAR_") && FileExists(SaveCharDir() + "/" + d + "/General.jcr")) cnt++;
+		}
+		QCol->Doing("Characters", cnt);
+		HasChar = cnt>0;
+	}
+	
+	static bool AllowStartGame(MainMenuItem*) { return HasChar; }
+#pragma endregion
+
 #pragma region "Action Functions"
 	static void ActCharGen(MainMenuItem*) { GoFlow("CharGen"); }
+	static void ActStartGame(MainMenuItem*) { GoFlow("ChooseCharAndGame"); }
 	static void ActConfig(MainMenuItem*) { GoFlow("Config"); }
 	static void ActBugs(MainMenuItem*) { OpenURL("https://github.com/PhantasarProductions/Kxsarl/issues"); QCol->Doing("Opening", "Issue tracker on GitHub"); }
 #pragma endregion
@@ -84,7 +105,7 @@ namespace Kxsarl {
 	void MainMenuItem::InitMenuItems() {
 		static bool _done{ false }; if (_done) return; _done = true;
 		new MainMenuItem("Character Creation",ActCharGen);
-		new MainMenuItem("Start Game");
+		new MainMenuItem("Start Game", ActStartGame, AllowStartGame);
 		new MainMenuItem("Jukebox");
 		new MainMenuItem("Report Bugs", ActBugs);
 		new MainMenuItem("System Configuration",ActConfig);
@@ -99,8 +120,8 @@ namespace Kxsarl {
 		if (!GPL) { GPL = LoadUImage(MRes(), "GFX/MainMenu/GPL.png"); GPL->Hot(0, GPL->Height()); }
 		if (!Fantasy) { Fantasy = LoadUImageFont(MRes(), "Fonts/Fantasy.jfbf"); }
 		MainMenuItem::InitMenuItems();
-		Music(MainMenuMusic);
-		
+		CheckHasChar();
+		Music(MainMenuMusic);		
 	}
 
 	bool Flow_MainMenu() {
