@@ -23,10 +23,13 @@
 // 
 // Version: 23.07.26
 // EndLic
+
 #pragma once
+#include <string>
 
 
 namespace Kxsarl {
+	std::string IndexFile();
 	void Char_Indexer(bool force=false);
 
 }
