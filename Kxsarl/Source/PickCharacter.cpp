@@ -80,7 +80,7 @@ namespace Kxsarl {
 		for (auto D : *CDirs) {
 			if (Prefixed(Upper(D), "CHAR_")) {
 				Okay = Okay || (!CharIndex->HasCat("CHAR::" + D));
-				Okay = Okay || (!CharIndex->BoolValue("CHAR::" + D, "Index"));
+				Okay = Okay || (!CharIndex->BoolValue("CHAR::" + D, "Indexed"));
 			}
 		}
 		QCol->Doing("Indexing", "Characters", "\t");
@@ -88,7 +88,9 @@ namespace Kxsarl {
 		if (!Okay) {
 			QCol->Red("Skipped! Appears to be no need for it!\n");
 			CharIndex->Value("Force", "Times", Times+1);
-			SaveString(TrSPrintF("%s\n%s",Header, CharIndex->UnParse().c_str()), IndexFile());
+			//SaveString(TrSPrintF("%s\n%s",Header, CharIndex->UnParse().c_str()), IndexFile());
+			string outp{ Header }; outp += CharIndex->UnParse().c_str();
+			SaveString(IndexFile(), outp);
 			return;
 		}
 		QCol->Green("Go!\n");
@@ -109,6 +111,7 @@ namespace Kxsarl {
 					CharIndex->Value(DTag, "Name", GG->Value("Gen", "Name"));
 					CharIndex->Value(DTag, "Class", GG->Value("Gen", "Class"));
 					CharIndex->Value(DTag, "Sex", GG->Value("Gen", "Sex"));
+					CharIndex->BoolValue(DTag, "Indexed", true);
 					switch (GG->IntValue("SKill", "Skill")) {
 					case 1: CharIndex->Value(DTag, "Skill", "Easy"); break;
 					case 2: CharIndex->Value(DTag, "Skill", "Normal"); break;
@@ -154,6 +157,14 @@ namespace Kxsarl {
 			}
 			Y++;
 		}
+		// Back
+		SetColor(255, 255, 255);
+		if (MouseX() < ASX(182) && MouseY() > ASY(ScreenHeight() - 100)) {
+			SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1);
+			if (MouseHit(1)) GoFlow("MainMenu");
+		}
+		Arrow(EArrow::Left)->StretchDraw(0, ScreenHeight() - 100, 182, 100);
+		// And keep on going
 		return true;
 	}
 
