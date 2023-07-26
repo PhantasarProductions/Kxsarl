@@ -388,6 +388,7 @@ namespace Kxsarl {
 					CSay("Face");  JO->AddBank(MRes()->B((*Faces)[CFace]), "Face.png");
 					CSay("Party");  Statistician::StatSaveJCR6(CParty.get(), JO, "Char", "Store");
 					CSay("Finalize"); JO->Close();
+					Char_Indexer(true);
 					//Crash("No next stage set yet");
 					GoFlow("MainMenu");
 				}
