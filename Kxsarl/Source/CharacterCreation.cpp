@@ -106,7 +106,7 @@ namespace Kxsarl {
 
 	void Arrive_CharCreation() {
 		CurrentStage = Stage::Skill;
-		Basic = ParseUGINIE(TrSPrintF("[Creation]\nCHARGEN_BUILD=%s; %s\nDATE=%s\TIME=%s", __DATE__, __TIME__,CurrentDate().c_str(),CurrentTime().c_str()),"","# Basic character data!");
+		Basic = ParseUGINIE(TrSPrintF("[Creation]\nCHARGEN_BUILD=%s; %s\nDATE=%s\nTIME=%s", __DATE__, __TIME__,CurrentDate().c_str(),CurrentTime().c_str()),"","# Basic character data!");
 	}
 #pragma endregion
 
@@ -372,6 +372,7 @@ namespace Kxsarl {
 					CChar->BStat["Skill"] = CSkill();
 					CChar->BStat["Experience"] = 0;
 					CChar->BStat["Level"] = 1;
+					Basic->Value("Gen", "Name", TBName->value);
 					SysStatus("Saving");
 					if (!DirectoryExists(SaveCharDir())) {
 						QCol->Doing("Creating dir", SaveCharDir());
