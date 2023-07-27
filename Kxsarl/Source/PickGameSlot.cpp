@@ -101,6 +101,7 @@ namespace Kxsarl {
 		auto List{ FileList(Dir) };
 		CSlot::List = TList<CSlot>::CreateUnique();
 		CSlot::nexty = 0; CSlot::bl = 0;
+		for (auto F : *List) new CSlot(CHID, F);
 		new CSlot(CHID,"*NEW");
 
 		GoFlow(FlowPickSlot);
