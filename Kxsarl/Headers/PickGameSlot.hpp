@@ -1,6 +1,6 @@
 // Lic:
 // The Legend of the Kxsarl
-// Pick Game Slot
+// Pick Game Slot (header)
 // 
 // 
 // 
