@@ -21,13 +21,15 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.24
+// Version: 23.07.27
 // EndLic
 #pragma once
 
 #include <TQSG.hpp>
 
 namespace Kxsarl {
+
+	extern bool FullScreenMode;
 
 	inline void ColLoop(int divider=100){ Slyvina::TQSG::SetColorHSV((SDL_GetTicks() / divider) % 360, 1, 1); }
 

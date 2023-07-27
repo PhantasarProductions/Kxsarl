@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.25
+// Version: 23.07.27
 // EndLic
 
 #undef KXSARL_NOCATCH
@@ -50,8 +50,10 @@ void EnterGFXMode() {
 	QCol->Doing("Entering", "Graphics Mode");
 	if (CFG_Windowed()) {
 		Graphics(CFG_Width(), CFG_Height(), "The Legend of the Kxsarl");
+		FullScreenMode = false;
 	} else {
 		Graphics("The Legend of the Kxsarl");
+		FullScreenMode = true;
 	}
 	SysStatus("Loading");
 	SetAltScreen(1900, 1000);

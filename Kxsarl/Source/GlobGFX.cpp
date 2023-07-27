@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.24
+// Version: 23.07.27
 // EndLic
 
 #include <algorithm>
@@ -46,6 +46,8 @@ using namespace Units;
 #define KXSARL_GetPic(FILE) static auto ret{LoadUImage(MRes(),FILE)}; return ret.get()
 
 namespace Kxsarl {
+
+	bool FullScreenMode{ false };
 
 	const char* _FileChiqueFont{ "Fonts/MorrisRoman.jfbf" };
 	const char* _FileRyannaFont{ "Fonts/Ryanna.jfbf" };
