@@ -26,6 +26,6 @@
 #pragma once
 #include <string>
 namespace Kxsarl {
-	void GoPickChar(std::string);
+	void GoPickSlot(std::string);
 	
 }

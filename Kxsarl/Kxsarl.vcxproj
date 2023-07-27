@@ -136,6 +136,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Libs\Headers\JCR6_Core.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\JCR6_Write.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\JCR6_zlib.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\Kthura_Core.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\Kthura_Export_XML.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvAsk.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvBank.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvConInput.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvDir.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvEndian.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvGINIE.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvHSVRGB.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\Slyvina.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvQCol.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvRandom.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvRequestFile.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvSTOI.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvStream.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvString.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvTime.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvVecSearch.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\SlyvVolumes.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\TQSA.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\TQSE.hpp" />
+    <ClInclude Include="..\..\..\Libs\Headers\TQSG.hpp" />
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician.hpp" />
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.hpp" />
     <ClInclude Include="Headers\ArmorClass.hpp" />
