@@ -21,13 +21,14 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.26
+// Version: 23.07.27
 // EndLic
 
 #include <TQSE.hpp>
 
 #include <SlyvMath.hpp>
 #include <SlyvLinkedList.hpp>
+#include <SlyvRequestFile.hpp>
 
 #include <Statistician.hpp>
 #include <Statistician_SaveJCR6.hpp>
@@ -37,6 +38,7 @@
 #include <map>
 
 #include "AllHeaders.hpp"
+#include <SlyvDirry.hpp>
 
 
 
@@ -330,6 +332,7 @@ namespace Kxsarl {
 	static VecString Faces{nullptr};
 	static uint32 CFace{0};
 	static TUImage IFace{nullptr};
+	static string ImportedFace{""};
 
 	static void StartNameAndPicture(){
 		if (!TBG) {
@@ -360,7 +363,30 @@ namespace Kxsarl {
 		if (MouseHit(1) && MouseX() > ASX(PX) && MouseX() < ASX(PX + 500) && MouseY() > ASY(PY) && MouseY() < ASY(500 + PY)) {
 			IFace = nullptr;
 			CFace = (CFace + 1) % Faces->size();
+			if (ImportedFace.size())
+				ImportedFace = "";
+			else
+				CFace = (CFace + 1) % Faces->size();
 		}
+		if (!FullScreenMode) {
+			static TUImage PicImport{LoadUImage(MRes(), "GFX/Buttons/CharGen/Import.png")};
+			static int PIX{ (ScreenWidth() / 2) - (PicImport->Width() / 2) }, PIY{ PY + 550 };
+			if (MouseX() > ASX(PIX) && MouseY() > ASY(PIY) && MouseX() < ASX(PIX + PicImport->Width()) && MouseY() < (PIY + PicImport->Height())) {
+				ColLoop(10);
+				if (MouseHit(1)) {
+					auto GotFile{ RequestFile("Please select a portrait file",Dirry("$Home$"),"Pictures:*.png") };
+					if (GotFile.size()) {
+						QCol->Doing("Importing Face", GotFile);
+						IFace = LoadUImage(GotFile);
+						if (IFace)
+							ImportedFace = GotFile;
+						else
+							Notify("File '" + GotFile + "' could not be loaded properly");
+					}
+				}
+			}
+			PicImport->Draw(PIX, PIY);
+		} SetColor(255, 255, 255);
 		if (Trim(TBName->value).size()) {
 			static auto nx{ ScreenWidth() - 182 };
 			if (MouseX() > ASX(nx) && MouseY() > ASY(ScreenHeight() - 100)) {
@@ -386,6 +412,11 @@ namespace Kxsarl {
 					auto JO{ JCR6::CreateJCR6(OutDir + "/General.jcr","zlib") };
 					CSay("Base"); JO->AddString(Basic->UnParse(), "Base.ini", "zlib");
 					CSay("Face");  JO->AddBank(MRes()->B((*Faces)[CFace]), "Face.png");
+					CSay("Face");  
+					if (ImportedFace.size())
+						JO->AddFile(ImportedFace,"Face.png","Store","Imported","Please note that imported images can be subject to copyright. Do not distribute this file unless the copyright terms allow you to do so.");
+					else
+						JO->AddBank(MRes()->B((*Faces)[CFace]), "Face.png");
 					CSay("Party");  Statistician::StatSaveJCR6(CParty.get(), JO, "Char", "Store");
 					CSay("Finalize"); JO->Close();
 					Char_Indexer(true);
