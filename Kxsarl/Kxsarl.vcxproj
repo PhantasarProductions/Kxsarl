@@ -149,6 +149,7 @@
     <ClInclude Include="Headers\MainMenu.hpp" />
     <ClInclude Include="Headers\Music.hpp" />
     <ClInclude Include="Headers\PickCharacter.hpp" />
+    <ClInclude Include="Headers\PickGameSlot.hpp" />
     <ClInclude Include="Headers\RollStat.hpp" />
     <ClInclude Include="Headers\Stats.hpp" />
     <ClInclude Include="Headers\SysStatus.hpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Source\MainMenu.cpp" />
     <ClCompile Include="Source\Music.cpp" />
     <ClCompile Include="Source\PickCharacter.cpp" />
+    <ClCompile Include="Source\PickGameSlot.cpp" />
     <ClCompile Include="Source\SysStatus.cpp" />
     <ClCompile Include="Source\TextBoxes.cpp" />
     <ClCompile Include="Source\UseJCR6.cpp" />
