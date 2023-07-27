@@ -151,6 +151,7 @@ namespace Kxsarl {
 					ColLoop(250); SetAlpha(100);
 					ARect(10, IY, ScreenWidth() - 20, 50);
 					SetAlpha(255);
+					if (MouseHit(1)) GoPickSlot(Ch);
 				} 
 				Ryanna(CharIndex->Value(Cat, "Name"), 15, IY + 3); 
 				MiniFont(CharIndex->Value(Cat, "Sex") + " " + CharIndex->Value(Cat, "Class") + "    " + CharIndex->Value(Cat, "Skill") + " difficulty", 15, IY + 35);
