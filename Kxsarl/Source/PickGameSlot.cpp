@@ -57,17 +57,19 @@ namespace Kxsarl {
 		string FullSlotFile() { return SlotDir() + "/" + SlotFile; }
 		string GameName() {
 			if (NewGame) return "* New Adventure *";
+			return "???";
 		}
 
 		inline CSlot(string _CHID, string _F) {
+			SlotFile = _F;
 			if (_F == "*NEW") {
+				CSay("Slot for new game");
 				NewGame = true;
 				uint64 eid{ 0 };
 				do SlotFile = TrSPrintF("SLOT_%08X.jcr", eid++); while (FileExists(FullSlotFile()));
 				InfoLine = "Lv 1 - Game Start";
 			}
 			bl += 25;
-			SlotFile = _F;
 			CharID = _CHID;
 			(*List) += this;
 			CSay(to_string(NewGame)+">Slot created: " + _F);
@@ -78,14 +80,19 @@ namespace Kxsarl {
 	std::unique_ptr<TList<CSlot>> CSlot::List{nullptr};
 
 
+	static TUImage Banner{nullptr};
 	static bool FlowPickSlot() {
-		static auto Banner{ LoadUImage(MRes(),"GFX/Banner/Pick a Slot.png") }; Banner->HotCenter();
+		if (!Banner) {
+			QCol->Doing("Loading", "Pick adventure banner");
+			Banner = LoadUImage(MRes(), "GFX/Banner/Pick a Slot.png");
+			Banner->HotCenter();
+		}
 		SetColor(255, 255, 255);
 		DrawBackground();
 		Banner->Draw(ScreenWidth() / 2, 50);
 		int64 Y{ -ScrollY };
 		for (auto sl = CSlot::List->First(); sl; sl = CSlot::List->Next()) {
-			if (Y > 0) {
+			if (Y >= 0 && Y<18) {
 				int64 IY{ 120 - (Y * 50) };
 				Ryanna(sl->GameName(), 20, IY);
 				MiniFont(sl->InfoLine, 20, IY + 30);
@@ -99,9 +106,15 @@ namespace Kxsarl {
 	void GoPickSlot(string CHID) {
 		auto Dir{ SaveCharDir() + "/" + CHID };
 		auto List{ FileList(Dir) };
+		CSay("Analysing: " + Dir);
 		CSlot::List = TList<CSlot>::CreateUnique();
 		CSlot::nexty = 0; CSlot::bl = 0;
-		for (auto F : *List) new CSlot(CHID, F);
+#ifdef KXSARL_DEBUG
+		printf("Going to add %d slots!\n", List->size());
+#endif
+		for (auto F : *List) {
+			if (Prefixed(Upper(F),"SLOT_"))	new CSlot(CHID, F);
+		}
 		new CSlot(CHID,"*NEW");
 
 		GoFlow(FlowPickSlot);
