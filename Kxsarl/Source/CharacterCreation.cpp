@@ -262,7 +262,8 @@ namespace Kxsarl {
 		Game::GameSkill = CSkill();
 		static map<string, map<string, int>> mini {
 			{ "Warrior", { { "Power",14 },{"Toughness",10} }},
-			{ "Paladin", { { "Will",17},{"Power",12},{"Thoughness",9}} },
+			{ "Paladin", { { "Will",17},{"Power",12},{"Thoughness",9},{"Wisdom",10}} },
+			{ "Cleric", {{"Will",10},{"Intelligence",10},{"Wisdom",14}} },
 			{ "Mage", {{"Intelligence",16},{"Will",16} } },
 			{ "Rogue", { {"Power",8},{"Agility",14}, {"Will",9} } },
 			{ "Archer",{{"Agility",10},{"Power",9},{"Stamina",9} } }
@@ -362,7 +363,6 @@ namespace Kxsarl {
 		IFace->StretchDraw(PX, PY, 500, 500);
 		if (MouseHit(1) && MouseX() > ASX(PX) && MouseX() < ASX(PX + 500) && MouseY() > ASY(PY) && MouseY() < ASY(500 + PY)) {
 			IFace = nullptr;
-			CFace = (CFace + 1) % Faces->size();
 			if (ImportedFace.size())
 				ImportedFace = "";
 			else
@@ -411,7 +411,6 @@ namespace Kxsarl {
 					MakeDir(OutDir);
 					auto JO{ JCR6::CreateJCR6(OutDir + "/General.jcr","zlib") };
 					CSay("Base"); JO->AddString(Basic->UnParse(), "Base.ini", "zlib");
-					CSay("Face");  JO->AddBank(MRes()->B((*Faces)[CFace]), "Face.png");
 					CSay("Face");  
 					if (ImportedFace.size())
 						JO->AddFile(ImportedFace,"Face.png","Store","Imported","Please note that imported images can be subject to copyright. Do not distribute this file unless the copyright terms allow you to do so.");
