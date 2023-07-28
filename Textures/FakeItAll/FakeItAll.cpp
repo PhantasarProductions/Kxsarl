@@ -32,19 +32,35 @@
 // You can also expect a kind of "dirty" way to access directories and stuff
 // as a result.
 
+#include <SlyvGINIE.hpp>
 #include <SlyvDir.hpp>
 #include <SlyvQCol.hpp>
 #include <SlyvStream.hpp>
+#include <SlyvTime.hpp>
 
+#define ConfigFile ExtractDir(a[0]) + "/FakeItAll.ini"
 #define TexDir "/Projects/Applications/Slyvina/Apps/Kxsarl/Textures/"
 
 using namespace std;
 using namespace Slyvina;
 using namespace Units;
 
+UGINIE Config;
+inline string TD(string k) { return string(TexDir) + k; }
+
 int main(int ac, char** a) {
 	QCol->Green("Fake it all\n");
 	QCol->Doing("Coded by", "Jeroen P. Broks");
 	QCol->Doing("Running from", CurrentDir());
 	QCol->Doing("Texture dir", TexDir);
+	if (FileExists(ConfigFile)) {
+		QCol->Doing("Loading", ConfigFile);
+		Config = LoadUGINIE(ConfigFile, ConfigFile, "# Just some bloody config!");
+	} else {
+		QCol->Doing("Creating", ConfigFile);
+		Config = ParseUGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(),ConfigFile,"# New bloody config day! Cool, huh?");
+	}
+	QCol->Doing("Scanning", "Artists");
+	auto artists{ *FileList(TD("src")) };
+
 }
