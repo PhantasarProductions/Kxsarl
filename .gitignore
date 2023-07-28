@@ -57,6 +57,10 @@ Kxsarl/x64/Release
 Debug_JQL/assets.jql
 enc_temp_folder
 
+# Fake 3D
 *.bb_bak*
 Textures/Fake3D/Fake3D.gitignore.zip
 Textures/Fake3D/F3DM.pdb
+Textures/FakeItAll/x64/
+Textures/FakeItAll/Exe
+
