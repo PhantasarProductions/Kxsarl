@@ -37,15 +37,18 @@
 #include <SlyvQCol.hpp>
 #include <SlyvStream.hpp>
 #include <SlyvTime.hpp>
+#include <SlyvAsk.hpp>
 
 #define ConfigFile ExtractDir(a[0]) + "/FakeItAll.ini"
 #define TexDir "/Projects/Applications/Slyvina/Apps/Kxsarl/Textures/"
+#define AssetJQLiniFile "/Projects/Applications/Slyvina/Apps/Kxsarl/Assets/Dir2JQL.ini"
 
 using namespace std;
 using namespace Slyvina;
 using namespace Units;
 
-UGINIE Config;
+GINIE AssetConfig;
+GINIE Config;
 inline string TD(string k) { return string(TexDir) + k; }
 
 int main(int ac, char** a) {
@@ -55,12 +58,16 @@ int main(int ac, char** a) {
 	QCol->Doing("Texture dir", TexDir);
 	if (FileExists(ConfigFile)) {
 		QCol->Doing("Loading", ConfigFile);
-		Config = LoadUGINIE(ConfigFile, ConfigFile, "# Just some bloody config!");
+		Config = LoadGINIE(ConfigFile, ConfigFile, "# Just some bloody config!");
 	} else {
 		QCol->Doing("Creating", ConfigFile);
-		Config = ParseUGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(),ConfigFile,"# New bloody config day! Cool, huh?");
+		Config = ParseGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(),ConfigFile,"# New bloody config day! Cool, huh?");
 	}
+	QCol->Doing("Loading", AssetJQLiniFile); AssetConfig = LoadGINIE(AssetJQLiniFile);
 	QCol->Doing("Scanning", "Artists");
 	auto artists{ *FileList(TD("src")) };
+	for(auto artist:artists){
+
+	}
 
 }
