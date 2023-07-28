@@ -66,6 +66,7 @@ int main(int ac, char** a) {
 	QCol->Doing("Loading", AssetJQLiniFile); AssetConfig = LoadGINIE(AssetJQLiniFile);
 	QCol->Doing("Scanning", "Artists");
 	auto artists{ *FileList(TD("src")) };
+	AskGINIE = Config;
 	for(auto artist:artists){
 
 	}
