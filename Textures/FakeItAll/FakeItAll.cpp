@@ -58,17 +58,28 @@ int main(int ac, char** a) {
 	QCol->Doing("Texture dir", TexDir);
 	if (FileExists(ConfigFile)) {
 		QCol->Doing("Loading", ConfigFile);
-		Config = LoadGINIE(ConfigFile, ConfigFile, "# Just some bloody config!");
+		Config = LoadGINIE(ConfigFile, ConfigFile, "Just some bloody config! #");
 	} else {
 		QCol->Doing("Creating", ConfigFile);
-		Config = ParseGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(),ConfigFile,"# New bloody config day! Cool, huh?");
+		Config = ParseGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(),ConfigFile,"New bloody config day! Cool, huh? #");
 	}
 	QCol->Doing("Loading", AssetJQLiniFile); AssetConfig = LoadGINIE(AssetJQLiniFile);
 	QCol->Doing("Scanning", "Artists");
-	auto artists{ *FileList(TD("src")) };
+	auto artists{ *FileList(TD("src"),DirWant::Directories) };
 	AskGINIE = Config;
 	for(auto artist:artists){
-
+		auto ATag{ "Artist::" + artist };
+		if (Yes(ATag,"Add","Add '" + artist + "' as texture artist")) {
+			auto MDTag{ "MultiDir::" + artist };
+			if (AssetConfig->Value(MDTag, "Include") == "Y") {
+				if (Yes(ATag, "JQLImport", "JQL project data found about '" + artist + "'. Import that")) {
+					Config->Value(ATag, "Author", AssetConfig->Value(MDTag, "Author"));
+					Config->Value(ATag, "Notes", AssetConfig->Value(MDTag, "Notes"));
+				}
+			}
+			auto wartist = Ask(ATag, "Author", "Author name for '" + artist + "': ", artist);
+			auto wnotes = Ask(ATag, "Notes", "Notes for '" + artist + "': ");
+		}
 	}
 
 }
