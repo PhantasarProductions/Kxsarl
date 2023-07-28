@@ -32,6 +32,19 @@
 // You can also expect a kind of "dirty" way to access directories and stuff
 // as a result.
 
-int main(int ac, char** a) {
+#include <SlyvDir.hpp>
+#include <SlyvQCol.hpp>
+#include <SlyvStream.hpp>
 
+#define TexDir "/Projects/Applications/Slyvina/Apps/Kxsarl/Textures/"
+
+using namespace std;
+using namespace Slyvina;
+using namespace Units;
+
+int main(int ac, char** a) {
+	QCol->Green("Fake it all\n");
+	QCol->Doing("Coded by", "Jeroen P. Broks");
+	QCol->Doing("Running from", CurrentDir());
+	QCol->Doing("Texture dir", TexDir);
 }
