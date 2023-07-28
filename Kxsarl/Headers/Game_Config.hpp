@@ -21,14 +21,19 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.24
+// Version: 23.07.28
 // EndLic
 
 #pragma once
 #include <Slyvina.hpp>
+#include <SlyvGINIE.hpp>
 
 namespace Kxsarl {
 	namespace Game {
-		extern Slyvina::byte GameSkill; // temp code!
+		extern Slyvina::byte GameSkill; 
+		extern Slyvina::Units::UGINIE GameBase;
+		extern Slyvina::TQSG::TImage FaceHero;
+
+		void LoadGameBase(std::string CHID);
 	}
 }
