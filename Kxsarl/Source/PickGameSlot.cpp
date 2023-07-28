@@ -96,6 +96,15 @@ namespace Kxsarl {
 				int64 IY{ 120 - (Y * 50) };
 				Ryanna(sl->GameName(), 20, IY);
 				MiniFont(sl->InfoLine, 20, IY + 30);
+				if (MouseY() > ASY(IY) && MouseY() < ASY(IY + 50)) {
+					ColLoop(250); SetAlpha(95);
+					ARect(10, IY, ScreenWidth() - 20, 50);
+					SetAlpha(255);
+					if (MouseHit(1)) {
+						CSay("Starting game not yet coded");
+					}
+				}
+
 			}
 		}
 		SetColor(255, 255, 255, 255);
