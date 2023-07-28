@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.27
+// Version: 23.07.28
 // EndLic
 
 #include <TQSE.hpp>
@@ -98,6 +98,18 @@ namespace Kxsarl {
 				MiniFont(sl->InfoLine, 20, IY + 30);
 			}
 		}
+		SetColor(255, 255, 255, 255);
+		static auto GEX{ ScreenWidth() - 70 };
+		Game::FaceHero->StretchDraw(GEX, 50, 50, 50);
+		//CSay("???> " + Game::GameBase->Value("Gen", "Name")); // DEBUG ONLY!
+		Ryanna(Game::GameBase->Value("Gen", "Name"), GEX-10, 50, Align::Right);
+		MiniFont(Game::GameBase->Value("Gen", "Sex") + " " + Game::GameBase->Value("Gen", "Class"), GEX-1, 80, Align::Right);
+		SetColor(255, 255, 255);
+		if (MouseX() < ASX(182) && MouseY() > ASY(ScreenHeight() - 100)) {
+			SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1);
+			if (MouseHit(1)) GoFlow("ChooseChar");
+		}
+		Arrow(EArrow::Left)->StretchDraw(0, ScreenHeight() - 100, 182, 100);
 		return true;
 	}
 	
@@ -116,7 +128,7 @@ namespace Kxsarl {
 			if (Prefixed(Upper(F),"SLOT_"))	new CSlot(CHID, F);
 		}
 		new CSlot(CHID,"*NEW");
-
+		Game::LoadGameBase(CHID);
 		GoFlow(FlowPickSlot);
 	}
 #pragma endregion
