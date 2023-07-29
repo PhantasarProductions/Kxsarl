@@ -27,6 +27,8 @@
 #include "AllHeaders.hpp"
 
 using namespace std;
+using namespace Slyvina;
+using namespace TQSG;
 
 namespace Kxsarl {
 	namespace Game {
@@ -38,6 +40,26 @@ namespace Kxsarl {
 
 #pragma region "Flow"
 		static bool FlowPickGame() {
+			static int ScrollY{ 0 };		
+			static auto Lijst{ GameLists->List("Game","List") };
+			auto Banner{ LoadUImage(MRes(),"GFX/Banner/Pick a Game.png") }; 
+			Banner->HotCenter();
+			SetColor(255, 255, 255);
+			DrawBackground();
+			Banner->Draw(ScreenWidth() / 2, 50);
+			for (int i = 0; i < GameLists->ListCount("Game", "List"); i++) {
+				int 
+					Y{ i - ScrollY }, 
+					IY{ (Y * 50) + 100 };
+				auto
+					ID{ (*Lijst)[i] },
+					GameTitle{ GameLists->Value(ID,"Title") },
+					GameDesc{ GameLists->Value(ID,"Desc") };
+				if (Y >= 0 && Y <= 18) {
+					Ryanna(GameTitle, 20, IY);
+					MiniFont(GameDesc, 20, IY + 30);
+				}
+			}
 			return true;
 		}
 #pragma endregion
