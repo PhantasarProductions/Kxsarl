@@ -33,6 +33,7 @@ namespace Kxsarl {
 
 #pragma region Vars
 		static string _CHID{ "" };
+		static UGINIE GameLists{ParseUGINIE("[Nothing]\nNothing=Nothing")};
 #pragma endregion
 
 #pragma region "Flow"
@@ -42,7 +43,23 @@ namespace Kxsarl {
 #pragma endregion
 		
 #pragma region "Chain"
-		void PickGame(std::string CHID){}
+		static bool LoadGameLists() {
+			QCol->Doing("Loading", "Game Lists");
+			auto l{ MRes()->Directory("Game",false) };
+			for (auto i : *l) {
+				if (Prefixed(Upper(i), "LIST") && ExtractExt(Upper(i)) == "INI") {
+					QCol->Doing("=>", i);
+					GameLists->Parse(MRes(i), true);
+				}
+			}
+			return true;
+		}
+
+		void PickGame(std::string CHID){
+			bool GameListsLoaded{ LoadGameLists() };
+			_CHID = CHID;
+			GoFlow(FlowPickGame);
+		}
 	}
 #pragma endregion
 }
