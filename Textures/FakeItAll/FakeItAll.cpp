@@ -51,11 +51,39 @@ using namespace Units;
 GINIE AssetConfig{ nullptr };
 GINIE Config{ nullptr };
 GINIE ModifyLog{ nullptr };
-vector<string> Modified{};
 inline string TD(string k) { return string(TexDir) + k; }
+
+const char* PS1_Convert{
+	//	Base
+	"# Generated Script!\n\n"
+	"function __ConvWall($artist,$tex,$texo,$col,$notes) {\n"
+	//	"\tMD " TexDir "Priv.Temp/Out.Tex\n"
+	"\techo \"Converting $tex by $artist (trans: $col)\"\n"
+	//	"\techo \"" TexDir "/Fake3D/Fake3D 'Kxsarl," TexDir "src/$artist/Walls/$tex,$artist," TexDir "Priv.Temp/Out.Tex,$col,1900,1000," TexDir"Priv.Temp/Ready'\"\n" // debug only
+	"\t" TexDir "/Fake3D/Fake3D \"Kxsarl," TexDir "src/$artist/Walls/$tex,$artist," TexDir "Priv.Temp/Out.Tex,$col,1700,720," TexDir"/Priv.Temp/Ready\"\n"
+	"\tSleep 5\necho 'Waiting 4 minutes'\n"
+	"\tsleep 240\n"
+	"echo 'Converting to PNG and cutting transparent parts'\n"
+	"__Trans " TexDir "Priv.Temp/Out.Tex $col\n"
+	"pushd\n"
+	"cd " TexDir "Priv.Temp/Out.Tex\n"
+	"echo 'Disposing bitmaps'\n" 
+	"RM *.bmp\n"
+	"echo 'Packaging textures'\n"
+	"njcr add -doj -cm zlib -fc zlib  -author \"$artist\" -notes \"$notes\" \"" TexDir "tgt/$texo.tex\"\n"
+	"popd\n"
+	"}\n\n"
+};
 
 int main(int ac, char** a) {
 	bool force{ false };
+	string output{ PS1_Convert };
+	byte Mix[4]{ 1, 0, 1, 2 };
+	output += "function __Trans($dir,$col) {\n";
+	for (char i1 = -3; i1 <= 3; ++i1)
+		for (byte i2 = Mix[i1]; i2 <= 5; ++i2)
+			output += TrSPrintF("magick $dir/Pic.%d.%d.bmp -transparent \"#$col\" $dir/Pic.%d.%d.png\n", i1, i2, i1, i2);
+	output += "}\n\n";
 	for (int i = 1; i < ac; i++) force = force || Upper(a[i]) == "-FORCE";
 	QCol->Green("Fake it all\n");
 	QCol->Doing("Coded by", "Jeroen P. Broks");
@@ -79,6 +107,7 @@ int main(int ac, char** a) {
 	QCol->Doing("Scanning", "Artists");
 	auto artists{ *FileList(TD("src"),DirWant::Directories) };
 	AskGINIE = Config;
+	bool anymodifications{ false };
 	for (auto artist : artists) {
 		auto ATag{ "Artist::" + artist };
 		if (Yes(ATag, "Add", "Add '" + artist + "' as texture artist")) {
@@ -96,6 +125,7 @@ int main(int ac, char** a) {
 			auto walls{ *GetTree(walldir) };
 			QCol->Doing("Scanning artist", wartist);
 			vector<string> Reasons{};
+			vector<string> Modified{};
 			for (auto wall : walls) {
 				auto fullwall(walldir + "/" + wall);
 				if (force) Reasons.push_back("Forced");
@@ -109,9 +139,23 @@ int main(int ac, char** a) {
 						QCol->Reset();
 						cout << endl;
 					}
-					Modified.push_back(fullwall);
+					anymodifications = true;
+					Modified.push_back(wall);
 				}
+			}
+			for (auto modifiedwall : Modified) {
+				output += TrSPrintF("__ConvWall \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n", artist.c_str(), modifiedwall.c_str(), StripExt(modifiedwall).c_str(), Ask(ATag, "WALLCOLOR::" + modifiedwall, "What color to use for transparency? ", "00ffff").c_str(), wnotes.c_str());
 			}
 		}
 	}
+
+	if (anymodifications) {
+		QCol->Doing("Saving", "Convert script");
+		SaveString(TexDir "/Priv.Temp/RunConvert.ps1", output);
+		QCol->Doing("Running", "Convert script");
+		system("pwsh \"" TexDir "Priv.Temp/RunConvert.ps1\"");
+	} else {
+		QCol->Green("No modifications found.\n");
+	}
+	QCol->Reset();
 }
