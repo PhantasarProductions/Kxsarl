@@ -74,6 +74,7 @@ namespace Kxsarl {
 		if (!_MRes) {
 #ifdef KXSARL_DEBUG
 			_MRes = GetRes("../Debug_JQL/Assets.jql");
+			_MRes->Patch(GetRes("../Debug_JQL/Textures.jql"));
 			_MRes->Patch(GetRes("../Debug_JQL/Music.jql"));			
 #else
 			_MRes = GetRes(StripExt(Executable) + ".jcr");
