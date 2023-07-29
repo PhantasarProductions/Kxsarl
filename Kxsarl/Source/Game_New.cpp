@@ -60,6 +60,12 @@ namespace Kxsarl {
 					MiniFont(GameDesc, 20, IY + 30);
 				}
 			}
+			// Face
+			SetColor(255, 255, 255, 255);
+			static auto GEX{ ScreenWidth() - 70 };
+			Game::FaceHero->StretchDraw(GEX, 50, 50, 50);
+			Ryanna(Game::GameBase->Value("Gen", "Name"), GEX - 10, 50, Align::Right);
+			MiniFont(Game::GameBase->Value("Gen", "Sex") + " " + Game::GameBase->Value("Gen", "Class"), GEX - 1, 80, Align::Right);
 			return true;
 		}
 #pragma endregion
@@ -69,9 +75,14 @@ namespace Kxsarl {
 			QCol->Doing("Loading", "Game Lists");
 			auto l{ MRes()->Directory("Game",false) };
 			for (auto i : *l) {
-				if (Prefixed(Upper(i), "LIST") && ExtractExt(Upper(i)) == "INI") {
+				if (Prefixed(Upper(StripDir(i)), "LIST") && ExtractExt(Upper(i)) == "INI") {
 					QCol->Doing("=>", i);
 					GameLists->Parse(MRes(i), true);
+#ifdef KXSARL_DEBUG
+					auto lst{ GameLists->List("Game","List") };
+					for (auto l : *lst)
+						QCol->Doing("  =>", l);
+#endif
 				}
 			}
 			return true;
