@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.28
+// Version: 23.07.29
 // EndLic
 
 #pragma once
@@ -35,5 +35,6 @@ namespace Kxsarl {
 		extern Slyvina::TQSG::TImage FaceHero;
 
 		void LoadGameBase(std::string CHID);
+		Slyvina::int64 ExpNeeded(Slyvina::byte Level,std::string ChClass);
 	}
 }
