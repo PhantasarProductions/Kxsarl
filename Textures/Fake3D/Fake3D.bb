@@ -53,7 +53,7 @@ Global Ready$=Args[7]
 ;Global I:TIni = New TIni
 ;I.Load("Projects/"+Project)
 
-Global Png$ =Args[1] ;= RequestFile("Pick a file","image file:png,jpg,tga,jpeg")
+Global Png$ = Replace(Args[1],"/","\") ;= RequestFile("Pick a file","image file:png,jpg,tga,jpeg")
 If Not png End
 
 
@@ -94,7 +94,13 @@ Global Tex=LoadTexture(PNG,1) ;Global Tex:ttexture = LoadTexture(Png)
 
 DebugLog "=> "+Tex
 If Not tex	
+	TexPic = LoadImage(PNG)
+	
 	EndGraphics; 
+	BT = WriteFile("Error")
+	WriteLine BT,"Error! > "+"Too bad, I couldn't load that texture, sorry! "+Chr(10)+"("+Png+")" 
+	WriteLine BT,"Maybe the format is not right? "+ImageWidth(TexPic)+"x"+ImageHeight(TexPic)
+	CloseFile bt
 	RuntimeError "Too bad, I couldn't load that texture, sorry! "+Chr(10)+"("+Png+")" 
 	End
 EndIf
@@ -217,7 +223,10 @@ For akx=-6 To 6 Step 2
 		;SaveTex$ = I.C("JCR")+"/"+Author+"/"+I.C("InJCR")+Output+"/Pic."+(Int(akx/2))+"."+(Int(akz)/2)+".png"
 		;SaveTex   = Args[8]   +"\"+Author+"\"+Args[9]     +Output+"\Pic."+(Int(akx/2))+"."+(Int(akz)/2)+".bmp"
 		;		SaveTex   = Args[8]   + Args[9]     +Output+"\Pic."+(Int(akx/2))+"."+(Int(akz)/2)+".bmp"
-		SaveTex=Args[2]+"\Pic."+(Int(akx/2))+"."+(Int(akz)/2)+".bmp"
+		
+		;? SaveTex=Args[2]+"\Pic."+(Int(akx/2))+"."+(Int(akz)/2)+".bmp"
+		SaveTex=Args[3]+"\Pic."+(Int(akx/2))+"."+(Int(akz)/2)+".bmp"
+
 
 
 		DebugLog "Saving: "+SaveTex
@@ -233,7 +242,6 @@ For akx=-6 To 6 Step 2
 		CloseFile BTO
 	EndIf
 End
-
 
 
 
