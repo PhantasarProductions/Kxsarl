@@ -101,7 +101,11 @@ namespace Kxsarl {
 					ARect(10, IY, ScreenWidth() - 20, 50);
 					SetAlpha(255);
 					if (MouseHit(1)) {
-						CSay("Starting game not yet coded");
+						if (sl->NewGame) {
+							Game::PickGame(Game::CharID);
+						} else {
+							CSay("Starting game not yet coded");
+						}
 					}
 				}
 
