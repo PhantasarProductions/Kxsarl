@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.28
+// Version: 23.07.29
 // EndLic
 
 // Please note that FakeItAll (and the Blitz Basic program Fake 3D)
@@ -40,6 +40,7 @@
 #include <SlyvAsk.hpp>
 
 #define ConfigFile ExtractDir(a[0]) + "/FakeItAll.ini"
+#define ModifyFile ExtractDir(a[0]) + "/FakeItAll.ModifyLog.ini"
 #define TexDir "/Projects/Applications/Slyvina/Apps/Kxsarl/Textures/"
 #define AssetJQLiniFile "/Projects/Applications/Slyvina/Apps/Kxsarl/Assets/Dir2JQL.ini"
 
@@ -47,11 +48,15 @@ using namespace std;
 using namespace Slyvina;
 using namespace Units;
 
-GINIE AssetConfig;
-GINIE Config;
+GINIE AssetConfig{ nullptr };
+GINIE Config{ nullptr };
+GINIE ModifyLog{ nullptr };
+vector<string> Modified{};
 inline string TD(string k) { return string(TexDir) + k; }
 
 int main(int ac, char** a) {
+	bool force{ false };
+	for (int i = 1; i < ac; i++) force = force || Upper(a[i]) == "-FORCE";
 	QCol->Green("Fake it all\n");
 	QCol->Doing("Coded by", "Jeroen P. Broks");
 	QCol->Doing("Running from", CurrentDir());
@@ -61,15 +66,22 @@ int main(int ac, char** a) {
 		Config = LoadGINIE(ConfigFile, ConfigFile, "Just some bloody config! #");
 	} else {
 		QCol->Doing("Creating", ConfigFile);
-		Config = ParseGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(),ConfigFile,"New bloody config day! Cool, huh? #");
+		Config = ParseGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(), ConfigFile, "New bloody config day! Cool, huh? #");
+	}
+	if (FileExists(ModifyFile)) {
+		QCol->Doing("Loading", ModifyFile);
+		ModifyLog = LoadGINIE(ModifyFile, ModifyFile, "Just some logs to detect modifications config! #");
+	} else {
+		QCol->Doing("Creating", ModifyFile);
+		ModifyLog = ParseGINIE("[Creation]\nDate=" + CurrentDate() + "\nTime=" + CurrentTime(), ModifyFile, "New bloody config day! Cool, huh? #");
 	}
 	QCol->Doing("Loading", AssetJQLiniFile); AssetConfig = LoadGINIE(AssetJQLiniFile);
 	QCol->Doing("Scanning", "Artists");
 	auto artists{ *FileList(TD("src"),DirWant::Directories) };
 	AskGINIE = Config;
-	for(auto artist:artists){
+	for (auto artist : artists) {
 		auto ATag{ "Artist::" + artist };
-		if (Yes(ATag,"Add","Add '" + artist + "' as texture artist")) {
+		if (Yes(ATag, "Add", "Add '" + artist + "' as texture artist")) {
 			auto MDTag{ "MultiDir::" + artist };
 			if (AssetConfig->Value(MDTag, "Include") == "Y") {
 				if (Yes(ATag, "JQLImport", "JQL project data found about '" + artist + "'. Import that")) {
@@ -79,7 +91,27 @@ int main(int ac, char** a) {
 			}
 			auto wartist = Ask(ATag, "Author", "Author name for '" + artist + "': ", artist);
 			auto wnotes = Ask(ATag, "Notes", "Notes for '" + artist + "': ");
+			auto basedir{ TD("src/" + artist) };
+			auto walldir{ basedir + "/walls" };
+			auto walls{ *GetTree(walldir) };
+			QCol->Doing("Scanning artist", wartist);
+			vector<string> Reasons{};
+			for (auto wall : walls) {
+				auto fullwall(walldir + "/" + wall);
+				if (force) Reasons.push_back("Forced");
+				if (FileSize(fullwall) != ModifyLog->IntValue(fullwall, "Size")) Reasons.push_back("Size mismatch");
+				if (FileTimeStamp(fullwall) != ModifyLog->IntValue(fullwall, "Time")) Reasons.push_back("Time mismatch");
+				if (Reasons.size()) {
+					QCol->Doing("Scheduled", wall);
+					for (auto Reason : Reasons) {
+						QCol->LMagenta("* ");
+						QCol->LGreen(Reason);
+						QCol->Reset();
+						cout << endl;
+					}
+					Modified.push_back(fullwall);
+				}
+			}
 		}
 	}
-
 }
