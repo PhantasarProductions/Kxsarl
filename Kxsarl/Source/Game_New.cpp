@@ -23,10 +23,26 @@
 // 
 // Version: 23.07.29
 // EndLic
+
 #include "AllHeaders.hpp"
+
+using namespace std;
 
 namespace Kxsarl {
 	namespace Game {
+
+#pragma region Vars
+		static string _CHID{ "" };
+#pragma endregion
+
+#pragma region "Flow"
+		static bool FlowPickGame() {
+			return true;
+		}
+#pragma endregion
+		
+#pragma region "Chain"
 		void PickGame(std::string CHID){}
 	}
+#pragma endregion
 }
