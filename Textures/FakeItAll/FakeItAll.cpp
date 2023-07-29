@@ -81,7 +81,7 @@ int main(int ac, char** a) {
 	byte Mix[4]{ 1, 0, 1, 2 };
 	output += "function __Trans($dir,$col) {\n";
 	for (char i1 = -3; i1 <= 3; ++i1)
-		for (byte i2 = Mix[i1]; i2 <= 5; ++i2)
+		for (byte i2 = Mix[abs(i1)]; i2 <= 5; ++i2)
 			output += TrSPrintF("magick $dir/Pic.%d.%d.bmp -transparent \"#$col\" $dir/Pic.%d.%d.png\n", i1, i2, i1, i2);
 	output += "}\n\n";
 	for (int i = 1; i < ac; i++) force = force || Upper(a[i]) == "-FORCE";
