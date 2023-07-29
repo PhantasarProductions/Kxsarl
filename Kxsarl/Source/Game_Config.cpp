@@ -34,12 +34,14 @@ namespace Kxsarl {
 		byte GameSkill{ 0 };
 		UGINIE GameBase{ nullptr };
 		TImage FaceHero{ nullptr };
+		std::string CharID{""};
 
 
 		void LoadGameBase(string CHID) {
 			auto J{ JCR6::JCR6_Dir(SaveCharDir() + "/" + CHID + "/General.jcr") };
 			GameBase = ParseUGINIE(J->GetString("Base.ini"));
 			FaceHero = LoadImage(J, "Face.png");
+			CharID = CHID;
 			CSay("Base Loaded\t" + GameBase->Value("Gen", "Name"));
 		}
 
