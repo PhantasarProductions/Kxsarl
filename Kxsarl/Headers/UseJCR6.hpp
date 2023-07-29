@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.18
+// Version: 23.07.29
 // EndLic
 #include <JCR6_Core.hpp>
 
@@ -29,4 +29,5 @@
 namespace Kxsarl {
 
 	Slyvina::JCR6::JT_Dir MRes(); // Main Resource
+	inline std::string MRes(std::string e) { return MRes()->GetString(e); }
 }
