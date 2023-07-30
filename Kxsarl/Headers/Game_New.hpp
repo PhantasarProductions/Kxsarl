@@ -21,13 +21,18 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.29
+// Version: 23.07.30
 // EndLic
+
 #pragma once
 #include <string>
 
 namespace Kxsarl {
 	namespace Game {
+		/// <summary>
+		/// Pick the game to start
+		/// </summary>
+		/// <param name="CHID">Character ID</param>
 		void PickGame(std::string CHID);
 	}
 }
