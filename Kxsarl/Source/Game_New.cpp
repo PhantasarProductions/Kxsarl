@@ -41,6 +41,12 @@ namespace Kxsarl {
 		static UGINIE GameLists{ParseUGINIE("[Nothing]\nNothing=Nothing")};
 #pragma endregion
 
+#pragma region "Create a new game"
+		static void NewGame(std::string _GameID) {
+
+		}
+#pragma endregion
+
 #pragma region "Flow"
 		static bool FlowPickGame() {
 			static int ScrollY{ 0 };		
