@@ -24,11 +24,25 @@
 // Version: 23.07.30
 // EndLic
 
+// Tag for debugging purposes. 
+// Having to watch this every time something goes wrong in something following up, is gonna get frustrating VERY SOON!
+
+#undef SKIP_NARRATION
+
 #include "AllHeaders.hpp"
 
 namespace Kxsarl {  
 	namespace Game {
 		void Kxsarl::Game::StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
+			auto NarrationFile{ TrSPrintF("Game/%s/Narration/%s/%s",GameID.c_str(),NarrationEvent.c_str(),CFG_Lang().c_str()) };
+			if (!MRes()->EntryExists(NarrationFile)) { Crash("Narration text not found!", { { "Entry",NarrationFile } }); return; }
+			auto Lines{ MRes()->GetLines(NarrationFile) };
+			QCol->Doing("Narration", NarrationEvent);
+			QCol->Doing("=> Lines", (int)Lines->size());
+#ifndef SKIP_NARRATION
+
+#endif // !SKIP_NARRATION
+			if (ReturnFlow) GoFlow(ReturnFlow);
 		}
 	} 
 }
