@@ -84,6 +84,14 @@ namespace Kxsarl {
 			Game::FaceHero->StretchDraw(GEX, 50, 50, 50);
 			Ryanna(Game::GameBase->Value("Gen", "Name"), GEX - 10, 50, Align::Right);
 			MiniFont(Game::GameBase->Value("Gen", "Sex") + " " + Game::GameBase->Value("Gen", "Class"), GEX - 1, 80, Align::Right);
+
+			// Back
+			SetColor(255, 255, 255);
+			if (MouseX() < ASX(182) && MouseY() > ASY(ScreenHeight() - 100)) {
+				SetColorHSV((SDL_GetTicks() / 100) % 360, 1, 1);
+				if (MouseHit(1)) GoFlow("ChooseChar");
+			}
+			Arrow(EArrow::Left)->StretchDraw(0, ScreenHeight() - 100, 182, 100);
 			return true;
 		}
 #pragma endregion
