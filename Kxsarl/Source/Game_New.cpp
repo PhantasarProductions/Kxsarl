@@ -24,11 +24,14 @@
 // Version: 23.07.30
 // EndLic
 
+#include <TQSE.hpp>
+
 #include "AllHeaders.hpp"
 
 using namespace std;
 using namespace Slyvina;
 using namespace TQSG;
+using namespace TQSE;
 
 namespace Kxsarl {
 	namespace Game {
