@@ -64,6 +64,15 @@ namespace Kxsarl {
 					ID{ (*Lijst)[i] },
 					GameTitle{ GameLists->Value(ID,"Title") },
 					GameDesc{ GameLists->Value(ID,"Desc") };
+				if (MouseY() > ASY(IY) && MouseY() < ASY(IY + 50)) {
+					ColLoop(250); SetAlpha(95);
+					ARect(10, IY, ScreenWidth() - 20, 50);
+					SetAlpha(255);
+					if (MouseHit(1)) {
+						QCol->Doing("Player chose", ID);
+						NewGame(ID);
+					}
+				}
 				if (Y >= 0 && Y <= 18) {
 					Ryanna(GameTitle, 20, IY);
 					MiniFont(GameDesc, 20, IY + 30);
