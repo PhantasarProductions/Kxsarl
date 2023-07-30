@@ -43,7 +43,8 @@ namespace Kxsarl {
 
 #pragma region "Create a new game"
 		static void NewGame(std::string _GameID) {
-
+			auto StartIniSrc{ MRes("Game/" + _GameID + "/NewGame.ini") };
+			auto StartIni{ ParseUGINIE(StartIniSrc) };
 		}
 #pragma endregion
 
