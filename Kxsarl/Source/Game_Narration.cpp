@@ -33,7 +33,7 @@
 
 namespace Kxsarl {  
 	namespace Game {
-		void Kxsarl::Game::StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
+		void StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
 			auto NarrationFile{ TrSPrintF("Game/%s/Narration/%s/%s",GameID.c_str(),NarrationEvent.c_str(),CFG_Lang().c_str()) };
 			if (!MRes()->EntryExists(NarrationFile)) { Crash("Narration text not found!", { { "Entry",NarrationFile } }); return; }
 			auto Lines{ MRes()->GetLines(NarrationFile) };
