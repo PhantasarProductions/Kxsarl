@@ -135,7 +135,7 @@ namespace Kxsarl {
 		CSlot::List = TList<CSlot>::CreateUnique();
 		CSlot::nexty = 0; CSlot::bl = 0;
 #ifdef KXSARL_DEBUG
-		printf("Going to add %d slots!\n", List->size());
+		printf("Going to add %d slots!\n", (int)List->size());
 #endif
 		for (auto F : *List) {
 			if (Prefixed(Upper(F),"SLOT_"))	new CSlot(CHID, F);
