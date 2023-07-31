@@ -37,6 +37,7 @@ namespace Kxsarl {
 		extern Slyvina::TQSG::TImage FaceHero;
 		extern std::string CharID;
 		extern std::string GameID;
+		extern Slyvina::Statistician::UParty GameParty;
 
 		void LoadGameBase(std::string CHID);
 		Slyvina::int64 ExpNeeded(Slyvina::byte Level,std::string ChClass);

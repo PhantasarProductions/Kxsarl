@@ -23,7 +23,9 @@
 // 
 // Version: 23.07.30
 // EndLic
+
 #include "AllHeaders.hpp"
+#include <Statistician_LoadJCR6.hpp>
 
 using namespace Slyvina;
 using namespace TQSG;
