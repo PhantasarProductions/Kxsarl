@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\..\Libs\Headers\TQSE.hpp" />
     <ClInclude Include="..\..\..\Libs\Headers\TQSG.hpp" />
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician.hpp" />
+    <ClInclude Include="..\..\..\Libs\Statistician\Statistician_LoadJCR6.hpp" />
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.hpp" />
     <ClInclude Include="Headers\ArmorClass.hpp" />
     <ClInclude Include="Headers\CharacterCreation.hpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="..\..\..\Libs\JCR6\Source\JCR6_Write.cpp" />
     <ClCompile Include="..\..\..\Libs\JCR6\Source\JCR6_zlib.cpp" />
     <ClCompile Include="..\..\..\Libs\Statistician\Statistician.cpp" />
+    <ClCompile Include="..\..\..\Libs\Statistician\Statistician_LoadJCR6.cpp" />
     <ClCompile Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.cpp" />
     <ClCompile Include="..\..\..\Libs\TQSL\Source\TQSA.cpp" />
     <ClCompile Include="..\..\..\Libs\TQSL\Source\TQSE.cpp" />
