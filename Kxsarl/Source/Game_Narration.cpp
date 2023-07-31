@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.30
+// Version: 23.07.31
 // EndLic
 
 // Tag for debugging purposes. 
@@ -29,18 +29,35 @@
 
 #undef SKIP_NARRATION
 
+#include <TQSE.hpp>
+#include <TQSA.hpp>
+
 #include "AllHeaders.hpp"
+
+using namespace Slyvina;
+using namespace TQSG;
+using namespace TQSA;
+using namespace TQSE;
 
 namespace Kxsarl {  
 	namespace Game {
 		void StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
+#ifndef SKIP_NARRATION
 			auto NarrationFile{ TrSPrintF("Game/%s/Narration/%s/%s",GameID.c_str(),NarrationEvent.c_str(),CFG_Lang().c_str()) };
 			if (!MRes()->EntryExists(NarrationFile)) { Crash("Narration text not found!", { { "Entry",NarrationFile } }); return; }
 			auto Lines{ MRes()->GetLines(NarrationFile) };
 			QCol->Doing("Narration", NarrationEvent);
 			QCol->Doing("=> Lines", (int)Lines->size());
-#ifndef SKIP_NARRATION
-
+			auto Background{ LoadUImage(MRes(),TrSPrintF("Game/%s/Narration/%s/Background.png",GameID.c_str(),NarrationEvent.c_str())) };
+			if (!Background) Crash("Error loading narration background", { {"Game",GameID},{"Narration",NarrationEvent } });
+			while (true) {
+				Poll();
+				if (KeyHit(SDLK_ESCAPE)) break;
+				Cls(); 
+				SetColor(255, 255, 255);
+				Background->StretchDraw(0, 0, ScreenWidth(), ScreenHeight());
+				Flip();
+			}
 #endif // !SKIP_NARRATION
 			if (ReturnFlow) GoFlow(ReturnFlow);
 		}
