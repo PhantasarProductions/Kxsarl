@@ -45,6 +45,8 @@ namespace Kxsarl {
 		static void NewGame(std::string _GameID) {
 			auto StartIniSrc{ MRes("Game/" + _GameID + "/NewGame.ini") };
 			auto StartIni{ ParseUGINIE(StartIniSrc) };
+			GameID = _GameID;
+
 		}
 #pragma endregion
 
