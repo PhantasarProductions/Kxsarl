@@ -28,6 +28,8 @@
 #include <Slyvina.hpp>
 #include <SlyvGINIE.hpp>
 
+#include <Statistician.hpp>
+
 namespace Kxsarl {
 	namespace Game {
 		extern Slyvina::byte GameSkill; 

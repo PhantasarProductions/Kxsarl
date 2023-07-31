@@ -27,6 +27,7 @@
 
 using namespace Slyvina;
 using namespace TQSG;
+using namespace Statistician;
 using namespace std;
 
 namespace Kxsarl {
@@ -34,8 +35,9 @@ namespace Kxsarl {
 		byte GameSkill{ 0 };
 		UGINIE GameBase{ nullptr };
 		TImage FaceHero{ nullptr };
-		std::string CharID{""};
-		std::string GameID{""};
+		string CharID{""};
+		string GameID{""};
+		UParty GameParty{nullptr};
 
 
 		void LoadGameBase(string CHID) {
