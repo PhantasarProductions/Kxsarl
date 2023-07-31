@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.30
+// Version: 23.07.31
 // EndLic
 
 #include "AllHeaders.hpp"
@@ -47,6 +47,7 @@ namespace Kxsarl {
 			GameBase = ParseUGINIE(J->GetString("Base.ini"));
 			FaceHero = LoadImage(J, "Face.png");
 			CharID = CHID;
+			GameParty = JCR6_LoadUParty(J, "Char");
 			CSay("Base Loaded\t" + GameBase->Value("Gen", "Name"));
 		}
 
