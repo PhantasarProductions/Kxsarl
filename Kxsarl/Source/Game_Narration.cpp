@@ -27,7 +27,9 @@
 // Tag for debugging purposes. 
 // Having to watch this every time something goes wrong in something following up, is gonna get frustrating VERY SOON!
 
+
 #undef SKIP_NARRATION
+#undef KXSARL_DEBUG_NARRATION
 
 #include <TQSE.hpp>
 #include <TQSA.hpp>
@@ -70,15 +72,15 @@ namespace Kxsarl {
 			auto VoiceFile{ TrSPrintF("Game/%s/Narration/%s/Voice%d.ogg", GameID.c_str(), Nar.c_str(), idx + 1) };
 			if (MRes()->EntryExists(VoiceFile)) Voice = LoadAudio(MRes(), VoiceFile);
 			auto TH{ F->Height("The quick brown fox jumps over the lazy dog") };
-#ifdef KXSARL_DEBUG
+#ifdef KXSARL_DEBUG_NARRATION
 			QCol->Doing("Narration line", idx + 1);
 			QCol->Doing("=> Lines", ret->size());
 			QCol->Doing("=> Text Height", TH);
 			QCol->Doing("=> Centre Y", CY);
-			QCol->Doing("=> Text Start", CY - ((((int)ret->size()) * H) / 2));
+			QCol->Doing("=> Text Start", CY - ((((int)ret->size()) * TH) / 2));
 			QCol->Doing("=> Voice", boolstring(Voice!=nullptr));
 #endif
-			return { ret,CY - ((((int)ret->size()) * H) / 2),TH,Voice };
+			return { ret,CY - ((((int)ret->size()) * TH) / 2),TH,Voice };
 		}
 		
 		void StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
