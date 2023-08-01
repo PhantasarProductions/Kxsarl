@@ -53,5 +53,7 @@ namespace Kxsarl {
 		private:
 			GMap* _parent;
 		};
+
+		extern GMap Map;
 	}
 }

@@ -43,6 +43,8 @@ using namespace SuperTed;
 
 namespace Kxsarl {  
 	namespace Game {
+		GMap Map{};
+
 		void GMap::Load(std::string mapdir) {
 			QCol->Doing("Loading map", mapdir);
 			Map = LoadTeddy(MRes(), "Game/" + GameID + "/Maps/" + mapdir);
