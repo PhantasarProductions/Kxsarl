@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.31
+// Version: 23.08.01
 // EndLic
 
 // Tag for debugging purposes. 
@@ -41,6 +41,38 @@ using namespace TQSE;
 
 namespace Kxsarl {  
 	namespace Game {
+		struct BrokenLine {
+			VecString Lines{ nullptr };
+			int32 StartY{ 0 };
+			int32 H{ 0 };
+			TAudio Voice{ nullptr };
+		};
+
+		static BrokenLine BreakLine(std::string L, _____TIMAGEFONT* F, std::string Nar, size_t idx) {
+			static auto W{ ScreenWidth()-20 };
+			static auto H{ ScreenHeight() };
+			static auto CY{ H / 2 };
+			auto Words{ Split(L,' ') };
+			auto ret{ NewVecString() };
+			std::string NewLine{""};
+			for (auto Word : *Words) {
+				if (NewLine.size() && F->Width(NewLine + " " + Word) >= W) {
+					ret->push_back(NewLine);
+					NewLine = "";
+				}
+				if (Word != "") {
+					if (NewLine.size()) NewLine += "";
+					NewLine += Word;
+				}
+			}
+			if (NewLine.size()) ret->push_back(NewLine);
+			TAudio Voice{ nullptr };
+			auto VoiceFile{ TrSPrintF("Game/%s/Narration/%s/Voice%d.ogg", GameID.c_str(), Nar.c_str(), idx + 1) };
+			if (MRes()->EntryExists(VoiceFile)) Voice = LoadAudio(MRes(), VoiceFile);
+			auto TH{ F->Height("The quick brown fox jumps over the lazy dog") };
+			return { ret,CY - (((int)ret->size()) * H) / 2,TH,Voice };
+		}
+		
 		void StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
 #ifndef SKIP_NARRATION
 			auto NarrationFile{ TrSPrintF("Game/%s/Narration/%s/%s",GameID.c_str(),NarrationEvent.c_str(),CFG_Lang().c_str()) };
@@ -50,12 +82,25 @@ namespace Kxsarl {
 			QCol->Doing("=> Lines", (int)Lines->size());
 			auto Background{ LoadUImage(MRes(),TrSPrintF("Game/%s/Narration/%s/Background.png",GameID.c_str(),NarrationEvent.c_str())) };
 			if (!Background) Crash("Error loading narration background", { {"Game",GameID},{"Narration",NarrationEvent } });
+			size_t Line{ 0 };
+			auto Font{ LoadUImageFont(MRes(),TrSPrintF("Game/%s/Narration/%s/Font.jfbf",GameID.c_str(),NarrationEvent.c_str())) };
+			auto StrL{ BreakLine((*Lines)[Line],Font.get(),NarrationEvent,0) };
+			int VoiceChannel{ -1 }; if (StrL.Voice) VoiceChannel = StrL.Voice->Play();
 			while (true) {
 				Poll();
 				if (KeyHit(SDLK_ESCAPE)) break;
+				bool VoiceEnd{ StrL.Voice && (!Mix_Playing(VoiceChannel)) };
+				if (KeyHit(SDLK_SPACE) || KeyHit(SDLK_RETURN) || VoiceEnd) {
+					if (++Line >= Lines->size()) break;
+					StrL = BreakLine((*Lines)[Line], Font.get(), NarrationEvent, Line);
+					VoiceChannel = -1; if (StrL.Voice) VoiceChannel = StrL.Voice->Play();
+				}
 				Cls(); 
 				SetColor(255, 255, 255);
 				Background->StretchDraw(0, 0, ScreenWidth(), ScreenHeight());
+				for (size_t i = 0; i < StrL.Lines->size(); ++i) {
+					Font->Text((*StrL.Lines)[i], ScreenWidth() / 2, StrL.StartY + (StrL.H * i), Align::Center);
+				}
 				Flip();
 			}
 #endif // !SKIP_NARRATION
