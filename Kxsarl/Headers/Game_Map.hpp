@@ -40,12 +40,22 @@ namespace Kxsarl {
 		class GMap {
 		private:
 		public:
+			// Fields
 			Slyvina::SuperTed::Teddy Map{nullptr};
 			std::unique_ptr<Slyvina::Units::TList<GActor>> Actors{nullptr };
 			__PlayerPos Player{ 0,0,GWind::North };
 			std::string LoadedMap{""};
 			std::string CurrentRoom{""};			
 
+			// Positon functions
+			void GetForward(int tiles, int& x, int& y);
+			void GoForward(int tiles = 1);
+			void GetSideward(int tiles, int& x, int& y);
+			void GoSideward(int tiles = 1);
+			void TurnLeft();
+			void TurnRight();
+
+			// Load
 			void Load(std::string);
 			void GoTo(std::string _Map, std::string _Room, int x, int y, GWind wind = GWind::North);
 			void GoTo(std::string _Map, std::string _Room, std::string spot = "Start");

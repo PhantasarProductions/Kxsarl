@@ -45,6 +45,46 @@ namespace Kxsarl {
 	namespace Game {
 		GMap Map{};
 
+			
+
+		void GMap::GetForward(int tiles, int& x, int& y) {
+			switch (Player.Wind) {
+			case GWind::North: x = Player.X; y = Player.Y - tiles; return;
+			case GWind::East: x = Player.X + tiles; y = Player.Y; return;
+			case GWind::South: x = Player.X; y = Player.Y + tiles; return;
+			case GWind::West: x = Player.X - tiles; y = Player.Y; return;
+			}
+			Crash("GetForward(): Wind error");
+		}
+
+		void GMap::GoForward(int tiles) {
+			GetForward(tiles, Player.X, Player.Y);
+		}
+
+		void GMap::GetSideward(int tiles, int& x, int& y) {
+			switch (Player.Wind) {
+			case GWind::North: x = Player.X + tiles; y = Player.Y; return;
+			case GWind::East: x = Player.X; y = Player.Y + tiles; return;
+			case GWind::South: x = Player.X - tiles; y = Player.Y; return;
+			case GWind::West: x = Player.X; y = Player.Y - tiles; return;
+			}
+			Crash("GetSide(): Wind error");
+		}
+
+		void GMap::GoSideward(int tiles) {
+			GetSideward(tiles, Player.X, Player.Y);
+		}
+
+		void GMap::TurnLeft() {
+			int W{ (int)Player.Wind };
+			Player.Wind = (GWind)((W - 1) % 4);
+		}
+
+		void GMap::TurnRight() {
+			int W{ (int)Player.Wind };
+			Player.Wind = (GWind)((W + 1) % 4);
+		}
+
 		void GMap::Load(std::string mapdir) {
 			QCol->Doing("Loading map", mapdir);
 			Map = LoadTeddy(MRes(), "Game/" + GameID + "/Maps/" + mapdir);
