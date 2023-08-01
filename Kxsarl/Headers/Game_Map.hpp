@@ -26,8 +26,24 @@
 
 #pragma once
 #include <string>
+#include <SlyvLinkedList.hpp>
 
 namespace Kxsarl {
 	namespace Game {
+		class GMap;
+		class GActor;
+
+		class GMap {
+		public:
+			// SuperTed Map{nullptr};
+			std::unique_ptr<Slyvina::Units::TList<GActor>> Actors{nullptr };
+
+			GMap();
+		};
+
+		class GActor {
+		private:
+			GMap* _parent;
+		};
 	}
 }
