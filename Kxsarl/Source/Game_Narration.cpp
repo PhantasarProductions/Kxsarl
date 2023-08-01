@@ -61,7 +61,7 @@ namespace Kxsarl {
 					NewLine = "";
 				}
 				if (Word != "") {
-					if (NewLine.size()) NewLine += "";
+					if (NewLine.size()) NewLine += " ";
 					NewLine += Word;
 				}
 			}
