@@ -195,6 +195,9 @@
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician_LoadJCR6.hpp">
       <Filter>Header Files\Slyvina\Statitician</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Game_Map.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">
@@ -322,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Libs\Statistician\Statistician_LoadJCR6.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game_Map.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
