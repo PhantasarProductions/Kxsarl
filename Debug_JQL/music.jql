@@ -17,7 +17,11 @@ Author:Nihilore
 Notes:Creative Commons Attribution license -- http://www.nihilore.com/license/ -- Music downloaded from http://www.nihilore.com
 
 # Main Menu
-Raw:\Projects\3rd party assets\Music\Nihilore\Tempest.mp3>Music/MainMenu/Tempest.mp3
+Raw:/Projects/3rd party assets/Music/Nihilore/Tempest.mp3>Music/MainMenu/Tempest.mp3
+
+# Narration
+Raw:E:/Projects/3rd party assets/Music/Nihilore/Horror+Sting+1_Soft.ogg>Music/Narration/Horror String 1 (Soft).ogg
+Raw:E:/Projects/3rd party assets/Music/Nihilore/Horror+Sting+1_Soft.ogg>Game/Kxsarl/Narration/Intro/Music.ogg
 
 # Dungeons
-Raw:\Projects\3rd party assets\Music\Nihilore\Cathedral.mp3>Music/Dungeon/Cathedral.mp3
+Raw:/Projects/3rd party assets/Music/Nihilore/Cathedral.mp3>Music/Dungeon/Cathedral.mp3
