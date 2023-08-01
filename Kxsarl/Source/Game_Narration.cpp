@@ -27,7 +27,7 @@
 // Tag for debugging purposes. 
 // Having to watch this every time something goes wrong in something following up, is gonna get frustrating VERY SOON!
 
-
+// Must both be on #undef in release
 #undef SKIP_NARRATION
 #undef KXSARL_DEBUG_NARRATION
 
@@ -85,6 +85,7 @@ namespace Kxsarl {
 		
 		void StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
 #ifndef SKIP_NARRATION
+			SysStatus("Loading");
 			auto NarrationFile{ TrSPrintF("Game/%s/Narration/%s/%s",GameID.c_str(),NarrationEvent.c_str(),CFG_Lang().c_str()) };
 			if (!MRes()->EntryExists(NarrationFile)) { Crash("Narration text not found!", { { "Entry",NarrationFile } }); return; }
 			auto Lines{ MRes()->GetLines(NarrationFile) };
@@ -96,6 +97,9 @@ namespace Kxsarl {
 			auto Font{ LoadUImageFont(MRes(),TrSPrintF("Game/%s/Narration/%s/Font.jfbf",GameID.c_str(),NarrationEvent.c_str())) };
 			auto StrL{ BreakLine((*Lines)[Line],Font.get(),NarrationEvent,0) };
 			int VoiceChannel{ -1 }; if (StrL.Voice) VoiceChannel = StrL.Voice->Play();
+			auto MusicFile{ TrSPrintF("Game/%s/Narration/%s/Music",GameID.c_str(),NarrationEvent.c_str()) };
+			static std::vector<std::string> MusicExt = { ".ogg",".mp3" };
+			for (auto ext : MusicExt) { if (MRes()->EntryExists(MusicFile + ext)) { Music(MusicFile + ext); break; } }
 			while (true) {
 				Poll();
 				if (KeyHit(SDLK_ESCAPE)) break;
