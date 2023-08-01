@@ -65,6 +65,8 @@ namespace Kxsarl {
 		class GActor {
 		private:
 			GMap* _parent;
+		public:
+			int X{ 0 }, Y{ 0 };
 		};
 
 		extern GMap Map;
