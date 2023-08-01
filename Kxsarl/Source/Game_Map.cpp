@@ -50,6 +50,18 @@ namespace Kxsarl {
 			Map = LoadTeddy(MRes(), "Game/" + GameID + "/Maps/" + mapdir);
 		}
 
+		void GMap::GoTo(std::string _Map, std::string _Room, int x, int y, GWind wind) {
+			Load(_Map);
+			CurrentRoom = _Room;
+			Player.X = x;
+			Player.Y = y;
+			Player.Wind = wind;
+		}
+
+
+		void GMap::GoTo(std::string _Map, std::string _Room, std::string spot) {
+			Crash("GoTo based on spot not yet coded");
+		}
 
 		GMap::GMap() {
 			Actors = TList<GActor>::CreateUnique();

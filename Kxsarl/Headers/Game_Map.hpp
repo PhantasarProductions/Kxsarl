@@ -43,9 +43,12 @@ namespace Kxsarl {
 			Slyvina::SuperTed::Teddy Map{nullptr};
 			std::unique_ptr<Slyvina::Units::TList<GActor>> Actors{nullptr };
 			__PlayerPos Player{ 0,0,GWind::North };
-			
+			std::string LoadedMap{""};
+			std::string CurrentRoom{""};			
 
 			void Load(std::string);
+			void GoTo(std::string _Map, std::string _Room, int x, int y, GWind wind = GWind::North);
+			void GoTo(std::string _Map, std::string _Room, std::string spot = "Start");
 			GMap();
 		};
 
