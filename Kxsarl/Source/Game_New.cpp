@@ -46,7 +46,8 @@ namespace Kxsarl {
 			auto StartIniSrc{ MRes("Game/" + _GameID + "/NewGame.ini") };
 			auto StartIni{ ParseUGINIE(StartIniSrc) };
 			GameID = _GameID;
-
+			if (StartIni->BoolValue("Narration", "StartNarration"))
+				StartNarration("Intro");
 		}
 #pragma endregion
 
