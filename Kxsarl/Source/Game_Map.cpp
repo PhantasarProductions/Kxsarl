@@ -39,9 +39,16 @@ using namespace JCR6;
 using namespace TQSG;
 using namespace TQSE;
 using namespace TQSA;
+using namespace SuperTed;
 
 namespace Kxsarl {  
 	namespace Game {
+		void GMap::Load(std::string mapdir) {
+			QCol->Doing("Loading map", mapdir);
+			Map = LoadTeddy(MRes(), "Game/" + GameID + "/Maps/" + mapdir);
+		}
+
+
 		GMap::GMap() {
 			Actors = TList<GActor>::CreateUnique();
 		}

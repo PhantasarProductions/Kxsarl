@@ -26,18 +26,26 @@
 
 #pragma once
 #include <string>
+#include <SuperTed_Core.hpp>
 #include <SlyvLinkedList.hpp>
 
 namespace Kxsarl {
 	namespace Game {
+		enum class GWind { North, East, South, West };
+		struct __PlayerPos { int X{ 0 }, Y{ 0 }; GWind Wind{ GWind::North }; };
+
 		class GMap;
 		class GActor;
 
 		class GMap {
+		private:
 		public:
-			// SuperTed Map{nullptr};
+			Slyvina::SuperTed::Teddy Map{nullptr};
 			std::unique_ptr<Slyvina::Units::TList<GActor>> Actors{nullptr };
+			__PlayerPos Player{ 0,0,GWind::North };
+			
 
+			void Load(std::string);
 			GMap();
 		};
 
