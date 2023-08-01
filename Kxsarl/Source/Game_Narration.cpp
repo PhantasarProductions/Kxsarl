@@ -70,7 +70,15 @@ namespace Kxsarl {
 			auto VoiceFile{ TrSPrintF("Game/%s/Narration/%s/Voice%d.ogg", GameID.c_str(), Nar.c_str(), idx + 1) };
 			if (MRes()->EntryExists(VoiceFile)) Voice = LoadAudio(MRes(), VoiceFile);
 			auto TH{ F->Height("The quick brown fox jumps over the lazy dog") };
-			return { ret,CY - (((int)ret->size()) * H) / 2,TH,Voice };
+#ifdef KXSARL_DEBUG
+			QCol->Doing("Narration line", idx + 1);
+			QCol->Doing("=> Lines", ret->size());
+			QCol->Doing("=> Text Height", TH);
+			QCol->Doing("=> Centre Y", CY);
+			QCol->Doing("=> Text Start", CY - ((((int)ret->size()) * H) / 2));
+			QCol->Doing("=> Voice", boolstring(Voice!=nullptr));
+#endif
+			return { ret,CY - ((((int)ret->size()) * H) / 2),TH,Voice };
 		}
 		
 		void StartNarration(std::string NarrationEvent, bool(*ReturnFlow)(), std::string ReturnEventParameters) {
