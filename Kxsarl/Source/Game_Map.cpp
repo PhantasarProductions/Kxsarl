@@ -31,6 +31,7 @@
 #include "AllHeaders.hpp"
 
 
+
 using namespace std;
 using namespace Slyvina;
 using namespace Units;
@@ -41,5 +42,8 @@ using namespace TQSA;
 
 namespace Kxsarl {  
 	namespace Game {
-	} 
+		GMap::GMap() {
+			Actors = TList<GActor>::CreateUnique();
+		}
+	}
 }
