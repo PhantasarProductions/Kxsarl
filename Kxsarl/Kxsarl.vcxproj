@@ -75,7 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Exe_$(Platform)</OutDir>
-    <IncludePath>E:\Projects\Applications\Slyvina\Libs\Statistician;E:\Projects\Applications\Slyvina\Libs\JCR6\Headers;E:\Projects\Applications\Slyvina\Libs\TQSL\SDL2\include;E:\Projects\Applications\Slyvina\Libs\TQSL\Headers;E:\Projects\Applications\Slyvina\Libs\Units\Headers;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\Applications\Slyvina\Apps\SuperTed\C++ Class\headers;E:\Projects\Applications\Slyvina\Libs\Statistician;E:\Projects\Applications\Slyvina\Libs\JCR6\Headers;E:\Projects\Applications\Slyvina\Libs\TQSL\SDL2\include;E:\Projects\Applications\Slyvina\Libs\TQSL\Headers;E:\Projects\Applications\Slyvina\Libs\Units\Headers;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Projects\Applications\Slyvina\Libs\JCR6\3rdParty\zlib;E:\Projects\Applications\Slyvina\Libs\TQSL\SDL2;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -164,6 +164,7 @@
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician.hpp" />
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician_LoadJCR6.hpp" />
     <ClInclude Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.hpp" />
+    <ClInclude Include="..\..\SuperTed\C++ Class\headers\SuperTed_Core.hpp" />
     <ClInclude Include="Headers\ArmorClass.hpp" />
     <ClInclude Include="Headers\CharacterCreation.hpp" />
     <ClInclude Include="Headers\Config.hpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvString.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvTime.cpp" />
     <ClCompile Include="..\..\..\Libs\Units\Source\SlyvVolumes.cpp" />
+    <ClCompile Include="..\..\SuperTed\C++ Class\source\SuperTed_Core.cpp" />
     <ClCompile Include="Source\ArmorClass.cpp" />
     <ClCompile Include="Source\CharacterCreation.cpp" />
     <ClCompile Include="Source\Config.cpp" />

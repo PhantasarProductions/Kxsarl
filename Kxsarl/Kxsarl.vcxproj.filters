@@ -46,6 +46,12 @@
     <Filter Include="Header Files\Slyvina\Units">
       <UniqueIdentifier>{40e6eb49-5688-4503-9024-6ee168c8fa4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Slyvina\SuperTed">
+      <UniqueIdentifier>{169872ef-1003-48d8-ad86-c009d42dfbfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Slyvina\SuperTed">
+      <UniqueIdentifier>{f8bbd824-24dd-4d2f-8a33-44794f1c8a35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\MainMenu.hpp">
@@ -198,6 +204,9 @@
     <ClInclude Include="Headers\Game_Map.hpp">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\SuperTed\C++ Class\headers\SuperTed_Core.hpp">
+      <Filter>Header Files\Slyvina\SuperTed</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">
@@ -328,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="Source\Game_Map.cpp">
       <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\SuperTed\C++ Class\source\SuperTed_Core.cpp">
+      <Filter>Source Files\Slyvina\SuperTed</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
