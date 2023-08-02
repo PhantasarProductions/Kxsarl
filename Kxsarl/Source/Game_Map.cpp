@@ -40,6 +40,7 @@ using namespace TQSG;
 using namespace TQSE;
 using namespace TQSA;
 using namespace SuperTed;
+using namespace Statistician;
 
 namespace Kxsarl {  
 	namespace Game {
@@ -106,5 +107,8 @@ namespace Kxsarl {
 		GMap::GMap() {
 			Actors = TList<GActor>::CreateUnique();
 		}
+
+		Statistician::UParty GActor::_Party{CreateUniqueParty()};
+		Statistician::_Party* GActor::Party() { return _Party.get(); }
 	}
 }
