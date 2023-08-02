@@ -55,11 +55,12 @@ End License block -->
                     <Button x:Name="Browse_ExportTo" Foreground="#ff0000" Background="#1f0000" Margin="725,10,6,337" Content="Pick" Click="Browse_ExportTo_Click"/>
                     <ListBox x:Name="LB_TransferrableChars" Foreground="#FF0000" Background="#1f0000" Margin="10,86,18,10"/>
                     <Label Content="Compression:" Foreground="#FF0000" Margin="0,52,0,0"/>
-                    <ComboBox x:Name="Storage" Foreground="#ff0000" Background="#1f0000" Margin="89,57,437,294">
+                    <ComboBox x:Name="Storage" Foreground="#ff0000" Background="#1f0000" Margin="89,57,437,294" SelectionChanged="Storage_SelectionChanged">
                         <ComboBoxItem Content="None"/>
                         <ComboBoxItem Content="zlib"/>
                         <ComboBoxItem Content="lzma"/>
                     </ComboBox>
+                    <Button Content="Export!" x:Name="Act_Export" Margin="383,57,55,294" Foreground="#ff0000" Background="#1f0000"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Import">

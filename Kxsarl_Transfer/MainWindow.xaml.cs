@@ -46,14 +46,23 @@ namespace Kxsarl_Transfer {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            MayExport();
         }
+
+        private string StorageMethod => Storage.SelectedItem.ToString();
+        
         private void MayExport() {
-            // Code comes later!
+            //Confirm.Annoy(StorageMethod); // debug!
+            Act_Export.IsEnabled = TB_ExportTo.Text != "" && StorageMethod!="";            
         }
 
         private void Browse_ExportTo_Click(object sender, RoutedEventArgs e) {
             var WantFile = FFS.RequestFile(true);
             if (WantFile != "") TB_ExportTo.Text = WantFile;
+            MayExport();
+        }
+
+        private void Storage_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             MayExport();
         }
     }
