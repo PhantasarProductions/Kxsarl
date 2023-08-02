@@ -46,6 +46,7 @@ namespace Kxsarl_Transfer {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            KxsarlTransfer.GetChars(LB_TransferrableChars);
             MayExport();
         }
 

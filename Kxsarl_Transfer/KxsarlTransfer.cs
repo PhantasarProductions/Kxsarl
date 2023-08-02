@@ -1,0 +1,73 @@
+// Lic:
+// The Legend Of The Kxsarl
+// Transferring itself and configuration in general
+// 
+// 
+// 
+// (c) Jeroen P. Broks, 2023
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Please note that some references to data like pictures or audio, do not automatically
+// fall under this licenses. Mostly this is noted in the respective files.
+// 
+// Version: 23.08.02
+// EndLic
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using TrickyUnits;
+using UseJCR6;
+
+namespace Kxsarl_Transfer {
+    static internal class KxsarlTransfer {
+
+        static GINIE GlobalConfig = null;
+
+        static string GlobalConfigFile => Dirry.C("$AppSupport$/Kxsarl/Config/Config.ini");
+        static string SavedCharsDir => Dirry.AD(GlobalConfig["DIRECTORY", "SAVEDCHARS"]);
+        static string[] SavedChars = null;
+        static List<string> TransChars = null;
+
+        static public void GetChars(ListBox LB) { 
+            LB.Items.Clear();
+            TransChars = new List<string>();
+            foreach(var CHID in SavedChars) {
+                var CHFile = SavedCharsDir + "/" + CHID + "/General.jcr";
+                if (File.Exists(CHFile)) {
+                    var JDir = JCR6.Dir(CHFile);
+                    var Base = GINIE.FromSource(JDir.LoadString("Base.ini")); if (Base["GEN", "NAME"] == "") Base["GEN", "NAME"] = "<???>";
+                    var Item = $"{Base["GEN","NAME"]}\t{Base["GEN","SEX"]} {Base["GEN","CLASS"]}";
+                    if (Base["DEATH","PERMADEATH"].ToUpper()!="TRUE" && Base["DEATH", "SUPERPERMADEATH"].ToUpper() != "TRUE") {
+                        TransChars.Add(CHID);
+                        LB.Items.Add(Item);
+                    }
+                }
+            }
+        }
+
+        static KxsarlTransfer() {
+            JCR6_zlib.Init();
+            JCR6_lzma.Init();
+            Dirry.InitAltDrives();
+            //Confirm.Annoy(Dirry.C("$AppSupport$/Config/Config.ini"));
+            GlobalConfig = GINIE.FromFile(GlobalConfigFile);
+            //Confirm.Annoy(SavedCharsDir); // debug
+            SavedChars = FileList.GetDir(SavedCharsDir, 2);
+        }
+    }
+}
