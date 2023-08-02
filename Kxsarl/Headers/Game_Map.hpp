@@ -26,6 +26,7 @@
 
 #pragma once
 #include <string>
+#include <Statistician.hpp>
 #include <SuperTed_Core.hpp>
 #include <SlyvLinkedList.hpp>
 
@@ -65,7 +66,10 @@ namespace Kxsarl {
 		class GActor {
 		private:
 			GMap* _parent;
+			static Statistician::UParty _Party;
 		public:
+			static Statistician::_Party* Party();
+			Statistician::Character ChDat{ nullptr };
 			int X{ 0 }, Y{ 0 };
 		};
 
