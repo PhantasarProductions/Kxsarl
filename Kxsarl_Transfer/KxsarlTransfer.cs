@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.02
+// Version: 23.08.03
 // EndLic
 using System;
 using System.Collections.Generic;
@@ -58,6 +58,31 @@ namespace Kxsarl_Transfer {
                     }
                 }
             }
+        }
+
+        static public void Pack(string outfile,string storage) {
+            storage = storage.Trim();
+            if (storage == "None") storage = "Store";
+            var OJ = new TJCRCreate(outfile, storage);
+            if (JCR6.JERROR != "") {
+                Confirm.Annoy(JCR6.JERROR, "Error!", System.Windows.Forms.MessageBoxIcon.Error);
+                return;
+            }
+            OJ.AddString("[ID]\nTransfer=KXSARL", "ID.ini");
+            foreach(var CH in TransChars) {
+                var CHBL = new TJCRCreateBlock(OJ, storage);
+                var CHFL = FileList.GetTree(SavedCharsDir + "/" + CH);
+                CHBL.AddString("Check!", "Check/" + CH);
+                foreach (var CHFile in CHFL) {
+                    CHBL.AddFile(SavedCharsDir + "/" + CH + "/" + CHFile, "Characters/" + CH + "/" + CHFile);
+                }
+                CHBL.Close();
+            }
+            OJ.Close();
+            if (JCR6.JERROR != "")
+                Confirm.Annoy($"{JCR6.JCATCH.Message}\nEntry: {JCR6.JCATCH.entry}", "Something went wrong", System.Windows.Forms.MessageBoxIcon.Error);
+            else
+                Confirm.Annoy("Transfer data saved as " + outfile + "; Storage(" + storage + ")");
         }
 
         static KxsarlTransfer() {

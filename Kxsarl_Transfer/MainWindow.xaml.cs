@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.02
+// Version: 23.08.03
 // EndLic
 using System;
 using System.Collections.Generic;
@@ -50,10 +50,17 @@ namespace Kxsarl_Transfer {
             MayExport();
         }
 
-        private string StorageMethod => Storage.SelectedItem.ToString();
+        private string StorageMethod {
+            get {
+                if (Storage.SelectedItem == null) return "";
+                return Storage.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem:","").Trim();
+            }
+        }
         
         private void MayExport() {
             //Confirm.Annoy(StorageMethod); // debug!
+            if (Act_Export == null) Confirm.Annoy("Act_Export is null");
+            if (TB_ExportTo == null) Confirm.Annoy("ExportTo Texbox is null");
             Act_Export.IsEnabled = TB_ExportTo.Text != "" && StorageMethod!="";            
         }
 
@@ -66,5 +73,11 @@ namespace Kxsarl_Transfer {
         private void Storage_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             MayExport();
         }
+
+        private void Act_Export_Click(object sender, RoutedEventArgs e) {
+            KxsarlTransfer.Pack(TB_ExportTo.Text, StorageMethod);
+        }
+
+        private void TB_ExportTo_TextChanged(object sender, TextChangedEventArgs e) => MayExport();
     }
 }

@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Please note that some references to data like pictures or audio, do not automatically
 fall under this licenses. Mostly this is noted in the respective files.
 
-Version: 23.08.02
+Version: 23.08.03
 End License block -->
 <Window x:Name="MainWindow_Ksarl_Transfer" x:Class="Kxsarl_Transfer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -51,7 +51,7 @@ End License block -->
                         </LinearGradientBrush>
                     </Grid.Background>
                     <Label Content="Export to:" Foreground="#FF0000"/>
-                    <TextBox x:Name="TB_ExportTo" Background="#FFB4B4" Foreground="#1f0000" MinHeight="30" Margin="63,10,49,342" />
+                    <TextBox x:Name="TB_ExportTo" Background="#FFB4B4" Foreground="#1f0000" MinHeight="30" Margin="63,10,49,342" TextChanged="TB_ExportTo_TextChanged" />
                     <Button x:Name="Browse_ExportTo" Foreground="#ff0000" Background="#1f0000" Margin="725,10,6,337" Content="Pick" Click="Browse_ExportTo_Click"/>
                     <ListBox x:Name="LB_TransferrableChars" Foreground="#FF0000" Background="#1f0000" Margin="10,86,18,10"/>
                     <Label Content="Compression:" Foreground="#FF0000" Margin="0,52,0,0"/>
@@ -60,7 +60,7 @@ End License block -->
                         <ComboBoxItem Content="zlib"/>
                         <ComboBoxItem Content="lzma"/>
                     </ComboBox>
-                    <Button Content="Export!" x:Name="Act_Export" Margin="383,57,55,294" Foreground="#ff0000" Background="#1f0000"/>
+                    <Button Content="Export!" x:Name="Act_Export" Margin="383,57,55,294" Foreground="#ff0000" Background="#1f0000" Click="Act_Export_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Import">
