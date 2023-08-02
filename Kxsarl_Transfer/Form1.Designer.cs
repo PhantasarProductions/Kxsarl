@@ -29,7 +29,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(25, 18, 0);
             ClientSize = new Size(800, 450);
+            ForeColor = Color.FromArgb(255, 180, 0);
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
             Name = "Form1";
