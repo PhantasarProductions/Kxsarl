@@ -34,72 +34,72 @@ using TrickyUnits;
 using UseJCR6;
 
 namespace Kxsarl_Transfer {
-    static internal class KxsarlTransfer {
+	static internal class KxsarlTransfer {
 
-        static GINIE GlobalConfig = null;
+		static GINIE GlobalConfig = null;
 
-        static string GlobalConfigFile => Dirry.C("$AppSupport$/Kxsarl/Config/Config.ini");
-        static string SavedCharsDir => Dirry.AD(GlobalConfig["DIRECTORY", "SAVEDCHARS"]);
-        static string[] SavedChars = null;
-        static List<string> TransChars = null;
+		static string GlobalConfigFile => Dirry.C("$AppSupport$/Kxsarl/Config/Config.ini");
+		static string SavedCharsDir => Dirry.AD(GlobalConfig["DIRECTORY", "SAVEDCHARS"]);
+		static string[] SavedChars = null;
+		static List<string> TransChars = null;
 
-        static public void GetChars(ListBox LB) { 
-            LB.Items.Clear();
-            TransChars = new List<string>();
-            foreach(var CHID in SavedChars) {
-                var CHFile = SavedCharsDir + "/" + CHID + "/General.jcr";
-                if (File.Exists(CHFile)) {
-                    var JDir = JCR6.Dir(CHFile);
-                    var Base = GINIE.FromSource(JDir.LoadString("Base.ini")); if (Base["GEN", "NAME"] == "") Base["GEN", "NAME"] = "<???>";
-                    var Item = $"{Base["GEN","NAME"]}\t{Base["GEN","SEX"]} {Base["GEN","CLASS"]}";
-                    if (Base["DEATH","PERMADEATH"].ToUpper()!="TRUE" && Base["DEATH", "SUPERPERMADEATH"].ToUpper() != "TRUE") {
-                        TransChars.Add(CHID);                        
-                        LB.Items.Add(Item);
-                    }
-                }
-            }
-        }
+		static public void GetChars(ListBox LB) { 
+			LB.Items.Clear();
+			TransChars = new List<string>();
+			foreach(var CHID in SavedChars) {
+				var CHFile = SavedCharsDir + "/" + CHID + "/General.jcr";
+				if (File.Exists(CHFile)) {
+					var JDir = JCR6.Dir(CHFile);
+					var Base = GINIE.FromSource(JDir.LoadString("Base.ini")); if (Base["GEN", "NAME"] == "") Base["GEN", "NAME"] = "<???>";
+					var Item = $"{Base["GEN","NAME"]}\t{Base["GEN","SEX"]} {Base["GEN","CLASS"]}";
+					if (Base["DEATH","PERMADEATH"].ToUpper()!="TRUE" && Base["DEATH", "SUPERPERMADEATH"].ToUpper() != "TRUE") {
+						TransChars.Add(CHID);                        
+						LB.Items.Add(Item);
+					}
+				}
+			}
+		}
 
-        static public void Pack(string outfile,string storage) {
-            storage = storage.Trim();
-            if (storage == "None") storage = "Store";
-            var OJ = new TJCRCreate(outfile, storage);
-            var OJB=new TJCRCreateBlock(OJ,storage);
-            if (JCR6.JERROR != "") {
-                Confirm.Annoy(JCR6.JERROR, "Error!", System.Windows.Forms.MessageBoxIcon.Error);
-                return;
-            }
-            OJB.AddString("[ID]\nTransfer=KXSARL", "ID.ini");
-            var charlist = new StringBuilder();
-            foreach(var CH in TransChars) {
-                var CHBL = new TJCRCreateBlock(OJ, storage);
-                var CHFL = FileList.GetTree(SavedCharsDir + "/" + CH);
-                var CHJR = JCR6.Dir(SavedCharsDir + "/" + CH + "/General.jcr");
-                var CHDT = GINIE.FromSource(CHJR.LoadString("Base.ini"));
-                CHBL.AddString("Check!", "Check/" + CH);
-                if (CHDT["GEN", "NAME"] == "") CHDT["GEN", "NAME"] = "<???>";
-                charlist.Append($"{CHDT["GEN", "NAME"]}\t{CHDT["GEN", "SEX"]} {CHDT["GEN", "CLASS"]}\n");
-                foreach (var CHFile in CHFL) {
-                    CHBL.AddFile(SavedCharsDir + "/" + CH + "/" + CHFile, "Characters/" + CH + "/" + CHFile);
-                }
-                CHBL.Close();
-            }
-            OJB.AddString(charlist, "Chars",storage);
-            OJ.Close();
-            if (JCR6.JERROR != "")
-                Confirm.Annoy($"{JCR6.JCATCH.Message}\nEntry: {JCR6.JCATCH.entry}", "Something went wrong", System.Windows.Forms.MessageBoxIcon.Error);
-            else
-                Confirm.Annoy("Transfer data saved as " + outfile + "; Storage(" + storage + ")");
-        }
+		static public void Pack(string outfile,string storage) {
+			storage = storage.Trim();
+			if (storage == "None") storage = "Store";
+			var OJ = new TJCRCreate(outfile, storage);
+			var OJB=new TJCRCreateBlock(OJ,storage);
+			if (JCR6.JERROR != "") {
+				Confirm.Annoy(JCR6.JERROR, "Error!", System.Windows.Forms.MessageBoxIcon.Error);
+				return;
+			}
+			OJB.AddString("[ID]\nTransfer=KXSARL", "ID.ini");
+			var charlist = new StringBuilder();
+			foreach(var CH in TransChars) {
+				var CHBL = new TJCRCreateBlock(OJ, storage);
+				var CHFL = FileList.GetTree(SavedCharsDir + "/" + CH);
+				var CHJR = JCR6.Dir(SavedCharsDir + "/" + CH + "/General.jcr");
+				var CHDT = GINIE.FromSource(CHJR.LoadString("Base.ini"));
+				CHBL.AddString("Check!", "Check/" + CH);
+				if (CHDT["GEN", "NAME"] == "") CHDT["GEN", "NAME"] = "<???>";
+				charlist.Append($"{CHDT["GEN", "NAME"]}\t{CHDT["GEN", "SEX"]} {CHDT["GEN", "CLASS"]}\n");
+				foreach (var CHFile in CHFL) {
+					CHBL.AddFile(SavedCharsDir + "/" + CH + "/" + CHFile, "Characters/" + CH + "/" + CHFile);
+				}
+				CHBL.Close();
+			}
+			OJB.AddString(charlist, "Chars",storage);
+			OJ.Close();
+			if (JCR6.JERROR != "")
+				Confirm.Annoy($"{JCR6.JCATCH.Message}\nEntry: {JCR6.JCATCH.entry}", "Something went wrong", System.Windows.Forms.MessageBoxIcon.Error);
+			else
+				Confirm.Annoy("Transfer data saved as " + outfile + "; Storage(" + storage + ")");
+		}
 
-        static KxsarlTransfer() {
-            JCR6_zlib.Init();
-            JCR6_lzma.Init();
-            Dirry.InitAltDrives();
-            //Confirm.Annoy(Dirry.C("$AppSupport$/Config/Config.ini"));
-            GlobalConfig = GINIE.FromFile(GlobalConfigFile);
-            //Confirm.Annoy(SavedCharsDir); // debug
-            SavedChars = FileList.GetDir(SavedCharsDir, 2);
-        }
-    }
+		static KxsarlTransfer() {
+			JCR6_zlib.Init();
+			JCR6_lzma.Init();
+			Dirry.InitAltDrives();
+			//Confirm.Annoy(Dirry.C("$AppSupport$/Config/Config.ini"));
+			GlobalConfig = GINIE.FromFile(GlobalConfigFile);
+			//Confirm.Annoy(SavedCharsDir); // debug
+			SavedChars = FileList.GetDir(SavedCharsDir, 2);
+		}
+	}
 }
