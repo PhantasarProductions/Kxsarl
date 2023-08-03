@@ -44,6 +44,7 @@ namespace Kxsarl_Transfer {
 		static List<string> TransChars = null;
 
 		static public void GetChars(ListBox LB) { 
+        #region Export
 			LB.Items.Clear();
 			TransChars = new List<string>();
 			foreach(var CHID in SavedChars) {
@@ -91,8 +92,14 @@ namespace Kxsarl_Transfer {
 			else
 				Confirm.Annoy("Transfer data saved as " + outfile + "; Storage(" + storage + ")");
 		}
+        #endregion
 
-		static KxsarlTransfer() {
+        #region Import
+        #endregion
+
+
+        #region Init
+        static KxsarlTransfer() {
 			JCR6_zlib.Init();
 			JCR6_lzma.Init();
 			Dirry.InitAltDrives();
@@ -101,5 +108,5 @@ namespace Kxsarl_Transfer {
 			//Confirm.Annoy(SavedCharsDir); // debug
 			SavedChars = FileList.GetDir(SavedCharsDir, 2);
 		}
-	}
+        #endregion
 }
