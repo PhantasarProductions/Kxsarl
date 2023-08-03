@@ -53,7 +53,7 @@ namespace Kxsarl_Transfer {
                     var Base = GINIE.FromSource(JDir.LoadString("Base.ini")); if (Base["GEN", "NAME"] == "") Base["GEN", "NAME"] = "<???>";
                     var Item = $"{Base["GEN","NAME"]}\t{Base["GEN","SEX"]} {Base["GEN","CLASS"]}";
                     if (Base["DEATH","PERMADEATH"].ToUpper()!="TRUE" && Base["DEATH", "SUPERPERMADEATH"].ToUpper() != "TRUE") {
-                        TransChars.Add(CHID);
+                        TransChars.Add(CHID);                        
                         LB.Items.Add(Item);
                     }
                 }
@@ -64,20 +64,27 @@ namespace Kxsarl_Transfer {
             storage = storage.Trim();
             if (storage == "None") storage = "Store";
             var OJ = new TJCRCreate(outfile, storage);
+            var OJB=new TJCRCreateBlock(OJ,storage);
             if (JCR6.JERROR != "") {
                 Confirm.Annoy(JCR6.JERROR, "Error!", System.Windows.Forms.MessageBoxIcon.Error);
                 return;
             }
-            OJ.AddString("[ID]\nTransfer=KXSARL", "ID.ini");
+            OJB.AddString("[ID]\nTransfer=KXSARL", "ID.ini");
+            var charlist = new StringBuilder();
             foreach(var CH in TransChars) {
                 var CHBL = new TJCRCreateBlock(OJ, storage);
                 var CHFL = FileList.GetTree(SavedCharsDir + "/" + CH);
+                var CHJR = JCR6.Dir(SavedCharsDir + "/" + CH + "/General.jcr");
+                var CHDT = GINIE.FromSource(CHJR.LoadString("Base.ini"));
                 CHBL.AddString("Check!", "Check/" + CH);
+                if (CHDT["GEN", "NAME"] == "") CHDT["GEN", "NAME"] = "<???>";
+                charlist.Append($"{CHDT["GEN", "NAME"]}\t{CHDT["GEN", "SEX"]} {CHDT["GEN", "CLASS"]}\n");
                 foreach (var CHFile in CHFL) {
                     CHBL.AddFile(SavedCharsDir + "/" + CH + "/" + CHFile, "Characters/" + CH + "/" + CHFile);
                 }
                 CHBL.Close();
             }
+            OJB.AddString(charlist, "Chars",storage);
             OJ.Close();
             if (JCR6.JERROR != "")
                 Confirm.Annoy($"{JCR6.JCATCH.Message}\nEntry: {JCR6.JCATCH.entry}", "Something went wrong", System.Windows.Forms.MessageBoxIcon.Error);
