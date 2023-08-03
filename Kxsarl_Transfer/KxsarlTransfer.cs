@@ -43,8 +43,8 @@ namespace Kxsarl_Transfer {
 		static string[] SavedChars = null;
 		static List<string> TransChars = null;
 
-		static public void GetChars(ListBox LB) { 
         #region Export
+        static public void GetChars(ListBox LB) { 
 			LB.Items.Clear();
 			TransChars = new List<string>();
 			foreach(var CHID in SavedChars) {
@@ -95,6 +95,16 @@ namespace Kxsarl_Transfer {
         #endregion
 
         #region Import
+		public static bool RecognizeTrans(string file,bool notify=true, ListBox LB = null) {
+			if (!File.Exists(file)) goto Mislukt; // I really HATE the "goto" command, but in this case it was the safest and easiest way to go!
+			if (JCR6.Recognize(file) == "NONE") goto Mislukt;
+			var Check = GINIE.FromSource(JCR6.Dir(file).LoadString("ID.ini"));
+			if (Check["ID", "Transfer"] != "Kxsarl") goto Mislukt;
+			return true;
+		Mislukt:
+			if (notify) Confirm.Annoy($"File \"{file}\" does either not exist or has not been recognized as a transfer file", "Error", System.Windows.Forms.MessageBoxIcon.Error) ;
+			return false;
+		}
         #endregion
 
 
@@ -109,4 +119,5 @@ namespace Kxsarl_Transfer {
 			SavedChars = FileList.GetDir(SavedCharsDir, 2);
 		}
         #endregion
+    }
 }
