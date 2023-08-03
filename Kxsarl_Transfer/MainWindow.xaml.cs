@@ -86,6 +86,15 @@ namespace Kxsarl_Transfer {
         private void TB_ExportTo_TextChanged(object sender, TextChangedEventArgs e) => MayExport();
 
         private void TB_ImportFile_TextChanged(object sender, TextChangedEventArgs e) => MayImport();
-        
+
+        private void Act_Import_Click(object sender, RoutedEventArgs e) {
+
+        }
+        private void PickImport_Click(object sender, RoutedEventArgs e) {
+            var file = FFS.RequestFile();
+            if (file == "") { MayImport(); return; } // No file given
+            if (!KxsarlTransfer.RecognizeTrans(file, true, LB_ListImportChars)) return;
+            TB_ImportFile.Text = file;
+        }
     }
 }

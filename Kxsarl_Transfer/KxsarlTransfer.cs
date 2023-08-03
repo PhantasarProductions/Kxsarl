@@ -96,13 +96,19 @@ namespace Kxsarl_Transfer {
 
         #region Import
 		public static bool RecognizeTrans(string file,bool notify=true, ListBox LB = null) {
-			if (!File.Exists(file)) goto Mislukt; // I really HATE the "goto" command, but in this case it was the safest and easiest way to go!
-			if (JCR6.Recognize(file) == "NONE") goto Mislukt;
-			var Check = GINIE.FromSource(JCR6.Dir(file).LoadString("ID.ini"));
-			if (Check["ID", "Transfer"] != "Kxsarl") goto Mislukt;
+			var R = "NE"; if (!File.Exists(file)) goto Mislukt; // I really HATE the "goto" command, but in this case it was the safest and easiest way to go!
+			R = "NRBJ"; if (JCR6.Recognize(file) == "NONE") goto Mislukt;
+			R = "INVID"; var RTJ = JCR6.Dir(file);
+            var Check = GINIE.FromSource(RTJ.LoadString("ID.ini"));
+			if (Check["ID", "Transfer"] != "KXSARL") goto Mislukt;
+			if (LB != null) {
+				LB.Items.Clear();
+				var Chars = RTJ.ReadLines("Chars", true);
+				foreach(var Char in Chars) LB.Items.Add(Char);
+			}
 			return true;
 		Mislukt:
-			if (notify) Confirm.Annoy($"File \"{file}\" does either not exist or has not been recognized as a transfer file", "Error", System.Windows.Forms.MessageBoxIcon.Error) ;
+			if (notify) Confirm.Annoy($"File \"{file}\" does either not exist or has not been recognized as a transfer file\n({R})", "Error", System.Windows.Forms.MessageBoxIcon.Error) ;
 			return false;
 		}
         #endregion
