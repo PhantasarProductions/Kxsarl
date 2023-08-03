@@ -48,6 +48,7 @@ namespace Kxsarl_Transfer {
             InitializeComponent();
             KxsarlTransfer.GetChars(LB_TransferrableChars);
             MayExport();
+            MayImport();
         }
 
         private string StorageMethod {
@@ -62,6 +63,10 @@ namespace Kxsarl_Transfer {
             if (Act_Export == null) Confirm.Annoy("Act_Export is null");
             if (TB_ExportTo == null) Confirm.Annoy("ExportTo Texbox is null");
             Act_Export.IsEnabled = TB_ExportTo.Text != "" && StorageMethod!="";            
+        }
+
+        private void MayImport() {
+            Act_Import.IsEnabled = TB_ImportFile.Text != "";
         }
 
         private void Browse_ExportTo_Click(object sender, RoutedEventArgs e) {
@@ -79,5 +84,8 @@ namespace Kxsarl_Transfer {
         }
 
         private void TB_ExportTo_TextChanged(object sender, TextChangedEventArgs e) => MayExport();
+
+        private void TB_ImportFile_TextChanged(object sender, TextChangedEventArgs e) => MayImport();
+        
     }
 }
