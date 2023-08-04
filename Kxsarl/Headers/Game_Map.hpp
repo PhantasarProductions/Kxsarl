@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.02
+// Version: 23.08.04
 // EndLic
 
 #pragma once
@@ -66,10 +66,10 @@ namespace Kxsarl {
 		class GActor {
 		private:
 			GMap* _parent;
-			static Statistician::UParty _Party;
+			static Slyvina::Statistician::UParty _Party;
 		public:
-			static Statistician::_Party* Party();
-			Statistician::Character ChDat{ nullptr };
+			static Slyvina::Statistician::_Party* Party();
+			Slyvina::Statistician::Character ChDat{ nullptr };
 			int X{ 0 }, Y{ 0 };
 		};
 
