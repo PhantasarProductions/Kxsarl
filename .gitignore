@@ -72,3 +72,8 @@ Kxsarl_Transfer/obj
 
 # tlogs? We don't need no stinking tlogs!
 *.tlog
+Kxsarl/x64/Debug/Kxsarl.log
+Kxsarl/x64/Debug/vc143.idb
+Kxsarl/x64/Debug/vc143.pdb
+Kxsarl_Transfer/bin/Debug/Kxsarl_Transfer.exe.config
+Kxsarl_Transfer/bin/Debug/Kxsarl_Transfer.pdb
