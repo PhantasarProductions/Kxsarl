@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.02
+// Version: 23.08.04
 // EndLic
 
 #include <TQSG.hpp>
@@ -86,9 +86,42 @@ namespace Kxsarl {
 			Player.Wind = (GWind)((W + 1) % 4);
 		}
 
+		__PlayerPos& GMap::Spot(std::string _Room, std::string _Spot) {
+			Trans2Upper(_Room);
+			Trans2Upper(_Spot);
+			return ExitSpots[_Room][_Spot];
+		}
+
+		void GMap::ScanExitSpots() {
+			ExitSpots.clear();
+			if (!Map) Crash("Can't search for exit spots when no map has been loaded");
+			for (auto& kvr : Map->Rooms) {
+				auto _Room{ Upper(kvr.first) };
+				for (int _y = 0; _y < kvr.second->H(); _y++) {
+					for (int _x = 0; _x < kvr.second->W(); _x++) {
+						auto OL{ kvr.second->MapObjects->Value(_x, _y) };
+						if (OL) {
+							for (auto O : *OL) {
+								if (Upper(O->Data["__kind"]) == "EXIT") {
+									auto &ESR{ ExitSpots[Upper(kvr.first)] };
+									auto Tag{ Upper(O->Data["TAG"]) };
+									if (ESR.count(Tag)) {
+										Crash("Dupe exit (" + O->Data["TAG"] + ") in room " + kvr.first);
+										return;
+									}
+									ESR[Tag] = { _x,_y,CWind(O->Data["WIND"]) };
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
 		void GMap::Load(std::string mapdir) {
 			QCol->Doing("Loading map", mapdir);
 			Map = LoadTeddy(MRes(), "Game/" + GameID + "/Maps/" + mapdir);
+			ScanExitSpots();
 		}
 
 		void GMap::GoTo(std::string _Map, std::string _Room, int x, int y, GWind wind) {
@@ -110,5 +143,25 @@ namespace Kxsarl {
 
 		Statistician::UParty GActor::_Party{CreateUniqueParty()};
 		Statistician::_Party* GActor::Party() { return _Party.get(); }
+		
+		GWind CWind(std::string _Wind) {
+			Trans2Upper(_Wind);
+			if (_Wind.size()) switch (_Wind[0]) {
+			case 'N': return GWind::North;
+			case 'E': return GWind::East;
+			case 'S': return GWind::South;
+			case 'W': return GWind::West;
+			}
+			Crash("Unknown wind string (" + _Wind + ")");
+			return GWind::North; // safety precaution
+		}
+		std::string CWind(GWind _Wind) {
+			switch (_Wind) {
+			case GWind::North: return "North";
+			case GWind::South: return "South";
+			case GWind::East: return "East";
+			case GWind::West: return "West";
+			}
+		}
 	}
 }

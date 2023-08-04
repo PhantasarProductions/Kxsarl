@@ -35,6 +35,9 @@ namespace Kxsarl {
 		enum class GWind { North, East, South, West };
 		struct __PlayerPos { int X{ 0 }, Y{ 0 }; GWind Wind{ GWind::North }; };
 
+		GWind CWind(std::string _Wind);
+		std::string CWind(GWind _Wind);
+
 		class GMap;
 		class GActor;
 
@@ -46,7 +49,8 @@ namespace Kxsarl {
 			std::unique_ptr<Slyvina::Units::TList<GActor>> Actors{nullptr };
 			__PlayerPos Player{ 0,0,GWind::North };
 			std::string LoadedMap{""};
-			std::string CurrentRoom{""};			
+			std::string CurrentRoom{""};
+			std::map<std::string, std::map<std::string, __PlayerPos>> ExitSpots{};
 
 			// Positon functions
 			void GetForward(int tiles, int& x, int& y);
@@ -55,6 +59,10 @@ namespace Kxsarl {
 			void GoSideward(int tiles = 1);
 			void TurnLeft();
 			void TurnRight();
+
+			// Exit Spots
+			__PlayerPos& Spot(std::string _Room, std::string _Spot);
+			void ScanExitSpots();
 
 			// Load
 			void Load(std::string);
