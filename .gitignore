@@ -68,3 +68,7 @@ Textures/FakeItAll/Error
 
 # C# obj crap
 Kxsarl_Transfer/obj
+
+
+# tlogs? We don't need no stinking tlogs!
+*.tlog
