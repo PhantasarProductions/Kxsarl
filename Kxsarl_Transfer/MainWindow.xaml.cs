@@ -21,10 +21,11 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.03
+// Version: 23.08.04
 // EndLic
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,8 +89,14 @@ namespace Kxsarl_Transfer {
         private void TB_ImportFile_TextChanged(object sender, TextChangedEventArgs e) => MayImport();
 
         private void Act_Import_Click(object sender, RoutedEventArgs e) {
-
+            try {
+                KxsarlTransfer.Unpack(TB_ImportFile.Text);
+            } catch ( Exception exception) {
+                Debug.WriteLine($"{exception.Message}\n\n{exception.StackTrace}");
+                Confirm.Annoy($"Exception thrown: {exception.Message}", "Error", System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
+
         private void PickImport_Click(object sender, RoutedEventArgs e) {
             var file = FFS.RequestFile();
             if (file == "") { MayImport(); return; } // No file given

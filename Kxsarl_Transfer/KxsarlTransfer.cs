@@ -21,15 +21,17 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.03
+// Version: 23.08.04
 // EndLic
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using TrickyUnits;
 using UseJCR6;
 
@@ -43,8 +45,8 @@ namespace Kxsarl_Transfer {
 		static string[] SavedChars = null;
 		static List<string> TransChars = null;
 
-        #region Export
-        static public void GetChars(ListBox LB) { 
+		#region Export
+		static public void GetChars(System.Windows.Controls.ListBox LB) { 
 			LB.Items.Clear();
 			TransChars = new List<string>();
 			foreach(var CHID in SavedChars) {
@@ -92,14 +94,14 @@ namespace Kxsarl_Transfer {
 			else
 				Confirm.Annoy("Transfer data saved as " + outfile + "; Storage(" + storage + ")");
 		}
-        #endregion
+		#endregion
 
-        #region Import
-		public static bool RecognizeTrans(string file,bool notify=true, ListBox LB = null) {
+		#region Import
+		public static bool RecognizeTrans(string file,bool notify=true, System.Windows.Controls.ListBox LB = null) {
 			var R = "NE"; if (!File.Exists(file)) goto Mislukt; // I really HATE the "goto" command, but in this case it was the safest and easiest way to go!
 			R = "NRBJ"; if (JCR6.Recognize(file) == "NONE") goto Mislukt;
 			R = "INVID"; var RTJ = JCR6.Dir(file);
-            var Check = GINIE.FromSource(RTJ.LoadString("ID.ini"));
+			var Check = GINIE.FromSource(RTJ.LoadString("ID.ini"));
 			if (Check["ID", "Transfer"] != "KXSARL") goto Mislukt;
 			if (LB != null) {
 				LB.Items.Clear();
@@ -111,11 +113,57 @@ namespace Kxsarl_Transfer {
 			if (notify) Confirm.Annoy($"File \"{file}\" does either not exist or has not been recognized as a transfer file\n({R})", "Error", System.Windows.Forms.MessageBoxIcon.Error) ;
 			return false;
 		}
-        #endregion
+
+		public static void Unpack(string file) {
+			// Need this during the unpack, later!
+			UInt64 c = 0;
+			// Is everything okay?
+			if (!RecognizeTrans(file) || !File.Exists(file)) return;
+			// Read the import file!
+			var JI = JCR6.Dir(file);
+			var Tags = new List<string>();
+			// Scan for characters
+			foreach(var EN in JI.Entries) {
+				var fName=qstr.StripDir(EN.Key);
+				var ffDir = qstr.ExtractDir(EN.Key);
+				var fcDir = qstr.StripDir(ffDir);
+				if (fName == "GENERAL.JCR" && qstr.ExtractDir(ffDir)=="CHARACTERS") Tags.Add(fcDir);
+			}
+			// Extract the characters
+			foreach(var iTag in Tags) {
+				var oTag = "";
+				var fDir = "";
+				do { 
+					oTag = Fmt.sprintf("CHAR_IMPORTED_%09x", c++);
+					fDir = SavedCharsDir + "/" + oTag;
+				} while (Directory.Exists(fDir));
+				Debug.WriteLine($"Extracting {iTag} to {oTag}.");
+                foreach (var EN in JI.Entries) {
+					var Prefix = $"CHARACTERS/{iTag}/";
+					Debug.WriteLine($"Prefix = {Prefix}; Entry={EN.Key}; Prefixed={qstr.Prefixed(EN.Key, Prefix)}");
+                    if (qstr.Prefixed(EN.Key, Prefix)) {
+						var oFile = $"{fDir}/{EN.Value.Entry.Substring(Prefix.Length)}";
+						Debug.WriteLine($"- {EN.Value.Entry} => {oFile}");
+						Directory.CreateDirectory(qstr.ExtractDir(oFile));
+						var BO=QuickStream.WriteFile(oFile);
+						BO.WriteBytes(JI.JCR_B(EN.Key));
+						BO.Close();
+					}
+
+                }				
+            }
+			var IndexFile = $"{SavedCharsDir}/CharacterIndex.ini";
+			if (File.Exists(IndexFile)) {
+				Debug.WriteLine($"Deleting: {IndexFile}");
+				File.Delete(IndexFile);
+			}
+			Confirm.Annoy("Importing complete");
+		}
+		#endregion
 
 
-        #region Init
-        static KxsarlTransfer() {
+		#region Init
+		static KxsarlTransfer() {
 			JCR6_zlib.Init();
 			JCR6_lzma.Init();
 			Dirry.InitAltDrives();
@@ -124,6 +172,6 @@ namespace Kxsarl_Transfer {
 			//Confirm.Annoy(SavedCharsDir); // debug
 			SavedChars = FileList.GetDir(SavedCharsDir, 2);
 		}
-        #endregion
-    }
+		#endregion
+	}
 }
