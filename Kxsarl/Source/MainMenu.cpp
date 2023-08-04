@@ -88,6 +88,7 @@ namespace Kxsarl {
 	static void ActCharGen(MainMenuItem*) { GoFlow("CharGen"); }
 	static void ActStartGame(MainMenuItem*) { GoFlow("ChooseChar"); }
 	static void ActConfig(MainMenuItem*) { GoFlow("Config"); }
+	static void ActTransfer(MainMenuItem*) { system((ExeDir() + "/Kxsarl_Transfer.exe").c_str()); }
 	static void ActBugs(MainMenuItem*) { OpenURL("https://github.com/PhantasarProductions/Kxsarl/issues"); QCol->Doing("Opening", "Issue tracker on GitHub"); }
 #pragma endregion
 
@@ -109,7 +110,7 @@ namespace Kxsarl {
 		new MainMenuItem("Jukebox");
 		new MainMenuItem("Report Bugs", ActBugs);
 		new MainMenuItem("System Configuration",ActConfig);
-		new MainMenuItem("Transfer");
+		new MainMenuItem("Transfer",ActTransfer);
 		new MainMenuItem("Exit", ActExit);
 	}
 	
