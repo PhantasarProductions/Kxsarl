@@ -314,9 +314,6 @@
     <ClCompile Include="Source\Game_Config.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SysStatus.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -332,14 +329,17 @@
     <ClCompile Include="Source\Game_Narration.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\Statistician\Statistician_LoadJCR6.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game_Map.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\SuperTed\C++ Class\source\SuperTed_Core.cpp">
       <Filter>Source Files\Slyvina\SuperTed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\Statistician\Statistician_LoadJCR6.cpp">
+      <Filter>Source Files\Slyvina\Statitician</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.cpp">
+      <Filter>Source Files\Slyvina\Statitician</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
