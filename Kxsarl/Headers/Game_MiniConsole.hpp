@@ -26,6 +26,7 @@
 
 #pragma once
 #include <string>
+#include "Flow.hpp"
 
 namespace Kxsarl {
 	namespace Game {
@@ -38,5 +39,8 @@ namespace Kxsarl {
 		void MCShow(Slyvina::uint32 linenr, Slyvina::uint32 Y);
 
 		void MCMiniShow();
+
+		void MC_Max(FlowFunction ReturnFlow);
+		bool MC_Flow();
 	}
 }

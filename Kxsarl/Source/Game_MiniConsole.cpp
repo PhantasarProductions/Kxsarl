@@ -40,7 +40,7 @@ using namespace TQSG;
 using namespace TQSE;
 using namespace TQSA;
 
-namespace Kxsarl {  
+namespace Kxsarl {
 	namespace Game {
 		const int MaxLines{ 50 };
 		struct MCText {
@@ -48,10 +48,10 @@ namespace Kxsarl {
 			std::string msg;
 			int X{ 0 };
 		};
-		
+
 		static int XPos{ 0 }, YPos{ 0 };
 		static shared_ptr<TList<MCText>> Lines[MaxLines]{};
-		
+
 		inline void InitL() {
 			static bool _DoneInit{ false };
 			if (_DoneInit) return;
@@ -74,7 +74,7 @@ namespace Kxsarl {
 			XPos = 0;
 			if (++YPos >= MaxLines) {
 				YPos = MaxLines;
-				for (int i = 0; i < MaxLines-1; i++) Lines[i] = Lines[i + 1];
+				for (int i = 0; i < MaxLines - 1; i++) Lines[i] = Lines[i + 1];
 				Lines[MaxLines - 1] = TList<MCText>::CreateShared();
 			}
 		}
@@ -103,6 +103,32 @@ namespace Kxsarl {
 			for (int i = SLine; i < SLine + 3 && i < MaxLines; ++i) {
 				MCShow(i, DY); DY += FH;
 			}
+			if (MouseY() > ASY(BY) && MouseHit(1)) MC_Max(GetFlow());
+		}
+
+		static FlowFunction _ReturnFromMaximize;
+		void MC_Max(FlowFunction ReturnFlow) {
+			_ReturnFromMaximize = ReturnFlow;
+			GoFlow(MC_Flow);
+		}
+
+		bool MC_Flow() {
+			static auto FH{ MiniFont()->Height("The quick brown fox jumped over the lazy dog") };
+			static auto _Back{ LoadUImage(MRes(),"GFX/Crawl/MCB.jpg") };
+			static auto Down{ Arrow(EArrow::Down) };
+			//static auto AX{ ScreenWidth() - Down->Width() }, AY{ ScreenHeight() - Down->Height() };
+			static auto AW{ 50 }, AH{ 100 };
+			static auto AX{ ScreenWidth() - AW }, AY{ ScreenHeight() - AH };
+			SetColor(100, 100, 100);
+			_Back->Tile(0, 0, ScreenWidth(), ScreenHeight());
+			for (int i = 0; i < MaxLines; ++i) MCShow(i, i * FH);
+			SetColor(255, 255, 255);
+			if (MouseX() > ASX(AX), MouseY() > ASY(AY)) {
+				ColLoop(2500);
+				if (MouseHit(1)) GoFlow(_ReturnFromMaximize);
+			}
+			Down->StretchDraw(AX, AY, AW, AH);
+			return true;
 		}
 
 	}
