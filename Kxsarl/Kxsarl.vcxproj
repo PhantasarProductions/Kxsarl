@@ -173,7 +173,9 @@
     <ClInclude Include="Headers\Flow.hpp" />
     <ClInclude Include="Headers\Game_Config.hpp" />
     <ClInclude Include="Headers\Game_Crawl.hpp" />
+    <ClInclude Include="Headers\Game_Inventory.hpp" />
     <ClInclude Include="Headers\Game_Map.hpp" />
+    <ClInclude Include="Headers\Game_MiniConsole.hpp" />
     <ClInclude Include="Headers\Game_Narration.hpp" />
     <ClInclude Include="Headers\Game_New.hpp" />
     <ClInclude Include="Headers\GlobGFX.hpp" />
@@ -223,7 +225,9 @@
     <ClCompile Include="Source\Flow.cpp" />
     <ClCompile Include="Source\Game_Config.cpp" />
     <ClCompile Include="Source\Game_Crawl.cpp" />
+    <ClCompile Include="Source\Game_Inventory.cpp" />
     <ClCompile Include="Source\Game_Map.cpp" />
+    <ClCompile Include="Source\Game_MiniConsole.cpp" />
     <ClCompile Include="Source\Game_Narration.cpp" />
     <ClCompile Include="Source\Game_New.cpp" />
     <ClCompile Include="Source\GlobGFX.cpp" />
