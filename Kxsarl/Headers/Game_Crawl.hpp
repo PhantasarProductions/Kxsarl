@@ -27,6 +27,9 @@
 #pragma once
 
 #include <string>
+
+#include <TQSG.hpp>
+
 #include "Game_Map.hpp"
 
 namespace Kxsarl {
@@ -37,13 +40,20 @@ namespace Kxsarl {
 			DWW{ 1700 },
 			DWH{ 720 };
 
+		Slyvina::TQSG::_____TIMAGE* CrawlBack();
+
 		// I brought this in the way to bear the possibility in mind
 		// Things could go different than just from player view
 		void DrawDungeon(__PlayerPos* PP,int X,int Y, int w, int h);
 		
 		inline void DrawDungeon() { DrawDungeon(&Map.Player, DWX, DWY, DWW, DWH); }
 		inline void DrawDungeon(int x, int y, int w, int h) { DrawDungeon(&Map.Player, x, y, w, h); }
+
+		void DrawScreen();
 		
+		void Arrive_Crawl();
+		bool Flow_Crawl();
+
 	}
 
 	
