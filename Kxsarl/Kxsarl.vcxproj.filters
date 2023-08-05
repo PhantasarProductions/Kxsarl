@@ -207,6 +207,9 @@
     <ClInclude Include="..\..\SuperTed\C++ Class\headers\SuperTed_Core.hpp">
       <Filter>Header Files\Slyvina\SuperTed</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Game_Crawl.hpp">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MainMenu.cpp">
@@ -340,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Libs\Statistician\Statistician_SaveJCR6.cpp">
       <Filter>Source Files\Slyvina\Statitician</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game_Crawl.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
