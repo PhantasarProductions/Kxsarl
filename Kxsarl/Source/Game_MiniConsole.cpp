@@ -41,5 +41,49 @@ using namespace TQSA;
 
 namespace Kxsarl {  
 	namespace Game {
-	} 
+		const int MaxLines{ 50 };
+		struct MCText {
+			byte r, g, b;
+			std::string msg;
+			int X{ 0 };
+		};
+		
+		static int XPos{ 0 }, YPos{ 0 };
+		static shared_ptr<TList<MCText>> Lines[MaxLines]{};
+		
+		inline void InitL() {
+			static bool _DoneInit{ false };
+			if (_DoneInit) return;
+			QCol->Doing("Initiating", "Mini Console");
+			for (uint32 i = 0; i < MaxLines; ++i) Lines[i] = TList<MCText>::CreateShared();
+			MCWriteLn("The Legend Of The Kxsarl", 255, 180, 0);
+			MCWrite("Coded and copyrighted by: ", 180, 255, 0);
+			MCWriteLn("Jeroen P. Broks", 180, 0, 255);
+			_DoneInit = false;
+		}
+
+		void MCWrite(std::string msg, byte r, byte g, byte b) {
+			InitL();
+			*Lines[YPos] += new MCText{ r, b, b, msg, XPos };
+			XPos += MiniFont()->Width(msg);
+		}
+
+		void MCNext() {
+			InitL();
+			XPos = 0;
+			if (++YPos >= MaxLines) {
+				YPos = MaxLines;
+				for (int i = 0; i < MaxLines-1; i++) Lines[i] = Lines[i + 1];
+				Lines[MaxLines - 1] = TList<MCText>::CreateShared();
+			}
+		}
+
+		void MCShow(uint32 linenr, uint32 Y) {
+			InitL();
+			for (auto L = Lines[linenr]->First(); L; L = Lines[linenr]->Next()) {
+				MiniFont(L->msg, L->X, Y);
+			}
+		}
+
+	}
 }
