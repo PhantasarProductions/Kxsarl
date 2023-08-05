@@ -64,7 +64,7 @@ namespace Kxsarl {
 
 		void MCWrite(std::string msg, byte r, byte g, byte b) {
 			InitL();
-			*Lines[YPos] += new MCText{ r, b, b, msg, XPos };
+			*Lines[YPos] += new MCText{ r, g, b, msg, XPos };
 			XPos += MiniFont()->Width(msg);
 		}
 
