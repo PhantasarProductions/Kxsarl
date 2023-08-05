@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.01
+// Version: 23.08.05
 // EndLic
 
 #include <TQSE.hpp>
@@ -48,6 +48,8 @@ namespace Kxsarl {
 			GameID = _GameID;
 			if (StartIni->BoolValue("Narration", "StartNarration"))
 				StartNarration("Intro");
+			// To do: Load Map
+			GoFlow("Crawl");
 		}
 #pragma endregion
 
