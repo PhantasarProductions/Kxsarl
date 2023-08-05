@@ -67,6 +67,9 @@ namespace Kxsarl {
 		if (a) a();
 		CurrentFlow = f;
 	}
+	FlowFunction GetFlow() {
+		return CurrentFlow;
+	}
 	void FlowInt() {
 		QCol->Doing("Init", "Flow functions");
 		RegFlow("MainMenu", Flow_MainMenu,Arrive_MainMenu);

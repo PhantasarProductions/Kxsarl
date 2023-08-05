@@ -35,6 +35,8 @@ namespace Kxsarl {
 	void GoFlow(std::string f);
 	void GoFlow(FlowFunction f, FlowArrive a = nullptr);
 
+	FlowFunction GetFlow();
+
 	
 	void FlowInt();
 	void Run();
