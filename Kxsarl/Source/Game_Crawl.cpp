@@ -57,6 +57,7 @@ namespace Kxsarl {
 		void DrawScreen() {
 			CrawlBack()->Tile(0, 0, ScreenWidth(), ScreenHeight());
 			DrawDungeon();
+			MCMiniShow();
 		}
 		void Arrive_Crawl() {}
 		bool Flow_Crawl() {
