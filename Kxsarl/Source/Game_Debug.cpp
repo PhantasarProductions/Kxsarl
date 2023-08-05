@@ -24,6 +24,8 @@
 // Version: 23.08.05
 // EndLic
 
+#include "../Headers/Debug.hpp"
+#ifdef KXSARL_DEBUG
 #include <TQSG.hpp>
 #include <TQSE.hpp>
 #include <TQSA.hpp>
@@ -43,3 +45,4 @@ namespace Kxsarl {
 	namespace Game {
 	} 
 }
+#endif

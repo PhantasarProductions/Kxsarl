@@ -29,5 +29,8 @@
 
 namespace Kxsarl {
 	namespace Game {
+#ifdef KXSARL_DEBUG
+#else
+#endif
 	}
 }
