@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.04
+// Version: 23.08.05
 // EndLic
 
 #include <TQSG.hpp>
@@ -48,12 +48,12 @@ namespace Kxsarl {
 
 			
 
-		void GMap::GetForward(int tiles, int& x, int& y) {
+		void GMap::GetForward(__PlayerPos&P,int tiles, int& x, int& y) {
 			switch (Player.Wind) {
-			case GWind::North: x = Player.X; y = Player.Y - tiles; return;
-			case GWind::East: x = Player.X + tiles; y = Player.Y; return;
-			case GWind::South: x = Player.X; y = Player.Y + tiles; return;
-			case GWind::West: x = Player.X - tiles; y = Player.Y; return;
+			case GWind::North: x = P.X; y = P.Y - tiles; return;
+			case GWind::East: x = P.X + tiles; y = P.Y; return;
+			case GWind::South: x = P.X; y = P.Y + tiles; return;
+			case GWind::West: x = P.X - tiles; y = P.Y; return;
 			}
 			Crash("GetForward(): Wind error");
 		}

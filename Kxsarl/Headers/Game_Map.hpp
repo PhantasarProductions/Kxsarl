@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.04
+// Version: 23.08.05
 // EndLic
 
 #pragma once
@@ -53,7 +53,8 @@ namespace Kxsarl {
 			std::map<std::string, std::map<std::string, __PlayerPos>> ExitSpots{};
 
 			// Positon functions
-			void GetForward(int tiles, int& x, int& y);
+			void GetForward(__PlayerPos& _Player, int tiles, int& x, int& y);
+			inline void GetForward(int tiles, int& x, int& y) { GetForward(Player, tiles, x, y); }
 			void GoForward(int tiles = 1);
 			void GetSideward(int tiles, int& x, int& y);
 			void GoSideward(int tiles = 1);
