@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.18
+// Version: 23.08.05
 // EndLic
 #pragma once
 #include <string>
@@ -35,6 +35,7 @@ namespace Kxsarl {
 	void GoFlow(std::string f);
 	void GoFlow(FlowFunction f, FlowArrive a = nullptr);
 
+	
 	void FlowInt();
 	void Run();
 }
