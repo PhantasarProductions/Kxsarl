@@ -7,6 +7,8 @@
 #define MyAppURL "https://www.thiscomeslater.com"
 #define MyAppExeName "Kxsarl.exe"
 
+#define DevAppFolder "E:\Projects\Applications"
+
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
@@ -20,12 +22,12 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-LicenseFile=E:\Projects\Applications\Slyvina\Apps\Kxsarl\License.txt
+LicenseFile={#DevAppFolder}\Slyvina\Apps\Kxsarl\License.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=E:\Projects\Applications\Slyvina\Apps\Kxsarl\Setup\output
+OutputDir={#DevAppFolder}\Slyvina\Apps\Kxsarl\Setup\output
 OutputBaseFilename=Setup - Kxsarl
-SetupIconFile=E:\Projects\Applications\Slyvina\Apps\Kxsarl\Kxsarl\Ksarl.ico
+SetupIconFile={#DevAppFolder}\Slyvina\Apps\Kxsarl\Kxsarl\Ksarl.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -38,28 +40,28 @@ Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl_Transfer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl_Transfer.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl_Transfer.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libFLAC-8.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libjpeg-9.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libmodplug-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libmpg123-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libogg-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libopus-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libopusfile-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libpng16-16.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libtiff-5.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libvorbis-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libvorbisfile-3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\libwebp-7.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\SDL2_image.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\SDL2_mixer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\zlib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Projects\Applications\Slyvina\Apps\Kxsarl\Exe_x64\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl_Transfer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl_Transfer.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\Kxsarl_Transfer.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libFLAC-8.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libjpeg-9.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libmodplug-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libmpg123-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libogg-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libopus-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libopusfile-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libpng16-16.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libtiff-5.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libvorbis-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libvorbisfile-3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\libwebp-7.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\SDL2_image.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\SDL2_mixer.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\zlib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#DevAppFolder}\Slyvina\Apps\Kxsarl\Exe_x64\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
