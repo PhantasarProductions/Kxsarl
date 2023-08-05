@@ -29,12 +29,14 @@
 
 namespace Kxsarl {
 	namespace Game {
-		void MCWrite(std::string msg, byte r, byte g, byte b);
+		void MCWrite(std::string msg, Slyvina::byte r, Slyvina::byte g, Slyvina::byte b);
 		inline void MCWrite(std::string msg) { MCWrite(msg, 255, 255, 255); }
 		void MCNext();
 		inline void MCWriteLn(std::string msg) { MCWrite(msg); MCNext(); }
-		inline void MCWriteLn(std::string msg, byte r, byte g, byte b) { MCWrite(msg, r, g, b); MCNext(); }
+		inline void MCWriteLn(std::string msg, Slyvina::byte r, Slyvina::byte g, Slyvina::byte b) { MCWrite(msg, r, g, b); MCNext(); }
 
 		void MCShow(Slyvina::uint32 linenr, Slyvina::uint32 Y);
+
+		void MCMiniShow();
 	}
 }
