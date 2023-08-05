@@ -24,6 +24,7 @@
 // Version: 23.08.05
 // EndLic
 
+#include <SlyvQCol.hpp>
 #include <TQSG.hpp>
 #include <TQSE.hpp>
 #include <TQSA.hpp>
@@ -54,12 +55,12 @@ namespace Kxsarl {
 		inline void InitL() {
 			static bool _DoneInit{ false };
 			if (_DoneInit) return;
+			_DoneInit = true;
 			QCol->Doing("Initiating", "Mini Console");
 			for (uint32 i = 0; i < MaxLines; ++i) Lines[i] = TList<MCText>::CreateShared();
 			MCWriteLn("The Legend Of The Kxsarl", 255, 180, 0);
 			MCWrite("Coded and copyrighted by: ", 180, 255, 0);
 			MCWriteLn("Jeroen P. Broks", 180, 0, 255);
-			_DoneInit = false;
 		}
 
 		void MCWrite(std::string msg, byte r, byte g, byte b) {
@@ -81,7 +82,26 @@ namespace Kxsarl {
 		void MCShow(uint32 linenr, uint32 Y) {
 			InitL();
 			for (auto L = Lines[linenr]->First(); L; L = Lines[linenr]->Next()) {
+				SetColor(L->r, L->g, L->b, 255);
 				MiniFont(L->msg, L->X, Y);
+			}
+		}
+
+		void MCMiniShow() {
+			static auto
+				FH{ MiniFont()->Height("The quick brown fox jumped over the lazy dog") },
+				BH{ FH * 3 },
+				BY{ ScreenHeight() - 3 - BH },
+				BX{ 3 },
+				BW{ ScreenWidth() - 6 };
+			auto
+				SLine{ std::max(0,YPos - 3) };
+			SetColor(0, 0, 0, 180);
+			ARect(BX, BY, BW, BH);
+			SetAlpha(255);
+			auto DY{ BY };
+			for (int i = SLine; i < SLine + 3 && i < MaxLines; ++i) {
+				MCShow(i, DY); DY += FH;
 			}
 		}
 
