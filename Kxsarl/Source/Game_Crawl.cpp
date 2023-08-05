@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.30
+// Version: 23.08.05
 // EndLic
 
 #include <TQSG.hpp>
@@ -41,5 +41,14 @@ using namespace TQSA;
 
 namespace Kxsarl {  
 	namespace Game {
-	} 
+
+		void DrawDungeon(__PlayerPos* PP, int x, int y, int w, int h) {
+			// Base Background
+			SetColor(65, 65, 65); Rect(x, y, w, h / 2);
+			SetColor(100, 100, 100); Rect(x, y + (h / 2), w, h / 2);
+			// Floor and ceiling
+			// Actors (most of all enemies) 
+			// Walls, illusions and doors
+		}
+	}
 }

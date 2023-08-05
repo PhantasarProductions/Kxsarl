@@ -21,13 +21,30 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.07.30
+// Version: 23.08.05
 // EndLic
 
 #pragma once
+
 #include <string>
+#include "Game_Map.hpp"
 
 namespace Kxsarl {
 	namespace Game {
+		static const int
+			DWX{ 5 },
+			DWY{ 5 },
+			DWW{ 1700 },
+			DWH{ 720 };
+
+		// I brought this in the way to bear the possibility in mind
+		// Things could go different than just from player view
+		void DrawDungeon(__PlayerPos* PP,int X,int Y, int w, int h);
+		
+		inline void DrawDungeon() { DrawDungeon(&Map.Player, DWX, DWY, DWW, DWH); }
+		inline void DrawDungeon(int x, int y, int w, int h) { DrawDungeon(&Map.Player, x, y, w, h); }
+		
 	}
+
+	
 }
