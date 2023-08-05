@@ -41,7 +41,10 @@ using namespace TQSA;
 
 namespace Kxsarl {  
 	namespace Game {
-
+		_____TIMAGE* CrawlBack() {
+			static auto _ret{ LoadUImage(MRes(),"GFX/Crawl/Background.jpg") };
+			return _ret.get();
+		}
 		void DrawDungeon(__PlayerPos* PP, int x, int y, int w, int h) {
 			// Base Background
 			SetColor(65, 65, 65); Rect(x, y, w, h / 2);
@@ -49,6 +52,16 @@ namespace Kxsarl {
 			// Floor and ceiling
 			// Actors (most of all enemies) 
 			// Walls, illusions and doors
+		}
+		
+		void DrawScreen() {
+			CrawlBack()->Tile(0, 0, ScreenWidth(), ScreenHeight());
+			DrawDungeon();
+		}
+		void Arrive_Crawl() {}
+		bool Flow_Crawl() {
+			DrawScreen();
+			return true;
 		}
 	}
 }
