@@ -1,0 +1,4 @@
+This is the resource file for The Legend of the Kxsarl.
+Please note that I was reliant on 3rd parties. All 3rd party stuff was copyrighted by their respective creators and their license terms still apply.
+JCR6 supports author and notes. Please check those before extracting any file from this resource!
+Thank you.

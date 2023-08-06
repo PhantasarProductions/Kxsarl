@@ -1,0 +1,3 @@
+Oh, I see you have the full version with music.
+If you see this message it must mean that the music is properly linked into the main JCR file.
+Good, good!
