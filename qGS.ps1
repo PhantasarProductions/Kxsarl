@@ -39,7 +39,7 @@ namespace Kxsarl {
 
 } else {
 
-cho "
+echo "
 #pragma once
 #include <string>
 
