@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.05
+// Version: 23.08.06
 // EndLic
 #pragma once
 
@@ -77,6 +77,9 @@ namespace Kxsarl {
 		RegFlow("CharGen", Flow_CharacterCreation,Arrive_CharCreation); 
 		RegFlow("ChooseChar", Flow_CharSelect, Arrive_CharSelect);
 		RegFlow("Crawl", Game::Flow_Crawl, Game::Arrive_Crawl);
+#ifdef KXSARL_DEBUG
+		RegFlow("DebugConsole", Game::FlowDebug);
+#endif
 	}
 
 	void Run() {
