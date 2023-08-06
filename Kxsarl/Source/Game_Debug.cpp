@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.05
+// Version: 23.08.06
 // EndLic
 
 #include "../Headers/Debug.hpp"
@@ -43,6 +43,22 @@ using namespace TQSA;
 
 namespace Kxsarl {  
 	namespace Game {
+
+		static map<string, ConsoleCommandFunction> Cmds;
+
+		void RegisterDebug(std::string Command, ConsoleCommandFunction Action) {
+			Trans2Upper(Command);
+			Cmds[Command] = Action;
+		}
+
+		static bool InitCommands() {
+			return true;
+		}
+
+		bool FlowDebug() {
+			static bool Done{ InitCommands() };
+		}
+
 	} 
 }
 #endif

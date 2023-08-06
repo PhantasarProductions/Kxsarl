@@ -21,16 +21,24 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 23.08.05
+// Version: 23.08.06
 // EndLic
 
 #pragma once
-#include <string>
+#include <Slyvina.hpp>
+#include "Debug.hpp"
 
 namespace Kxsarl {
 	namespace Game {
+
+		typedef void (*ConsoleCommandFunction)(Slyvina::VecString);
+
 #ifdef KXSARL_DEBUG
+		void RegisterDebug(std::string Command, ConsoleCommandFunction Action);
+		bool FlowDebug();
 #else
+		inline void Register(std::string Command, ConsoleCommandFunction Action) {}
 #endif
+
 	}
 }
