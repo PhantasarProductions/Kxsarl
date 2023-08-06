@@ -57,6 +57,7 @@ namespace Kxsarl {
 
 		bool FlowDebug() {
 			static bool Done{ InitCommands() };
+			return true;
 		}
 
 	} 

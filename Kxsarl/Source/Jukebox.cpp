@@ -40,10 +40,86 @@ using namespace TQSA;
 
 
 namespace Kxsarl {
+	struct JukeEntry{
+		std::string
+			Title{},
+			Artist{},
+			Notes{},
+			Site{},
+			File{};
+	};
+	class _Juke{
+	private:
+		std::map<std::string, JukeEntry> _Entries;
+		GINIE Dat{ nullptr };
+		void LoadG() {
+			if (!Dat) {
+				QCol->Doing("Loading", "Jukebox data");
+				Dat = ParseGINIE(MRes()->GetString("Data/Jukebox.ini"));
+			}
+		}
+	public:
+		JukeEntry& operator[](std::string Entry) {
+			auto UE{ Upper(Entry) };
+			LoadG();
+			if (!_Entries.count(UE)) {
+				auto Tag{ "Entry:" + Entry };
+				QCol->Doing("Creating Jukebox Entry", Entry);
+				_Entries[UE] = { Dat->Value(Tag,"Title"),Dat->Value(Tag,"Artist"),Dat->Value(Tag,"License"),Dat->Value(Tag,"WebSite"),Entry };
+			}
+			return _Entries[UE];
+		}
+		vector<string>* Entries() { LoadG(); return Dat->List("Index", "Index"); }
+	};
+	_Juke Juke{};
+
 	void Arrive_Jukebox() {
+		Music("Music/Sys/Silence.ogg");
+		Ryanna("The quick brown fox jumps over the lazy dog", 0, 0); 
 	}
 
 	bool Flow_Jukebox() {
+		static auto Back{ LoadUImage(MRes(),"GFX/Jukebox/Background.png") };
+		static auto ScrollY{ 0 };
+		static auto H{ Ryanna()->Height("The quick brown fox jumps over the lazy dog") };
+		static auto Entries{Juke.Entries()};
+		static JukeEntry* CurrentEntry{nullptr};
+		auto Y{ -ScrollY };
+		SetColor(155, 155, 155);
+		Back->StretchDraw(0, 0, ScreenWidth(), ScreenHeight());
+		for (auto& Ent : *Entries) {
+			auto DY{ ((Y++) * H) + 10 };
+			auto DX{ 10 };
+			if (DY >= 0 && DY <= ScreenHeight() - H) {
+				if (MouseY() > ASY(DY) && MouseY() < ASY(DY + H)) {
+					ColLoop();
+					if (MouseHit(1)) {
+						CurrentEntry = &Juke[Ent];
+						Music(Ent);
+					}
+				} else if (CurrentEntry && CurrentEntry == &Juke[Ent]) 
+					SetColor(255, 180, 0);
+				else SetColor(255, 255, 255);
+				Ryanna(Juke[Ent].Title, DX, DY);
+			}			
+			if (CurrentEntry) {
+				SetColor(255, 255, 255);
+				static auto EX{ ScreenWidth() - 10 };
+				MiniFont("Playing track:", EX, 10, Align::Right);
+				Ryanna(CurrentEntry->Title, EX, 30, Align::Right);
+				MiniFont("Composed by", EX, 60, Align::Right);
+				Ryanna(CurrentEntry->Artist, EX, 80, Align::Right);
+				MiniFont("License:", EX, 110, Align::Right);
+				if (Ryanna()->Width(CurrentEntry->Notes) > ScreenWidth() / 2)
+					MiniFont(CurrentEntry->Notes, EX, 130, Align::Right);
+				else
+					Ryanna(CurrentEntry->Notes, EX, 130, Align::Right);
+				if (CurrentEntry->Site.size()) {
+					MiniFont("Website:", EX, 160, Align::Right);
+					Ryanna(CurrentEntry->Site, EX, 180, Align::Right);
+				}
+			}
+		}
 		return true;
 	}
 }

@@ -77,6 +77,7 @@ namespace Kxsarl {
 		RegFlow("CharGen", Flow_CharacterCreation,Arrive_CharCreation); 
 		RegFlow("ChooseChar", Flow_CharSelect, Arrive_CharSelect);
 		RegFlow("Crawl", Game::Flow_Crawl, Game::Arrive_Crawl);
+		RegFlow("Jukebox", Flow_Jukebox, Arrive_Jukebox);
 #ifdef KXSARL_DEBUG
 		RegFlow("DebugConsole", Game::FlowDebug);
 #endif
